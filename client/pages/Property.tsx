@@ -13,6 +13,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
+import { useAuth } from "@/auth/AuthContext";
 
 const LeadSchema = z.object({
   name: z.string().min(1, "Este campo es obligatorio."),
