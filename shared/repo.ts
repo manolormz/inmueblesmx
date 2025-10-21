@@ -108,12 +108,25 @@ seedOnce();
 export type PropertyFilters = {
   operation?: Operation;
   type?: PropertyType;
+  // price filters (support both aliases)
   minPrice?: number;
   maxPrice?: number;
+  priceMin?: number;
+  priceMax?: number;
   status?: PublicationStatus;
   owner_company?: string; // company id
   q?: string; // text search title/description
-  sortBy?: "price" | "views" | "title";
+  // extra facets
+  minBedrooms?: number;
+  minBathrooms?: number;
+  minParking?: number;
+  builtMin?: number;
+  builtMax?: number;
+  landMin?: number;
+  landMax?: number;
+  currency?: "MXN" | "USD";
+  // sorting
+  sortBy?: "id" | "price" | "views" | "title" | "built_m2";
   sortDir?: "asc" | "desc";
 };
 
@@ -122,16 +135,46 @@ export async function listProperties(
   page = 1,
   pageSize = 12,
 ): Promise<{ items: Property[]; total: number; page: number; pageSize: number }> {
-  const { operation, type, minPrice, maxPrice, status, owner_company, q, sortBy = "price", sortDir = "desc" } = filters;
+  const {
+    operation,
+    type,
+    minPrice,
+    maxPrice,
+    priceMin,
+    priceMax,
+    status,
+    owner_company,
+    q,
+    minBedrooms,
+    minBathrooms,
+    minParking,
+    builtMin,
+    builtMax,
+    landMin,
+    landMax,
+    currency,
+    sortBy = "id",
+    sortDir = "desc",
+  } = filters;
 
   let data = properties.slice();
 
   if (operation) data = data.filter((p) => p.operation === operation);
   if (type) data = data.filter((p) => p.type === type);
-  if (typeof minPrice === "number") data = data.filter((p) => p.price >= minPrice);
-  if (typeof maxPrice === "number") data = data.filter((p) => p.price <= maxPrice);
+  const effMinPrice = typeof minPrice === "number" ? minPrice : priceMin;
+  const effMaxPrice = typeof maxPrice === "number" ? maxPrice : priceMax;
+  if (typeof effMinPrice === "number") data = data.filter((p) => p.price >= effMinPrice);
+  if (typeof effMaxPrice === "number") data = data.filter((p) => p.price <= effMaxPrice);
   if (status) data = data.filter((p) => p.status === status);
   if (owner_company) data = data.filter((p) => p.owner_company === owner_company);
+  if (typeof minBedrooms === "number") data = data.filter((p) => (p.bedrooms ?? 0) >= minBedrooms);
+  if (typeof minBathrooms === "number") data = data.filter((p) => (p.bathrooms ?? 0) >= minBathrooms);
+  if (typeof minParking === "number") data = data.filter((p) => (p.parking ?? 0) >= minParking);
+  if (typeof builtMin === "number") data = data.filter((p) => (p.built_m2 ?? 0) >= builtMin);
+  if (typeof builtMax === "number") data = data.filter((p) => (p.built_m2 ?? 0) <= builtMax);
+  if (typeof landMin === "number") data = data.filter((p) => (p.land_m2 ?? 0) >= landMin);
+  if (typeof landMax === "number") data = data.filter((p) => (p.land_m2 ?? 0) <= landMax);
+  if (currency) data = data.filter((p) => p.currency === currency);
   if (q && q.trim()) {
     const needle = q.trim().toLowerCase();
     data = data.filter((p) =>
@@ -146,8 +189,13 @@ export async function listProperties(
         return a.title.localeCompare(b.title) * dir;
       case "views":
         return (a.views - b.views) * dir;
-      default:
+      case "built_m2":
+        return ((a.built_m2 ?? 0) - (b.built_m2 ?? 0)) * dir;
+      case "price":
         return (a.price - b.price) * dir;
+      case "id":
+      default:
+        return a.id.localeCompare(b.id) * dir;
     }
   });
 
