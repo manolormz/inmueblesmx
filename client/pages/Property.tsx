@@ -71,14 +71,15 @@ export default function Property() {
   useMeta(data);
 
   const schema = LeadSchema;
+  type LeadForm = z.infer<typeof schema>;
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
-  } = useForm<{ name: string; email: string; phone?: string; message: string }>({ resolver: zodResolver(schema) });
+  } = useForm<LeadForm>({ resolver: zodResolver(schema) });
 
-  const submitLead = async (values: { name: string; email: string; phone?: string; message: string }) => {
+  const submitLead = async (values: LeadForm) => {
     if (!data?.id) return;
     toast("Enviando…");
     await createLead({ property: data.id, name: values.name, email: values.email, phone: values.phone, message: values.message } as any);
