@@ -181,7 +181,7 @@ export default function Property() {
           {/* Details */}
           <div>
             <h1 className="text-2xl font-bold mb-2">{p.title}</h1>
-            <div className="text-blue-700 text-xl font-semibold mb-2">{formatPrice(p.price, p.currency!)}</div>
+            <div className="text-blue-700 text-xl font-semibold mb-2">{formatPriceCompactMXN(p.price, (p.operation === "Rent" ? "Rent" : "Sale"))}</div>
             <div className="flex flex-wrap gap-2 mb-4">
               <Badge>{getOptionLabelEs("Operation", p.operation as any)}</Badge>
               <Badge variant="outline">{getOptionLabelEs("PropertyType", p.type as any)}</Badge>
