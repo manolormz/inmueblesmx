@@ -2,9 +2,12 @@ import { Button } from "@/components/ui/button";
 import { Search, MapPin, Home } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import onClickLog from "@/debug/onClickLog";
+import { useAuth } from "@/auth/AuthContext";
+import { toast } from "sonner";
 
 export function Header() {
   const navigate = useNavigate();
+  const { currentUser, logout } = useAuth();
   return (
     <header className="bg-white border-b border-gray-200 shadow-sm sticky top-0 z-50" data-loc="client/components/Header.tsx:6:5">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -39,25 +42,29 @@ export function Header() {
             >
               Vender
             </Link>
-            <button
-              type="button"
+            <Link
+              to="/maintenance"
               onClick={onClickLog("nav-mantenimiento")}
               className="text-gray-700 hover:text-blue-600 transition"
               aria-label="Mantenimiento"
+              data-loc="NavbarMaintenance"
             >
               Mantenimiento
-            </button>
+            </Link>
           </nav>
 
           <div className="flex items-center gap-3" data-loc="Navbar">
-            <Button variant="ghost" size="sm" type="button" onClick={onClickLog("nav-login")}
-              aria-disabled={false} aria-busy={false}
-            >
-              Iniciar sesión
-            </Button>
-            <Button size="sm" className="bg-blue-600 hover:bg-blue-700" type="button" onClick={onClickLog("nav-register")}>
-              Registrarse
-            </Button>
+            {!currentUser ? (
+              <>
+                <Link to="/auth/login" className="text-gray-700 hover:text-blue-600 transition" data-loc="NavbarLogin">Iniciar sesión</Link>
+                <Link to="/auth/register" className="text-white bg-blue-600 hover:bg-blue-700 px-3 py-2 rounded-md text-sm font-medium" data-loc="NavbarRegister">Registrarse</Link>
+              </>
+            ) : (
+              <div className="flex items-center gap-3">
+                <span className="text-sm text-gray-700">Hola, {currentUser.full_name.split(" ")[0]}</span>
+                <Button type="button" size="sm" variant="ghost" onClick={() => { logout().then(()=>{ toast.success("Sesión cerrada"); navigate("/"); }); }} data-loc="NavbarLogout">Cerrar sesión</Button>
+              </div>
+            )}
           </div>
         </div>
       </div>
