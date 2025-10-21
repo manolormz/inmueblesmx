@@ -1,26 +1,47 @@
-import { useEffect, useMemo, useRef } from "react";
-import { useSearchParams, useNavigate } from "react-router-dom";
+import { useEffect, useMemo, useRef, useCallback, useState } from "react";
+import { useSearchParams, Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { listProperties } from "@shared/repo";
-import { OperationOptions, PropertyTypeOptions } from "@shared/options";
+import { PropertyTypeOptions, CurrencyOptions } from "@shared/options";
 import { formatPrice, getOptionLabelEs } from "@shared/formatters";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 
 function toInt(v: string | null, def: number) {
   const n = v ? parseInt(v, 10) : NaN;
-  return Number.isFinite(n) && n > 0 ? n : def;
+  return Number.isFinite(n) ? n : def;
+}
+
+function mapPriceKeyToRange(key: "any" | "0-1M" | "1-3M" | "3M+") {
+  if (key === "0-1M") return { priceMin: undefined, priceMax: 1_000_000 } as const;
+  if (key === "1-3M") return { priceMin: 1_000_000, priceMax: 3_000_000 } as const;
+  if (key === "3M+") return { priceMin: 3_000_000, priceMax: undefined } as const;
+  return { priceMin: undefined, priceMax: undefined } as const;
+}
+
+function useDebouncedCallback<T extends (...args: any[]) => void>(fn: T, delay = 300) {
+  const ref = useRef<number | null>(null);
+  return useCallback((...args: any[]) => {
+    if (ref.current) window.clearTimeout(ref.current);
+    ref.current = window.setTimeout(() => fn(...args), delay);
+  }, [fn, delay]) as T;
 }
 
 function useFilters() {
   const [params, setParams] = useSearchParams();
 
-  const page = toInt(params.get("page"), 1);
-  const pageSize = toInt(params.get("pageSize"), 20);
+  // defaults
+  if (!params.get("status")) {
+    params.set("status", "Published");
+    setParams(params, { replace: true });
+  }
+
+  const page = Math.max(1, toInt(params.get("page"), 1));
+  const pageSize = Math.max(1, toInt(params.get("pageSize"), 20));
 
   const q = params.get("q") || "";
   const operation = params.get("operation") || "";
@@ -28,6 +49,16 @@ function useFilters() {
   const priceMin = params.get("priceMin");
   const priceMax = params.get("priceMax");
   const status = params.get("status") || "Published";
+
+  const minBedrooms = params.get("minBedrooms");
+  const minBathrooms = params.get("minBathrooms");
+  const minParking = params.get("minParking");
+  const builtMin = params.get("builtMin");
+  const builtMax = params.get("builtMax");
+  const landMin = params.get("landMin");
+  const landMax = params.get("landMax");
+  const currency = params.get("currency");
+  const sort = params.get("sort") || "recent"; // recent | price_asc | price_desc | m2_desc
 
   function set(next: Record<string, string | number | undefined | null>) {
     const nextParams = new URLSearchParams(params);
@@ -38,30 +69,38 @@ function useFilters() {
     setParams(nextParams, { replace: false });
   }
 
-  return {
-    filters: {
-      q: q || undefined,
-      operation: operation || undefined,
-      type: type || undefined,
-      priceMin: priceMin ? Number(priceMin) : undefined,
-      priceMax: priceMax ? Number(priceMax) : undefined,
-      status: status || "Published",
-    },
-    page,
-    pageSize,
-    params,
-    set,
+  const filtersForRepo = {
+    q: q || undefined,
+    operation: operation || undefined,
+    type: type || undefined,
+    priceMin: priceMin ? Number(priceMin) : undefined,
+    priceMax: priceMax ? Number(priceMax) : undefined,
+    status: status || "Published",
+    minBedrooms: minBedrooms ? Number(minBedrooms) : undefined,
+    minBathrooms: minBathrooms ? Number(minBathrooms) : undefined,
+    minParking: minParking ? Number(minParking) : undefined,
+    builtMin: builtMin ? Number(builtMin) : undefined,
+    builtMax: builtMax ? Number(builtMax) : undefined,
+    landMin: landMin ? Number(landMin) : undefined,
+    landMax: landMax ? Number(landMax) : undefined,
+    currency: currency || undefined,
+    ...(sort === "price_asc" ? { sortBy: "price", sortDir: "asc" as const } :
+       sort === "price_desc" ? { sortBy: "price", sortDir: "desc" as const } :
+       sort === "m2_desc" ? { sortBy: "built_m2", sortDir: "desc" as const } :
+       { sortBy: "id", sortDir: "desc" as const }),
   } as const;
+
+  return { params, set, page, pageSize, filtersForRepo } as const;
 }
 
 export default function Search() {
-  const { filters, page, pageSize, set, params } = useFilters();
-  const navigate = useNavigate();
+  const { params, set, page, pageSize, filtersForRepo } = useFilters();
   const headingRef = useRef<HTMLHeadingElement>(null);
+  const [modalOpen, setModalOpen] = useState(false);
 
   const query = useQuery({
-    queryKey: ["properties", filters, page, pageSize],
-    queryFn: () => listProperties(filters as any, page, pageSize),
+    queryKey: ["properties", filtersForRepo, page, pageSize],
+    queryFn: () => listProperties(filtersForRepo as any, page, pageSize),
   });
 
   const items = query.data?.items ?? [];
@@ -71,28 +110,50 @@ export default function Search() {
   useEffect(() => {
     headingRef.current?.focus();
     try { window.scrollTo({ top: 0, behavior: "smooth" }); } catch {}
-  }, [page, filters.q, filters.operation, filters.type, filters.priceMin, filters.priceMax, filters.status]);
+  }, [page, params.toString()]);
+
+  const qValue = params.get("q") || "";
+  const setQDebounced = useDebouncedCallback((val: string) => set({ q: val || null, page: 1 }), 300);
+
+  const priceKey = useMemo(() => {
+    const min = params.get("priceMin");
+    const max = params.get("priceMax");
+    if (!min && !max) return "any";
+    if (!min && max && Number(max) <= 1_000_000) return "0-1M";
+    if (min && Number(min) === 1_000_000 && max && Number(max) === 3_000_000) return "1-3M";
+    return "3M+";
+  }, [params]);
 
   const activeChips = useMemo(() => {
     const chips: { key: string; label: string }[] = [];
-    if (filters.q) chips.push({ key: "q", label: `Texto: "${filters.q}"` });
-    if (filters.operation) chips.push({ key: "operation", label: `Operación: ${getOptionLabelEs("Operation", filters.operation as any)}` });
-    if (filters.type) chips.push({ key: "type", label: `Tipo: ${getOptionLabelEs("PropertyType", filters.type as any)}` });
-    if (filters.priceMin || filters.priceMax) chips.push({ key: "price", label: `Precio: ${filters.priceMin ?? 0} - ${filters.priceMax ?? "∞"}` });
-    if (filters.status) chips.push({ key: "status", label: `Estado: ${filters.status}` });
+    if (qValue) chips.push({ key: "q", label: `Texto: "${qValue}"` });
+    const op = params.get("operation");
+    if (op) chips.push({ key: "operation", label: `Operación: ${getOptionLabelEs("Operation", op as any)}` });
+    const tp = params.get("type");
+    if (tp) chips.push({ key: "type", label: `Tipo: ${getOptionLabelEs("PropertyType", tp as any)}` });
+    const pmin = params.get("priceMin"), pmax = params.get("priceMax");
+    if (pmin || pmax) chips.push({ key: "price", label: `Precio: ${pmin ?? 0} - ${pmax ?? "∞"}` });
+    const beds = params.get("minBedrooms"); if (beds) chips.push({ key: "minBedrooms", label: `Recámaras: ${beds}+` });
+    const baths = params.get("minBathrooms"); if (baths) chips.push({ key: "minBathrooms", label: `Baños: ${baths}+` });
+    const park = params.get("minParking"); if (park) chips.push({ key: "minParking", label: `Estac.: ${park}+` });
+    const bmin = params.get("builtMin"), bmax = params.get("builtMax"); if (bmin || bmax) chips.push({ key: "built", label: `Construcción: ${bmin ?? 0}–${bmax ?? "∞"} m²` });
+    const lmin = params.get("landMin"), lmax = params.get("landMax"); if (lmin || lmax) chips.push({ key: "land", label: `Terreno: ${lmin ?? 0}–${lmax ?? "∞"} m²` });
+    const curr = params.get("currency"); if (curr) chips.push({ key: "currency", label: `Moneda: ${curr}` });
     return chips;
-  }, [filters]);
+  }, [params]);
 
-  function clearParam(k: string) {
+  function clearChip(k: string) {
     if (k === "price") set({ priceMin: null, priceMax: null, page: 1 });
+    else if (k === "built") set({ builtMin: null, builtMax: null, page: 1 });
+    else if (k === "land") set({ landMin: null, landMax: null, page: 1 });
     else set({ [k]: null, page: 1 } as any);
   }
 
-  function setPriceRange(key: "any" | "0-1M" | "1-3M" | "3M+") {
-    if (key === "0-1M") set({ priceMin: null, priceMax: 1_000_000, page: 1 });
-    else if (key === "1-3M") set({ priceMin: 1_000_000, priceMax: 3_000_000, page: 1 });
-    else if (key === "3M+") set({ priceMin: 3_000_000, priceMax: null, page: 1 });
-    else set({ priceMin: null, priceMax: null, page: 1 });
+  function resetAll() {
+    const keep: Record<string, string> = {};
+    if (params.get("status")) keep.status = params.get("status")!;
+    const next = new URLSearchParams(keep);
+    setParams(next, { replace: false });
   }
 
   function goPage(p: number) {
@@ -103,132 +164,212 @@ export default function Search() {
   return (
     <div className="min-h-screen bg-white">
       <Header />
-      <main className="container mx-auto px-4 py-6 grid grid-cols-1 md:grid-cols-12 gap-6">
-        <section className="md:col-span-9 order-2 md:order-1">
-          <h1 ref={headingRef} tabIndex={-1} className="text-xl font-semibold mb-2">
-            {query.isLoading ? "Cargando..." : `Resultados (${total})`}
-          </h1>
-          <div className="flex flex-wrap gap-2 mb-4">
+
+      {/* Sticky filter bar */}
+      <div className="sticky top-16 z-40 bg-white/90 backdrop-blur border-b" data-loc="SearchBar">
+        <div className="container mx-auto px-4 py-3">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-3 items-end">
+            {/* Ubicación */}
+            <div className="md:col-span-4 w-full border rounded-xl px-3 py-2 focus-within:ring-2 focus-within:ring-blue-200 focus-within:border-blue-500">
+              <label htmlFor="q" className="block text-xs font-medium text-gray-700">Ubicación</label>
+              <input id="q" defaultValue={qValue} onChange={(e) => setQDebounced(e.target.value)} placeholder="Ciudad, estado o código" className="w-full bg-transparent outline-none h-9" />
+            </div>
+
+            {/* Tipo */}
+            <div className="md:col-span-2 w-full border rounded-xl px-3 py-2">
+              <label htmlFor="type" className="block text-xs font-medium text-gray-700">Tipo</label>
+              <select id="type" className="w-full bg-transparent outline-none h-9" value={params.get("type") || ""} onChange={(e) => set({ type: e.target.value || null, page: 1 })}>
+                <option value="">Todos</option>
+                {PropertyTypeOptions.map((o) => (<option key={o.value} value={o.value}>{o.label_es}</option>))}
+              </select>
+            </div>
+
+            {/* Precio */}
+            <div className="md:col-span-2 w-full border rounded-xl px-3 py-2">
+              <label htmlFor="price" className="block text-xs font-medium text-gray-700">Precio</label>
+              <select id="price" className="w-full bg-transparent outline-none h-9" value={priceKey} onChange={(e) => {
+                const { priceMin, priceMax } = mapPriceKeyToRange(e.target.value as any);
+                set({ priceMin: priceMin ?? null, priceMax: priceMax ?? null, page: 1 });
+              }}>
+                <option value="any">Cualquier</option>
+                <option value="0-1M">0–1 M</option>
+                <option value="1-3M">1–3 M</option>
+                <option value="3M+">+3 M</option>
+              </select>
+            </div>
+
+            {/* Más filtros */}
+            <div className="md:col-span-2">
+              <Button type="button" variant="outline" className="w-full h-11" onClick={() => setModalOpen(true)} data-loc="SearchMoreFiltersBtn">Más filtros</Button>
+            </div>
+
+            {/* Ordenar */}
+            <div className="md:col-span-2">
+              <label htmlFor="order" className="block text-xs font-medium text-gray-700">Ordenar por</label>
+              <select id="order" className="w-full border rounded-xl h-11 px-3" value={params.get("sort") || "recent"} onChange={(e) => set({ sort: e.target.value, page: 1 })} data-loc="SearchOrder">
+                <option value="recent">Más recientes</option>
+                <option value="price_asc">Precio ascendente</option>
+                <option value="price_desc">Precio descendente</option>
+                <option value="m2_desc">Metros cuadrados</option>
+              </select>
+            </div>
+          </div>
+
+          {/* Chips */}
+          <div className="flex flex-wrap gap-2 mt-3" data-loc="SearchChips">
             {activeChips.map((c) => (
               <Badge key={c.key} variant="secondary" className="px-3 py-1 flex items-center gap-2">
                 <span>{c.label}</span>
-                <button type="button" aria-label={`Quitar ${c.key}`} onClick={() => clearParam(c.key)} className="text-sm">×</button>
+                <button type="button" aria-label={`Quitar ${c.key}`} onClick={() => clearChip(c.key)} className="text-sm">×</button>
               </Badge>
             ))}
+            {activeChips.length > 2 && (
+              <Button type="button" variant="ghost" size="sm" onClick={resetAll} data-loc="SearchResetAll">Restablecer todo</Button>
+            )}
           </div>
+        </div>
+      </div>
 
-          {query.isLoading ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {Array.from({ length: 6 }).map((_, i) => (
-                <div key={i} className="animate-pulse rounded-xl border p-4">
-                  <div className="h-40 bg-gray-200 rounded mb-3" />
-                  <div className="h-4 bg-gray-200 rounded w-3/4 mb-2" />
-                  <div className="h-4 bg-gray-100 rounded w-1/2" />
-                </div>
-              ))}
+      <main className="container mx-auto px-4 py-6">
+        <h1 ref={headingRef} tabIndex={-1} className="text-xl font-semibold mb-4">
+          {query.isLoading ? "Cargando..." : `Resultados (${total})`}
+        </h1>
+
+        {query.isLoading ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <div key={i} className="animate-pulse rounded-xl border p-4">
+                <div className="h-40 bg-gray-200 rounded mb-3" />
+                <div className="h-4 bg-gray-200 rounded w-3/4 mb-2" />
+                <div className="h-4 bg-gray-100 rounded w-1/2" />
+              </div>
+            ))}
+          </div>
+        ) : items.length === 0 ? (
+          <div className="text-center text-gray-600 py-16 space-y-3">
+            <div>No encontramos resultados con tus filtros…</div>
+            <div className="flex items-center justify-center gap-2">
+              <Button type="button" onClick={resetAll}>Limpiar filtros</Button>
+              <Link className="text-blue-600 underline" to="/">Volver al inicio</Link>
             </div>
-          ) : items.length === 0 ? (
-            <div className="text-center text-gray-600 py-16">No encontramos resultados con tus filtros…</div>
-          ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" data-loc="SearchCard">
-              {items.map((p) => (
-                <article key={p.id} className="rounded-xl border overflow-hidden">
-                  <a href={`/property/${p.slug}`} className="block focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <img src={p.cover || "/placeholder.svg"} alt={p.title} className="w-full h-40 object-cover" />
-                    <div className="p-4 space-y-2">
-                      <div className="flex items-center gap-2">
-                        <Badge>{p.operation}</Badge>
-                        <Badge variant="outline">{p.type}</Badge>
-                      </div>
-                      <h3 className="font-semibold text-lg">{p.title}</h3>
-                      <div className="text-blue-700 font-semibold">
-                        {formatPrice(p.price, p.currency!)}
-                      </div>
-                      {p.address_text && <div className="text-sm text-gray-600">{p.address_text}</div>}
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" data-loc="SearchCard">
+            {items.map((p) => (
+              <article key={p.id} className="rounded-xl border overflow-hidden">
+                <a href={`/property/${p.slug}`} className="block focus:outline-none focus:ring-2 focus:ring-blue-500">
+                  <img src={p.cover || "/placeholder.svg"} alt={p.title} className="w-full h-40 object-cover" />
+                  <div className="p-4 space-y-2">
+                    <div className="flex items-center gap-2">
+                      <Badge>{p.operation}</Badge>
+                      <Badge variant="outline">{p.type}</Badge>
                     </div>
-                  </a>
-                </article>
-              ))}
-            </div>
-          )}
+                    <h3 className="font-semibold text-lg">{p.title}</h3>
+                    <div className="text-blue-700 font-semibold">
+                      {formatPrice(p.price, p.currency!)}
+                    </div>
+                    {p.address_text && <div className="text-sm text-gray-600">{p.address_text}</div>}
+                  </div>
+                </a>
+              </article>
+            ))}
+          </div>
+        )}
 
-          {/* Pagination */}
-          <nav className="flex items-center justify-center gap-2 mt-6" aria-label="Paginación" data-loc="SearchPagination">
-            <Button type="button" variant="outline" disabled={page <= 1} aria-disabled={page <= 1} onClick={() => goPage(page - 1)}>Anterior</Button>
-            {Array.from({ length: totalPages }).slice(0, 7).map((_, idx) => {
-              const p = idx + 1;
-              return (
-                <Button key={p} type="button" variant={p === page ? "default" : "outline"} onClick={() => goPage(p)} aria-current={p === page ? "page" : undefined}>
-                  {p}
-                </Button>
-              );
-            })}
-            <Button type="button" variant="outline" disabled={page >= totalPages} aria-disabled={page >= totalPages} onClick={() => goPage(page + 1)}>Siguiente</Button>
-          </nav>
-        </section>
+        {/* Pagination */}
+        <nav className="flex items-center justify-center gap-2 mt-6" aria-label="Paginación" data-loc="SearchPagination">
+          <Button type="button" variant="outline" disabled={page <= 1} aria-disabled={page <= 1} onClick={() => goPage(page - 1)}>Anterior</Button>
+          {Array.from({ length: totalPages }).slice(0, 7).map((_, idx) => {
+            const p = idx + 1;
+            return (
+              <Button key={p} type="button" variant={p === page ? "default" : "outline"} onClick={() => goPage(p)} aria-current={p === page ? "page" : undefined}>
+                {p}
+              </Button>
+            );
+          })}
+          <Button type="button" variant="outline" disabled={page >= totalPages} aria-disabled={page >= totalPages} onClick={() => goPage(page + 1)}>Siguiente</Button>
+        </nav>
+      </main>
 
-        {/* Sidebar Filters */}
-        <aside className="md:col-span-3 order-1 md:order-2">
-          <div className="rounded-xl border p-4 space-y-4">
+      <Footer />
+
+      {/* More Filters Modal */}
+      <Dialog open={modalOpen} onOpenChange={setModalOpen}>
+        <DialogContent className="rounded-2xl">
+          <DialogHeader>
+            <DialogTitle>Más filtros</DialogTitle>
+          </DialogHeader>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {/* Recámaras */}
             <div>
-              <label className="block text-sm font-medium mb-1">Búsqueda</label>
-              <Input
-                value={filters.q || ""}
-                onChange={(e) => set({ q: e.target.value, page: 1 })}
-                placeholder="Ciudad, colonia..."
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium mb-1">Operación</label>
-              <select
-                className="w-full border rounded h-10 px-2"
-                value={filters.operation || ""}
-                onChange={(e) => set({ operation: e.target.value || null, page: 1 })}
-              >
-                <option value="">Todas</option>
-                {OperationOptions.map((o) => (
-                  <option key={o.value} value={o.value}>{o.label_es}</option>
+              <label className="block text-sm font-medium mb-1">Recámaras</label>
+              <select className="w-full border rounded h-10 px-2" defaultValue={params.get("minBedrooms") || ""} onChange={(e) => set({ minBedrooms: e.target.value || null, page: 1 })}>
+                <option value="">Cualquiera</option>
+                {Array.from({ length: 6 }).map((_, i) => (
+                  <option key={i} value={i === 5 ? 5 : i}>{i === 5 ? "5+" : i}</option>
                 ))}
               </select>
             </div>
 
+            {/* Baños */}
             <div>
-              <label className="block text-sm font-medium mb-1">Tipo</label>
-              <select
-                className="w-full border rounded h-10 px-2"
-                value={filters.type || ""}
-                onChange={(e) => set({ type: e.target.value || null, page: 1 })}
-              >
-                <option value="">Todos</option>
-                {PropertyTypeOptions.map((o) => (
-                  <option key={o.value} value={o.value}>{o.label_es}</option>
+              <label className="block text-sm font-medium mb-1">Baños</label>
+              <select className="w-full border rounded h-10 px-2" defaultValue={params.get("minBathrooms") || ""} onChange={(e) => set({ minBathrooms: e.target.value || null, page: 1 })}>
+                <option value="">Cualquiera</option>
+                {Array.from({ length: 6 }).map((_, i) => (
+                  <option key={i} value={i === 5 ? 5 : i}>{i === 5 ? "5+" : i}</option>
                 ))}
               </select>
             </div>
 
+            {/* Estacionamiento */}
             <div>
-              <label className="block text-sm font-medium mb-1">Precio</label>
-              <select
-                className="w-full border rounded h-10 px-2"
-                onChange={(e) => setPriceRange(e.target.value as any)}
-                value={
-                  filters.priceMin == null && filters.priceMax == null ? "any" :
-                  filters.priceMin == null && (filters.priceMax ?? 0) <= 1_000_000 ? "0-1M" :
-                  (filters.priceMin ?? 0) === 1_000_000 && (filters.priceMax ?? 0) === 3_000_000 ? "1-3M" :
-                  "3M+"
-                }
-              >
-                <option value="any">Cualquier</option>
-                <option value="0-1M">0–1M</option>
-                <option value="1-3M">1–3M</option>
-                <option value="3M+">+3M</option>
+              <label className="block text-sm font-medium mb-1">Estacionamiento</label>
+              <select className="w-full border rounded h-10 px-2" defaultValue={params.get("minParking") || ""} onChange={(e) => set({ minParking: e.target.value || null, page: 1 })}>
+                <option value="">Cualquiera</option>
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <option key={i} value={i === 4 ? 4 : i}>{i === 4 ? "4+" : i}</option>
+                ))}
+              </select>
+            </div>
+
+            {/* Construcción m2 */}
+            <div>
+              <label className="block text-sm font-medium mb-1">Construcción (m²)</label>
+              <div className="flex gap-2">
+                <Input type="number" inputMode="numeric" placeholder="Mín" defaultValue={params.get("builtMin") || ""} onChange={(e) => set({ builtMin: e.target.value || null, page: 1 })} />
+                <Input type="number" inputMode="numeric" placeholder="Máx" defaultValue={params.get("builtMax") || ""} onChange={(e) => set({ builtMax: e.target.value || null, page: 1 })} />
+              </div>
+            </div>
+
+            {/* Terreno m2 */}
+            <div>
+              <label className="block text-sm font-medium mb-1">Terreno (m²)</label>
+              <div className="flex gap-2">
+                <Input type="number" inputMode="numeric" placeholder="Mín" defaultValue={params.get("landMin") || ""} onChange={(e) => set({ landMin: e.target.value || null, page: 1 })} />
+                <Input type="number" inputMode="numeric" placeholder="Máx" defaultValue={params.get("landMax") || ""} onChange={(e) => set({ landMax: e.target.value || null, page: 1 })} />
+              </div>
+            </div>
+
+            {/* Moneda */}
+            <div>
+              <label className="block text-sm font-medium mb-1">Moneda</label>
+              <select className="w-full border rounded h-10 px-2" defaultValue={params.get("currency") || ""} onChange={(e) => set({ currency: e.target.value || null, page: 1 })}>
+                <option value="">Cualquiera</option>
+                {CurrencyOptions.map((c) => (<option key={c.value} value={c.value}>{c.value}</option>))}
               </select>
             </div>
           </div>
-        </aside>
-      </main>
-      <Footer />
+
+          <DialogFooter className="mt-4">
+            <div className="flex w-full justify-between">
+              <Button type="button" variant="ghost" onClick={() => resetAll()} data-loc="SearchResetAll">Limpiar</Button>
+              <Button type="button" onClick={() => setModalOpen(false)} data-loc="SearchApply">Aplicar</Button>
+            </div>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
