@@ -205,14 +205,14 @@ export default function Search() {
             <div className="md:col-span-2 w-full border rounded-xl px-3 py-2">
               <label htmlFor="price" className="block text-xs font-medium text-gray-700">Precio</label>
               <select id="price" className="w-full bg-transparent outline-none h-9" value={priceKey} onChange={(e) => {
-                const { priceMin, priceMax } = mapPriceKeyToRange(e.target.value as any);
-                set({ priceMin: priceMin ?? null, priceMax: priceMax ?? null, page: 1 });
+                const key = e.target.value;
+                const selected = priceOptions.find((o) => o.key === key);
+                localStorage.setItem("imx_priceRangeKey", key);
+                set({ priceMin: selected?.priceMin ?? null, priceMax: selected?.priceMax ?? null, page: 1 });
               }}>
-                <option value="any">Cualquier</option>
-                <option value="0-1M">0–1 M</option>
-                <option value="1-3M">1–3 M</option>
-                <option value="3M+">+3 M</option>
+                {priceOptions.map((o) => (<option key={o.key} value={o.key}>{o.label}</option>))}
               </select>
+              <p className="mt-1 text-xs text-gray-500">{opParam === "Sale" ? "Montos en millones MXN" : "Montos mensuales en miles MXN"}</p>
             </div>
 
             {/* Más filtros */}
