@@ -23,12 +23,11 @@ export function HeroSearch() {
   const debounceRef = useRef<number | null>(null);
 
   useEffect(() => {
-    // keep URL param for operation in sync
     const next = new URLSearchParams(params);
     if (operation) next.set("operation", operation);
     next.set("status", "Published");
     setParams(next, { replace: true });
-    localStorage.setItem("imx_hero_op", operation);
+    localStorage.setItem("imx_operation", operation);
   }, [operation]);
 
   const debouncedSetQ = useCallback((val: string) => {
