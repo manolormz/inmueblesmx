@@ -163,6 +163,12 @@ export async function getPropertyBySlug(slug: string): Promise<Property | undefi
   return properties.find((p) => p.slug === slug);
 }
 
+export async function updatePropertyStatus(slug: string, status: PublicationStatus): Promise<Property | undefined> {
+  const p = properties.find((x) => x.slug === slug);
+  if (p) p.status = status;
+  return p;
+}
+
 export async function createLead(payload: LeadInput): Promise<Lead> {
   const parsed = LeadSchema.parse({ ...payload, id: genId() });
   leads.push(parsed);
