@@ -126,7 +126,7 @@ export default function Dashboard() {
                         <td className="py-2 pr-4">{formatPrice(p.price, p.currency)}</td>
                         <td className="py-2 pr-4">—</td>
                         <td className="py-2 pr-4 flex gap-2">
-                          <Button size="sm" variant="outline" onClick={()=>toast("Edición próximamente")}>Editar</Button>
+                          <Button size="sm" variant="outline" onClick={()=>navigate(`/dashboard/properties/${p.slug}/edit`)}>Editar</Button>
                           {p.status !== 'Published' ? (
                             <Button size="sm" onClick={()=>publishMut.mutate(p.slug)} disabled={publishMut.isPending}>Publicar</Button>
                           ) : (
