@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import { Search, MapPin, Home } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
