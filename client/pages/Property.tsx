@@ -109,11 +109,17 @@ export default function Property() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ slug: data.slug }),
       });
-      if (!resp.ok) throw new Error("HTTP " + resp.status);
-      return await resp.json();
+      const json = await resp.json().catch(() => ({} as any));
+      if (resp.status === 401 || json?.ok === false) {
+        const msg = json?.message || "Falta configuración del servidor";
+        toast.error(msg);
+        return { ok: false } as any;
+      }
+      return json;
     },
     onMutate: () => { toast("Publicando…"); },
-    onSuccess: async () => {
+    onSuccess: async (res: any) => {
+      if (res?.ok === false) return; // demo mode handled above
       toast.success("Propiedad publicada con éxito");
       await qc.invalidateQueries({ queryKey: ["property", slug] });
       await qc.invalidateQueries({ queryKey: ["properties"] });
@@ -213,7 +219,7 @@ export default function Property() {
           {p.status !== "Published" && isOwner && (
             <div className="rounded-xl border p-4">
               <h3 className="font-semibold mb-2">Estado</h3>
-              <p className="text-sm text-gray-600 mb-3">La propiedad está en borrador. Puedes publicarla cuando esté lista.</p>
+              <p className="text-sm text-gray-600 mb-3">La propiedad está en borrador. Puedes publicarla cuando est�� lista.</p>
               <Button type="button" onClick={() => publishMutation.mutate()} disabled={publishMutation.isPending} aria-disabled={publishMutation.isPending} data-loc="PublishButton">
                 {publishMutation.isPending ? "Publicando…" : "Publicar"}
               </Button>
