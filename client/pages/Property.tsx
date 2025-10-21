@@ -52,11 +52,18 @@ function useMeta(property?: any) {
         return m;
       }).setAttribute("content", property.cover);
     }
+    const site = (import.meta as any)?.env?.VITE_SITE_URL?.replace(/\/$/, "") || window.location.origin;
+    const absUrl = `${site}/property/${property.slug}`;
     ensure('link[rel="canonical"]', () => {
       const l = document.createElement("link");
       l.setAttribute("rel", "canonical");
       return l;
-    }).setAttribute("href", `${location.origin}/property/${property.slug}`);
+    }).setAttribute("href", absUrl);
+    ensure('meta[property="og:url"]', () => {
+      const m = document.createElement("meta");
+      m.setAttribute("property", "og:url");
+      return m;
+    }).setAttribute("content", absUrl);
   }, [property]);
 }
 
