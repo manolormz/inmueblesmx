@@ -15,6 +15,7 @@ import Maintenance from "./pages/Maintenance";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import Dashboard from "./pages/Dashboard";
+import DashboardPropertyEdit from "./pages/dashboard/PropertyEdit";
 import QAButtons from "./pages/qa/Buttons";
 import Autotest from "./pages/qa/Autotest";
 import DebugTools from "./debug/DebugTools";
@@ -42,6 +43,7 @@ const App = () => (
             <Route path="/qa/buttons" element={<QAButtons />} />
             <Route path="/qa/autotest" element={<Autotest />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/dashboard/properties/:slug/edit" element={<DashboardPropertyEdit />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
