@@ -10,6 +10,19 @@ export function formatPrice(amount: number, currency: Currency | string): string
   return `${symbol} ${amount.toLocaleString("es-MX")}`.trim();
 }
 
+export function formatPriceCompactMXN(amount: number, operation: "Sale" | "Rent"): string {
+  const symbol = getCurrencySymbol("MXN");
+  if (operation === "Rent") {
+    return `${symbol} ${Math.round(amount).toLocaleString("es-MX")} MXN/mes`;
+  }
+  if (amount >= 1_000_000) {
+    const millions = amount / 1_000_000;
+    const rounded = Math.round(millions * 10) / 10; // 1 decimal
+    return `${symbol} ${rounded.toLocaleString("es-MX")} M MXN`;
+  }
+  return `${symbol} ${Math.round(amount).toLocaleString("es-MX")} MXN`;
+}
+
 export function formatNumber(n: number): string {
   return n.toLocaleString("es-MX");
 }
