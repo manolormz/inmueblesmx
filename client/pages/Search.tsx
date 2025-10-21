@@ -108,7 +108,7 @@ export default function Search() {
       <main className="container mx-auto px-4 py-6 grid grid-cols-1 md:grid-cols-12 gap-6">
         <section className="md:col-span-9 order-2 md:order-1">
           <h1 ref={headingRef} tabIndex={-1} className="text-xl font-semibold mb-2">
-            {isLoading ? "Cargando..." : `${total} resultados`}
+            {query.isLoading ? "Cargando..." : `${total} resultados`}
           </h1>
           <div className="flex flex-wrap gap-2 mb-4">
             {activeChips.map((c) => (
