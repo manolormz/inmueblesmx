@@ -70,6 +70,7 @@ export default function Search() {
 
   useEffect(() => {
     headingRef.current?.focus();
+    try { window.scrollTo({ top: 0, behavior: "smooth" }); } catch {}
   }, [page, filters.q, filters.operation, filters.type, filters.priceMin, filters.priceMax, filters.status]);
 
   const activeChips = useMemo(() => {
@@ -129,29 +130,31 @@ export default function Search() {
           ) : items.length === 0 ? (
             <div className="text-center text-gray-600 py-16">No encontramos resultados con tus filtros…</div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" data-loc="SearchCard">
               {items.map((p) => (
                 <article key={p.id} className="rounded-xl border overflow-hidden">
-                  <img src={p.cover || "/placeholder.svg"} alt={p.title} className="w-full h-40 object-cover" />
-                  <div className="p-4 space-y-2">
-                    <div className="flex items-center gap-2">
-                      <Badge>{p.operation}</Badge>
-                      <Badge variant="outline">{p.type}</Badge>
+                  <a href={`/property/${p.slug}`} className="block focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <img src={p.cover || "/placeholder.svg"} alt={p.title} className="w-full h-40 object-cover" />
+                    <div className="p-4 space-y-2">
+                      <div className="flex items-center gap-2">
+                        <Badge>{p.operation}</Badge>
+                        <Badge variant="outline">{p.type}</Badge>
+                      </div>
+                      <h3 className="font-semibold text-lg">{p.title}</h3>
+                      <div className="text-blue-700 font-semibold">
+                        {formatPrice(p.price, p.currency!)}
+                      </div>
+                      {p.address_text && <div className="text-sm text-gray-600">{p.address_text}</div>}
                     </div>
-                    <h3 className="font-semibold text-lg">{p.title}</h3>
-                    <div className="text-blue-700 font-semibold">
-                      {formatPrice(p.price, p.currency!)}
-                    </div>
-                    {p.address_text && <div className="text-sm text-gray-600">{p.address_text}</div>}
-                  </div>
+                  </a>
                 </article>
               ))}
             </div>
           )}
 
           {/* Pagination */}
-          <nav className="flex items-center justify-center gap-2 mt-6" aria-label="Paginación">
-            <Button type="button" variant="outline" disabled={page <= 1} onClick={() => goPage(page - 1)}>Anterior</Button>
+          <nav className="flex items-center justify-center gap-2 mt-6" aria-label="Paginación" data-loc="SearchPagination">
+            <Button type="button" variant="outline" disabled={page <= 1} aria-disabled={page <= 1} onClick={() => goPage(page - 1)}>Anterior</Button>
             {Array.from({ length: totalPages }).slice(0, 7).map((_, idx) => {
               const p = idx + 1;
               return (
@@ -160,7 +163,7 @@ export default function Search() {
                 </Button>
               );
             })}
-            <Button type="button" variant="outline" disabled={page >= totalPages} onClick={() => goPage(page + 1)}>Siguiente</Button>
+            <Button type="button" variant="outline" disabled={page >= totalPages} aria-disabled={page >= totalPages} onClick={() => goPage(page + 1)}>Siguiente</Button>
           </nav>
         </section>
 
