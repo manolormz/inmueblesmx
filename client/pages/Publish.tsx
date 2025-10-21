@@ -91,6 +91,7 @@ export default function Publish() {
     };
 
     try {
+      toast("Guardando…");
       const res = await fetch("/api/cms/property", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -112,7 +113,7 @@ export default function Publish() {
       <Header />
       <main className="container mx-auto px-4 py-8">
         <h1 className="text-2xl font-semibold mb-6">Publicar propiedad</h1>
-        <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 md:grid-cols-2 gap-4" aria-busy={isSubmitting}>
           <div className="md:col-span-2">
             <label className="block text-sm font-medium mb-1">Título</label>
             <Input placeholder="Casa en Polanco" {...register("title", { required: true })} />
@@ -227,7 +228,7 @@ export default function Publish() {
           </div>
 
           <div className="md:col-span-2 flex gap-3 pt-2">
-            <Button type="submit" disabled={isSubmitting}>
+            <Button type="submit" disabled={isSubmitting} aria-disabled={isSubmitting} data-loc="PublishSubmit">
               {isSubmitting ? "Guardando..." : "Guardar"}
             </Button>
           </div>
