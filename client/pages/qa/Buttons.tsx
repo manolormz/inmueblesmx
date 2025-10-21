@@ -40,6 +40,7 @@ export default function QAButtons() {
   if (import.meta.env.PROD) return <Navigate to="/" replace />;
 
   const [rows, setRows] = useState<any[]>([]);
+  const [results, setResults] = useState<Record<number, 'ok' | 'none'>>({});
 
   const scan = () => {
     const nodes = Array.from(document.querySelectorAll('button, [role="button"], a')) as HTMLElement[];
@@ -65,9 +66,14 @@ export default function QAButtons() {
       <main className="container mx-auto px-4 py-8">
         <div className="flex items-center justify-between mb-4">
           <h1 className="text-2xl font-semibold">QA · Botones</h1>
-          <Button onClick={scan}>Re-escanear</Button>
+          <div className="flex items-center gap-3">
+            <div className="text-sm text-gray-600">Total: {rows.length}</div>
+            <div className="text-sm text-green-700">Con handler: {rows.filter(r=>r.hasClick).length}</div>
+            <div className="text-sm text-red-700">Sin handler: {rows.filter(r=>!r.hasClick).length}</div>
+            <Button onClick={()=>{ setResults({}); scan(); }}>Re-escanear</Button>
+          </div>
         </div>
-        <div className="text-sm text-gray-600 mb-4">Lista de elementos clicables visibles. Los que no tengan handler aparecen en rojo.</div>
+        <div className="text-sm text-gray-600 mb-4">Lista de elementos clicables visibles. Los que no tengan handler aparecen en rojo. Tras probar, verás un distintivo "OK" en verde si el click navegó o mostró toast.</div>
         <div className="overflow-x-auto">
           <table className="min-w-full text-sm">
             <thead>
@@ -84,7 +90,9 @@ export default function QAButtons() {
                   <td className="py-2 pr-4 whitespace-nowrap max-w-xs overflow-hidden text-ellipsis">{r.text || '(sin texto)'}</td>
                   <td className="py-2 pr-4 whitespace-nowrap text-gray-500">{r.loc || '—'}</td>
                   <td className="py-2 pr-4">{r.hasClick ? 'Sí' : 'No'}</td>
-                  <td className="py-2 pr-4">
+                  <td className="py-2 pr-4 flex items-center gap-2">
+                    {results[idx] === 'ok' && <span className="inline-flex items-center px-2 py-0.5 rounded bg-green-100 text-green-800 text-xs">OK</span>}
+                    {results[idx] === 'none' && <span className="inline-flex items-center px-2 py-0.5 rounded bg-red-100 text-red-800 text-xs">Sin efecto</span>}
                     <Button
                       variant="outline"
                       size="sm"
@@ -92,16 +100,15 @@ export default function QAButtons() {
                         const beforePath = window.location.pathname + window.location.search + window.location.hash;
                         const beforeToasts = countToasts();
                         let navigated = false;
-                        let toast = false;
+                        let toastShown = false;
                         try { r.el.scrollIntoView({ block: 'center' }); } catch {}
                         try { r.el.click(); } catch {}
                         window.setTimeout(() => {
                           const afterPath = window.location.pathname + window.location.search + window.location.hash;
                           if (afterPath !== beforePath) navigated = true;
                           const afterToasts = countToasts();
-                          if (afterToasts > beforeToasts) toast = true;
-                          // eslint-disable-next-line no-alert
-                          alert(navigated ? 'Navegó' : toast ? 'Toast mostrado' : 'Sin efecto');
+                          if (afterToasts > beforeToasts) toastShown = true;
+                          setResults((prev) => ({ ...prev, [idx]: (navigated || toastShown) ? 'ok' : 'none' }));
                         }, 400);
                       }}
                     >Probar click</Button>
