@@ -152,13 +152,13 @@ export function HeroSearch() {
                   id="hero-price"
                   className="w-full bg-transparent outline-none h-9"
                   value={priceKey}
-                  onChange={(e) => setPriceKey(e.target.value as any)}
+                  onChange={(e) => { setPriceKey(e.target.value); localStorage.setItem("imx_priceRangeKey", e.target.value); }}
                 >
-                  <option value="any">Cualquier</option>
-                  <option value="0-1M">0–1 M</option>
-                  <option value="1-3M">1–3 M</option>
-                  <option value="3M+">+3 M</option>
+                  {getPriceOptionsMXNByOperation(operation).map((o) => (
+                    <option key={o.key} value={o.key}>{o.label}</option>
+                  ))}
                 </select>
+                <p className="mt-1 text-xs text-gray-500">{operation === "Sale" ? "Montos en millones MXN" : "Montos mensuales en miles MXN"}</p>
               </div>
 
               {/* Buscar */}
