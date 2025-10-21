@@ -287,7 +287,7 @@ export default function Search() {
                     </div>
                     <h3 className="font-semibold text-lg">{p.title}</h3>
                     <div className="text-blue-700 font-semibold">
-                      {formatPrice(p.price, p.currency!)}
+                      {formatPriceCompactMXN(p.price, (p.operation === "Rent" ? "Rent" : "Sale"))}
                     </div>
                     {p.address_text && <div className="text-sm text-gray-600">{p.address_text}</div>}
                   </div>
