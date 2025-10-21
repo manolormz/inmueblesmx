@@ -3,7 +3,7 @@ import express from "express";
 import cors from "cors";
 import { handleDemo } from "./routes/demo";
 import { createProperty, publishProperty } from "./routes/cms";
-import { unpublishProperty, deleteProperty } from "./routes/cms.extra";
+import { unpublishProperty, deleteProperty, updateProperty } from "./routes/cms.extra";
 import { handleSitemapXml, handleRobotsTxt } from "./routes/sitemap.xml";
 
 export function createServer() {
