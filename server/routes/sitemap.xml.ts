@@ -23,7 +23,7 @@ async function getPublishedPropertySlugs(): Promise<string[]> {
       }
     }
     // Fallback to in-memory repo
-    const { getSeededProperties } = await import("@shared/repo");
+    const { getSeededProperties } = await import("../../shared/repo");
     const all = await getSeededProperties();
     return all.filter((p) => p.status === "Published").map((p) => p.slug);
   } catch {
