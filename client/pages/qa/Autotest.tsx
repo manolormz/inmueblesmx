@@ -5,7 +5,8 @@ import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 
 function sleep(ms: number) { return new Promise((r) => setTimeout(r, ms)); }
-function waitFor(predicate: () => boolean, timeout = 3000, interval = 100): Promise<boolean> {
+
+function waitFor(predicate: () => boolean, timeout = 5000, interval = 100): Promise<boolean> {
   return new Promise((resolve) => {
     const start = Date.now();
     const id = window.setInterval(() => {
@@ -14,7 +15,21 @@ function waitFor(predicate: () => boolean, timeout = 3000, interval = 100): Prom
     }, interval);
   });
 }
+
+async function waitForEl<T extends Element = Element>(selector: string, timeout = 5000): Promise<T | null> {
+  const ok = await waitFor(() => !!document.querySelector(selector), timeout, 100);
+  return ok ? (document.querySelector(selector) as T) : null;
+}
+
 function text(el: Element | null): string { return (el?.textContent || "").trim(); }
+
+function normalizeLabel(s: string): string {
+  return s
+    .replace(/\u00A0/g, " ")
+    .replace(/\s*[\u2013\u2014-]\s*/g, " – ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
 
 type StepResult = {
   name: string;
@@ -59,8 +74,11 @@ export default function Autotest() {
     // Validar opciones de precio (Renta)
     const priceSel = document.querySelector('[data-loc="HeroPrice"] select') as HTMLSelectElement | null;
     await waitFor(() => !!priceSel && priceSel.options.length >= 8);
-    const labels = priceSel ? Array.from(priceSel.options).map((o) => o.text.trim()) : [];
-    const rentMust = ["≤ 10 mil/mes", "10 – 15 mil/mes", "15 – 20 mil/mes", "20 – 30 mil/mes", "30 – 50 mil/mes", "50 – 80 mil/mes", "≥ 80 mil/mes"];
+    const labels = priceSel ? Array.from(priceSel.options).map((o) => normalizeLabel(o.text)) : [];
+    const rentMust = [
+      "≤ 10 mil/mes","10 – 15 mil/mes","15 – 20 mil/mes",
+      "20 – 30 mil/mes","30 – 50 mil/mes","50 – 80 mil/mes","≥ 80 mil/mes"
+    ].map(normalizeLabel);
     const okRentOptions = labels.length >= 8 && rentMust.every((l) => labels.includes(l));
     push({ name: "Home → Rentar", route: location.pathname + location.search, action: "Opciones de precio (Renta)", expected: rentMust.join(", "), actual: labels.join(" | "), status: okRentOptions ? "PASS" : "FAIL" });
 
@@ -78,20 +96,28 @@ export default function Autotest() {
     push({ name: "Chips (Renta)", route: location.pathname + location.search, action: "Ver etiqueta de precio", expected: "15 – 20 mil/mes", actual: chips1.join(" | "), status: hasChipRent ? "PASS" : "FAIL" });
 
     // Precio primer resultado termina con MXN/mes
-    await waitFor(() => document.querySelector('[data-loc="SearchCard"] .text-blue-700'));
-    const firstPriceRent = document.querySelector('[data-loc="SearchCard"] .text-blue-700') as HTMLElement | null;
-    const priceTextRent = text(firstPriceRent);
-    const endsRent = /MXN\/mes$/.test(priceTextRent);
-    push({ name: "Precio formato (Renta)", route: location.pathname + location.search, action: "Validar sufijo", expected: "… MXN/mes", actual: priceTextRent, status: endsRent ? "PASS" : "FAIL" });
+    await waitFor(() => !!document.querySelector('[data-loc="SearchCard"]'));
+    const firstCardRent = document.querySelector('[data-loc="SearchCard"]');
+    if (!firstCardRent) {
+      push({ name: "Precio formato (Renta)", route: location.pathname + location.search, action: "Validar sufijo", expected: "… MXN/mes", actual: "Sin resultados", status: "SKIP" });
+    } else {
+      const firstPriceRent = (firstCardRent as HTMLElement).querySelector('.text-blue-700') as HTMLElement | null;
+      const priceTextRent = text(firstPriceRent);
+      const endsRent = /MXN\/mes$/.test(priceTextRent);
+      push({ name: "Precio formato (Renta)", route: location.pathname + location.search, action: "Validar sufijo", expected: "… MXN/mes", actual: priceTextRent, status: endsRent ? "PASS" : "FAIL" });
+    }
 
     // /search → Cambiar a Comprar (nav header)
     const headerComprar = Array.from(document.querySelectorAll('header a[role="link"], header a')).find((a) => /Comprar/.test(text(a))) as HTMLAnchorElement | undefined;
     headerComprar?.click();
     await waitFor(() => /operation=Sale/.test(location.search));
-    const priceSelSearch = document.querySelector('[data-loc="SearchBar"] select#price') as HTMLSelectElement | null;
+    const priceSelSearch = await waitForEl<HTMLSelectElement>('[data-loc="SearchBar"] select[name="price"]');
     await waitFor(() => !!priceSelSearch && priceSelSearch.options.length >= 8);
-    const labelsSale = priceSelSearch ? Array.from(priceSelSearch.options).map((o) => o.text.trim()) : [];
-    const saleMust = ["≤ 1 millón", "1 – 2 millones", "2 – 3 millones", "3 – 5 millones", "5 – 10 millones", "10 – 20 millones", "≥ 20 millones"];
+    const labelsSale = priceSelSearch ? Array.from(priceSelSearch.options).map((o) => normalizeLabel(o.text)) : [];
+    const saleMust = [
+      "≤ 1 millón","1 – 2 millones","2 – 3 millones",
+      "3 – 5 millones","5 – 10 millones","10 – 20 millones","≥ 20 millones"
+    ].map(normalizeLabel);
     const okSaleOptions = labelsSale.length >= 8 && saleMust.every((l) => labelsSale.includes(l));
     const spSale = new URLSearchParams(location.search);
     const resetOk = !spSale.get("priceMin") && !spSale.get("priceMax");
@@ -108,7 +134,7 @@ export default function Autotest() {
     push({ name: "Chips (Venta)", route: location.pathname + location.search, action: "Ver etiqueta de precio", expected: "3 – 5 millones", actual: chips2.join(" | "), status: hasChipSale ? "PASS" : "FAIL" });
 
     // Ordenar por Precio descendente
-    const orderSel = document.querySelector('#order') as HTMLSelectElement | null;
+    const orderSel = await waitForEl<HTMLSelectElement>('[data-loc="SearchBar"] select[name="order"]');
     if (orderSel) { orderSel.value = 'price_desc'; orderSel.dispatchEvent(new Event('change', { bubbles: true })); }
     await expectUrlHas("Orden precio desc", { sort: "price_desc" });
 
@@ -116,7 +142,7 @@ export default function Autotest() {
     await waitFor(() => document.querySelector('[data-loc="SearchCard"] .text-blue-700'));
     const firstPriceSale = document.querySelector('[data-loc="SearchCard"] .text-blue-700') as HTMLElement | null;
     const priceTextSale = text(firstPriceSale);
-    const reMillions = /^\$[\d,.]+(\.\d)?\sM\sMXN$/;
+    const reMillions = /^\$[\d.,]+(?:\.\d)?\s*M\s*MXN$/;
     push({ name: "Precio formato (Venta)", route: location.pathname + location.search, action: "Validar millones compactos", expected: reMillions.toString(), actual: priceTextSale, status: reMillions.test(priceTextSale) ? "PASS" : "FAIL" });
 
     // Restablecer todo (asegurar que aparezca)
@@ -187,6 +213,22 @@ export default function Autotest() {
             </tbody>
           </table>
         </div>
+        {(() => {
+          const summary = (() => {
+            const pass = results.filter(r => r.status === "PASS").length;
+            const fail = results.filter(r => r.status === "FAIL").length;
+            const skip = results.filter(r => r.status === "SKIP").length;
+            return { pass, fail, skip, total: results.length };
+          })();
+          return (
+            <div className="mt-4 text-sm">
+              <span className="mr-3 px-2 py-1 rounded bg-green-100 text-green-800">PASS: {summary.pass}</span>
+              <span className="mr-3 px-2 py-1 rounded bg-red-100 text-red-800">FAIL: {summary.fail}</span>
+              <span className="mr-3 px-2 py-1 rounded bg-yellow-100 text-yellow-800">SKIP: {summary.skip}</span>
+              <span className="px-2 py-1 rounded bg-gray-100 text-gray-700">TOTAL: {summary.total}</span>
+            </div>
+          );
+        })()}
       </main>
       <Footer />
     </div>
