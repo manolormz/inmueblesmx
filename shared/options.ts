@@ -77,7 +77,7 @@ export const HighlightTypeOptions: OptionBase[] = [
 export type Currency = "MXN" | "USD";
 export const CurrencyOptions: CurrencyOption[] = [
   { value: "MXN", display_order: 1, label_es: "Peso mexicano", symbol: "$" },
-  { value: "USD", display_order: 2, label_es: "Dolar estadounidense", symbol: "US$" },
+  { value: "USD", display_order: 2, label_es: "Dólar estadounidense", symbol: "US$" },
 ];
 
 // Helpers
