@@ -102,7 +102,7 @@ export default function Publish() {
       toast.success("Propiedad guardada con éxito (borrador)");
       navigate(`/property/${data?.data?.slug ?? slug}`);
     } catch (err: any) {
-      toast.error("No se pudo guardar la propiedad. Configura la API Key de Builder.");
+      toast.error("Falta configuración del servidor");
       // eslint-disable-next-line no-console
       console.error(err);
     }
