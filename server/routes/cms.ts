@@ -48,3 +48,39 @@ export const createProperty: RequestHandler = async (req, res) => {
     return res.status(400).json({ error: err?.message || "Invalid payload" });
   }
 };
+
+export const publishProperty: RequestHandler = async (req, res) => {
+  try {
+    const privateKey = process.env.BUILDER_PRIVATE_API_KEY;
+    const { slug } = (req.body ?? {}) as { slug?: string };
+    if (!slug) return res.status(400).json({ error: "Falta slug" });
+
+    if (privateKey) {
+      // Try to find content by slug
+      const listUrl = `https://builder.io/api/v3/content/property?apiKey=${privateKey}&query.data.slug=${encodeURIComponent(slug)}`;
+      const r = await fetch(listUrl);
+      const j = await r.json().catch(() => ({} as any));
+      const id = j?.results?.[0]?.id;
+      if (id) {
+        const put = await fetch(`https://builder.io/api/v3/content/${id}?apiKey=${privateKey}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ data: { status: "Published" } }),
+        });
+        if (!put.ok) {
+          const detail = await put.text();
+          return res.status(500).json({ error: "Builder API error", detail });
+        }
+        return res.json({ ok: true, id });
+      }
+    }
+
+    // Fallback to in-memory
+    const { updatePropertyStatus } = await import("@shared/repo");
+    const updated = await updatePropertyStatus(slug, "Published" as any);
+    if (!updated) return res.status(404).json({ error: "No encontrado" });
+    return res.json({ ok: true });
+  } catch (e: any) {
+    return res.status(500).json({ error: e?.message || "Error" });
+  }
+};
