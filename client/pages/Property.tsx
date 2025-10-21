@@ -105,6 +105,7 @@ export default function Property() {
       if (!resp.ok) throw new Error("HTTP " + resp.status);
       return await resp.json();
     },
+    onMutate: () => { toast("Publicando…"); },
     onSuccess: async () => {
       toast.success("Propiedad publicada con éxito");
       await qc.invalidateQueries({ queryKey: ["property", slug] });
@@ -206,7 +207,7 @@ export default function Property() {
             <div className="rounded-xl border p-4">
               <h3 className="font-semibold mb-2">Estado</h3>
               <p className="text-sm text-gray-600 mb-3">La propiedad está en borrador. Puedes publicarla cuando esté lista.</p>
-              <Button type="button" onClick={() => publishMutation.mutate()} disabled={publishMutation.isPending}>
+              <Button type="button" onClick={() => publishMutation.mutate()} disabled={publishMutation.isPending} aria-disabled={publishMutation.isPending} data-loc="PublishButton">
                 {publishMutation.isPending ? "Publicando…" : "Publicar"}
               </Button>
             </div>
@@ -242,7 +243,7 @@ export default function Property() {
                   <Textarea id="message" rows={4} aria-invalid={!!errors.message} {...register("message")} />
                   {errors.message && <p className="text-sm text-red-600 mt-1">{errors.message.message}</p>}
                 </div>
-                <Button type="submit" disabled={isSubmitting}>{isSubmitting ? "Enviando…" : "Enviar"}</Button>
+                <Button type="submit" disabled={isSubmitting} aria-disabled={isSubmitting} data-loc="LeadSubmit">{isSubmitting ? "Enviando…" : "Enviar"}</Button>
               </div>
             </form>
           </div>
