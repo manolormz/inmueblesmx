@@ -209,7 +209,7 @@ export default function Search() {
             {/* Precio */}
             <div className="md:col-span-2 w-full border rounded-xl px-3 py-2">
               <label htmlFor="price" className="block text-xs font-medium text-gray-700">Precio</label>
-              <select id="price" className="w-full bg-transparent outline-none h-9" value={priceKey} onChange={(e) => {
+              <select id="price" name="price" className="w-full bg-transparent outline-none h-9" value={priceKey} onChange={(e) => {
                 const key = e.target.value;
                 const selected = priceOptions.find((o) => o.key === key);
                 localStorage.setItem("imx_priceRangeKey", key);
