@@ -71,6 +71,7 @@ function useMeta(property?: any) {
 export default function Property() {
   const { slug = "" } = useParams();
   const qc = useQueryClient();
+  const { currentUser } = useAuth();
   const { data, isLoading } = useQuery({
     queryKey: ["property", slug],
     queryFn: () => getPropertyBySlug(slug),
