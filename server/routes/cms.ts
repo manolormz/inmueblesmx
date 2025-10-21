@@ -1,6 +1,6 @@
 import type { RequestHandler } from "express";
-import { PropertySchema } from "@shared/schemas";
-import { slugifyEs } from "@shared/formatters";
+import { PropertySchema } from "../../shared/schemas";
+import { slugifyEs } from "../../shared/formatters";
 
 function shortId(len = 6): string {
   const chars = "abcdefghijklmnopqrstuvwxyz0123456789";
