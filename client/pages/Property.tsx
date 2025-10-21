@@ -96,8 +96,13 @@ export default function Property() {
     reset();
   };
 
+  const canPublish = !!currentUser && currentUser.role !== "buyer";
   const publishMutation = useMutation({
     mutationFn: async () => {
+      if (!canPublish) {
+        toast.error("Necesitas iniciar sesión como agente o empresa para publicar.");
+        return;
+      }
       if (!data?.slug) return;
       const resp = await fetch("/api/cms/property/publish", {
         method: "POST",
@@ -116,7 +121,7 @@ export default function Property() {
     onError: () => toast.error("No se pudo publicar la propiedad"),
   });
 
-  const isOwner = true; // Mock check
+  const isOwner = canPublish;
 
   if (isLoading) {
     return (
