@@ -34,6 +34,7 @@ function countToasts(): number {
 }
 
 export default function DebugTools() {
+  if (import.meta.env.PROD) return null;
   const [enabled, setEnabled] = useState(hasDebugParam());
   const clicksRef = useRef<{ tag: string; className: string; node: string; time: string }[]>([]);
   const overlayRefs = useRef<HTMLElement[]>([]);
