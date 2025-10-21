@@ -167,7 +167,7 @@ export function HeroSearch() {
               </div>
 
               {/* Buscar */}
-              <div className="relative">
+              <div className="relative md:static sticky bottom-2">
                 <Button type="button" onClick={doSearch} className="w-full px-4 py-2 rounded-xl bg-blue-600 text-white hover:bg-blue-700 active:scale-95 transition h-11" data-loc="HeroSearchBtn">
                   <Search className="w-4 h-4 mr-2" /> Buscar
                 </Button>
