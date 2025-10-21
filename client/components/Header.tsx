@@ -62,6 +62,7 @@ export function Header() {
             ) : (
               <div className="flex items-center gap-3">
                 <span className="text-sm text-gray-700">Hola, {currentUser.full_name.split(" ")[0]}</span>
+                <Button type="button" size="sm" variant="outline" onClick={onClickLog("nav-account")}>Mi cuenta</Button>
                 <Button type="button" size="sm" variant="ghost" onClick={() => { logout().then(()=>{ toast.success("Sesión cerrada"); navigate("/"); }); }} data-loc="NavbarLogout">Cerrar sesión</Button>
               </div>
             )}
