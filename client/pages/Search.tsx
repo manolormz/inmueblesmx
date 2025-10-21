@@ -150,10 +150,25 @@ export default function Search() {
   }
 
   function resetAll() {
-    const keep: Record<string, string> = {};
-    if (params.get("status")) keep.status = params.get("status")!;
-    const next = new URLSearchParams(keep);
-    setParams(next, { replace: false });
+    const keepStatus = params.get("status") || "Published";
+    set({
+      q: null,
+      operation: null,
+      type: null,
+      priceMin: null,
+      priceMax: null,
+      minBedrooms: null,
+      minBathrooms: null,
+      minParking: null,
+      builtMin: null,
+      builtMax: null,
+      landMin: null,
+      landMax: null,
+      currency: null,
+      sort: null,
+      page: 1,
+      status: keepStatus,
+    } as any);
   }
 
   function goPage(p: number) {
