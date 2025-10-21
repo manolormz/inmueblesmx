@@ -22,6 +22,7 @@ export function createServer() {
 
   // CMS routes
   app.post("/api/cms/property", createProperty);
+  app.post("/api/cms/property/publish", publishProperty);
 
   return app;
 }
