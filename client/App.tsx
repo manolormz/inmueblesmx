@@ -11,6 +11,8 @@ import NotFound from "./pages/NotFound";
 import Publish from "./pages/Publish";
 import Search from "./pages/Search";
 import Property from "./pages/Property";
+import QAButtons from "./pages/qa/Buttons";
+import DebugTools from "./debug/DebugTools";
 
 const queryClient = new QueryClient();
 
@@ -20,11 +22,14 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        {/* Debug overlay auto-mounts if ?debug=1 */}
+        <DebugTools />
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/publish" element={<Publish />} />
           <Route path="/search" element={<Search />} />
           <Route path="/property/:slug" element={<Property />} />
+          <Route path="/qa/buttons" element={<QAButtons />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
