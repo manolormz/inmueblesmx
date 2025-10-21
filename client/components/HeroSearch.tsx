@@ -90,7 +90,7 @@ export function HeroSearch() {
                 role="tab"
                 aria-selected={operation === "Sale"}
                 className={`px-4 py-2 rounded-full text-sm font-medium transition border ${operation === "Sale" ? "bg-blue-600 text-white border-blue-600" : "bg-white text-gray-800 border-gray-300 hover:bg-gray-50"}`}
-                onClick={() => setOperation("Sale")}
+                onClick={() => { setOperation("Sale"); setPriceKey("any"); localStorage.removeItem("imx_priceRangeKey"); }}
               >
                 Comprar
               </button>
@@ -99,7 +99,7 @@ export function HeroSearch() {
                 role="tab"
                 aria-selected={operation === "Rent"}
                 className={`px-4 py-2 rounded-full text-sm font-medium transition border ${operation === "Rent" ? "bg-blue-600 text-white border-blue-600" : "bg-white text-gray-800 border-gray-300 hover:bg-gray-50"}`}
-                onClick={() => setOperation("Rent")}
+                onClick={() => { setOperation("Rent"); setPriceKey("any"); localStorage.removeItem("imx_priceRangeKey"); }}
               >
                 Rentar
               </button>
