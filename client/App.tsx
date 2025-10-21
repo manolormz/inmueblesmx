@@ -15,6 +15,7 @@ import Maintenance from "./pages/Maintenance";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import QAButtons from "./pages/qa/Buttons";
+import Autotest from "./pages/qa/Autotest";
 import DebugTools from "./debug/DebugTools";
 import { AuthProvider } from "./auth/AuthContext";
 
@@ -38,6 +39,7 @@ const App = () => (
             <Route path="/auth/login" element={<Login />} />
             <Route path="/auth/register" element={<Register />} />
             <Route path="/qa/buttons" element={<QAButtons />} />
+            <Route path="/qa/autotest" element={<Autotest />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
