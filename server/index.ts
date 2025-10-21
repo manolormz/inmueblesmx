@@ -26,6 +26,7 @@ export function createServer() {
   app.post("/api/cms/property", createProperty);
   app.post("/api/cms/property/publish", publishProperty);
   app.post("/api/cms/property/unpublish", unpublishProperty);
+  app.put("/api/cms/property/:slug", updateProperty);
   app.delete("/api/cms/property", deleteProperty);
 
   // SEO routes
