@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { getPropertyBySlug, createLead, listProperties } from "@shared/repo";
+import { getPropertyBySlug, createLead } from "@shared/repo";
 import { getOptionLabelEs, formatPrice, slugifyEs } from "@shared/formatters";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
