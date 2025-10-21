@@ -104,6 +104,14 @@ export default function Publish() {
         return;
       }
       toast.success("Propiedad guardada con éxito (borrador)");
+      try {
+        const arr = JSON.parse(localStorage.getItem("imx_my_props") || "[]");
+        const s = json?.data?.slug ?? slug;
+        if (s && !arr.includes(s)) {
+          arr.push(s);
+          localStorage.setItem("imx_my_props", JSON.stringify(arr));
+        }
+      } catch {}
       navigate(`/property/${json?.data?.slug ?? slug}`);
     } catch (err: any) {
       toast.error(err?.message || "Error al guardar");
