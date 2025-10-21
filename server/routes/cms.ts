@@ -1,15 +1,6 @@
 import type { RequestHandler } from "express";
 import { PropertySchema } from "@shared/schemas";
-
-function kebabCase(input: string): string {
-  return input
-    .normalize("NFKD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "")
-    .replace(/-{2,}/g, "-");
-}
+import { slugifyEs } from "@shared/formatters";
 
 function shortId(len = 6): string {
   const chars = "abcdefghijklmnopqrstuvwxyz0123456789";
@@ -26,7 +17,7 @@ export const createProperty: RequestHandler = async (req, res) => {
     }
 
     const input = req.body ?? {};
-    const slug = input.slug || `${kebabCase(input.title || "propiedad")}-${shortId(6)}`;
+    const slug = input.slug || `${slugifyEs(input.title || "propiedad")}-${shortId(6)}`;
 
     const parsed = PropertySchema.parse({
       ...input,
