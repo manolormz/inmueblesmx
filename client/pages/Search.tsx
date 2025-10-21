@@ -116,14 +116,15 @@ export default function Search() {
   const qValue = params.get("q") || "";
   const setQDebounced = useDebouncedCallback((val: string) => set({ q: val || null, page: 1 }), 300);
 
+  const opParam = (params.get("operation") as "Sale" | "Rent" | null) || (localStorage.getItem("imx_operation") as "Sale" | "Rent" | null) || "Sale";
+  const priceOptions = useMemo(() => getPriceOptionsMXNByOperation(opParam), [opParam]);
+
   const priceKey = useMemo(() => {
     const min = params.get("priceMin");
     const max = params.get("priceMax");
-    if (!min && !max) return "any";
-    if (!min && max && Number(max) <= 1_000_000) return "0-1M";
-    if (min && Number(min) === 1_000_000 && max && Number(max) === 3_000_000) return "1-3M";
-    return "3M+";
-  }, [params]);
+    const match = priceOptions.find((o) => String(o.priceMin ?? "") === String(min ?? "") && String(o.priceMax ?? "") === String(max ?? ""));
+    return match?.key || (localStorage.getItem("imx_priceRangeKey") || "any");
+  }, [params, priceOptions]);
 
   const activeChips = useMemo(() => {
     const chips: { key: string; label: string }[] = [];
