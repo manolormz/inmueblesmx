@@ -3,24 +3,20 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { PropertyTypeOptions } from "@shared/options";
-
-function mapPriceKeyToRange(key: "any" | "0-1M" | "1-3M" | "3M+") {
-  if (key === "0-1M") return { priceMin: undefined, priceMax: 1_000_000 } as const;
-  if (key === "1-3M") return { priceMin: 1_000_000, priceMax: 3_000_000 } as const;
-  if (key === "3M+") return { priceMin: 3_000_000, priceMax: undefined } as const;
-  return { priceMin: undefined, priceMax: undefined } as const;
-}
+import { getPriceOptionsMXNByOperation } from "@shared/filters";
 
 export function HeroSearch() {
   const [params, setParams] = useSearchParams();
   const navigate = useNavigate();
 
   // Load persisted operation from URL or localStorage
-  const initialOp = (params.get("operation") as "Sale" | "Rent" | null) || (localStorage.getItem("imx_hero_op") as "Sale" | "Rent" | null) || "Sale";
+  const persistedOp = (localStorage.getItem("imx_operation") as "Sale" | "Rent" | null) || (localStorage.getItem("imx_hero_op") as "Sale" | "Rent" | null) || null;
+  const initialOp = (params.get("operation") as "Sale" | "Rent" | null) || persistedOp || "Sale";
   const [operation, setOperation] = useState<"Sale" | "Rent">(initialOp);
   const [q, setQ] = useState("");
   const [typeValue, setTypeValue] = useState<string>("");
-  const [priceKey, setPriceKey] = useState<"any" | "0-1M" | "1-3M" | "3M+">("any");
+  const initialPriceKey = (localStorage.getItem("imx_priceRangeKey") as string | null) || "any";
+  const [priceKey, setPriceKey] = useState<string>(initialPriceKey);
 
   const helpId = useMemo(() => `hero-help-${Math.random().toString(36).slice(2)}`, []);
   const inputRef = useRef<HTMLInputElement>(null);
