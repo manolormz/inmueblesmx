@@ -97,12 +97,16 @@ export default function Publish() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const data = await res.json();
+      const json = await res.json().catch(() => ({} as any));
+      if (res.status === 401 || json?.ok === false) {
+        const msg = json?.message || "Falta configuración del servidor";
+        toast.error(msg);
+        return;
+      }
       toast.success("Propiedad guardada con éxito (borrador)");
-      navigate(`/property/${data?.data?.slug ?? slug}`);
+      navigate(`/property/${json?.data?.slug ?? slug}`);
     } catch (err: any) {
-      toast.error("Falta configuración del servidor");
+      toast.error(err?.message || "Error al guardar");
       // eslint-disable-next-line no-console
       console.error(err);
     }
