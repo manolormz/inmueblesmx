@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import { PropertySchema } from "@shared/schemas";
 import { CurrencyOptions, OperationOptions, PropertyTypeOptions } from "@shared/options";
+import { slugifyEs } from "@shared/formatters";
 
 function kebabCase(input: string): string {
   return input
@@ -79,7 +80,7 @@ export default function Publish() {
   });
 
   async function onSubmit(values: FormValues) {
-    const slug = `${kebabCase(values.title)}-${shortId(6)}`;
+    const slug = `${slugifyEs(values.title)}-${shortId(6)}`;
     const payload = {
       ...values,
       gallery: values.gallery ? values.gallery.split(",").map((s) => s.trim()).filter(Boolean) : [],
@@ -97,7 +98,7 @@ export default function Publish() {
       });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
-      toast.success("Propiedad publicada en borrador");
+      toast.success("Propiedad guardada con éxito (borrador)");
       navigate(`/property/${data?.data?.slug ?? slug}`);
     } catch (err: any) {
       toast.error("No se pudo guardar la propiedad. Configura la API Key de Builder.");
@@ -115,7 +116,7 @@ export default function Publish() {
           <div className="md:col-span-2">
             <label className="block text-sm font-medium mb-1">Título</label>
             <Input placeholder="Casa en Polanco" {...register("title", { required: true })} />
-            {errors.title && <p className="text-sm text-red-600 mt-1">Campo requerido</p>}
+            {errors.title && <p className="text-sm text-red-600 mt-1">Este campo es obligatorio.</p>}
           </div>
 
           <div className="md:col-span-2">
@@ -124,9 +125,9 @@ export default function Publish() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-1">Precio (MXN)</label>
-            <Input type="number" step="1" min={0} placeholder="2500000" {...register("price", { valueAsNumber: true })} />
-            {errors.price && <p className="text-sm text-red-600 mt-1">Precio inválido</p>}
+            <label className="block text-sm font-medium mb-1">Precio</label>
+            <Input type="number" step="1" min={0} placeholder="2500000" {...register("price", { valueAsNumber: true, min: 0 })} />
+            {errors.price && <p className="text-sm text-red-600 mt-1">El precio debe ser mayor o igual a 0.</p>}
           </div>
 
           <div>
@@ -143,7 +144,7 @@ export default function Publish() {
                 ))}
               </SelectContent>
             </Select>
-            {errors.currency && <p className="text-sm text-red-600 mt-1">Selecciona moneda</p>}
+            {errors.currency && <p className="text-sm text-red-600 mt-1">Este campo es obligatorio.</p>}
           </div>
 
           <div>
@@ -160,7 +161,7 @@ export default function Publish() {
                 ))}
               </SelectContent>
             </Select>
-            {errors.operation && <p className="text-sm text-red-600 mt-1">Selecciona operación</p>}
+            {errors.operation && <p className="text-sm text-red-600 mt-1">Este campo es obligatorio.</p>}
           </div>
 
           <div>
@@ -177,7 +178,7 @@ export default function Publish() {
                 ))}
               </SelectContent>
             </Select>
-            {errors.type && <p className="text-sm text-red-600 mt-1">Selecciona tipo</p>}
+            {errors.type && <p className="text-sm text-red-600 mt-1">Este campo es obligatorio.</p>}
           </div>
 
           <div>
@@ -227,7 +228,7 @@ export default function Publish() {
 
           <div className="md:col-span-2 flex gap-3 pt-2">
             <Button type="submit" disabled={isSubmitting}>
-              {isSubmitting ? "Guardando..." : "Publicar"}
+              {isSubmitting ? "Guardando..." : "Guardar"}
             </Button>
           </div>
         </form>
