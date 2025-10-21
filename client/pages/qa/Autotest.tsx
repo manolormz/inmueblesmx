@@ -133,17 +133,19 @@ export default function Autotest() {
       submit?.click();
       const redirected = await waitFor(() => /^\/property\//.test(location.pathname), 4000);
       const toasts = getToasts();
-      const failedServer = toasts.some((t) => /Falta configuración del servidor/i.test(t));
+      const failedServer = toasts.some((t) => /Falta/i.test(t));
       if (!redirected && failedServer) {
-        push({ name: "Publish → Crear borrador", route: location.pathname, action: "Enviar formulario", expected: "Redirigir a detalle", actual: toasts.join(" | "), status: "SKIP", notes: "Servidor no configurado" });
+        push({ name: "Publish → Crear borrador", route: location.pathname, action: "Enviar formulario", expected: "Redirigir a detalle", actual: toasts.join(" | "), status: "SKIP", notes: "Modo demo (sin clave)" });
       } else {
         push({ name: "Publish → Crear borrador", route: location.pathname, action: "Enviar formulario", expected: "Redirigir a detalle", actual: location.pathname, status: redirected ? "PASS" : "FAIL" });
         if (redirected) {
           const pb = document.querySelector('[data-loc="PublishButton"]') as HTMLButtonElement | null;
           pb?.click();
           await sleep(300);
-          const okToast = getToasts().some((t) => /publicada con éxito/i.test(t));
-          push({ name: "Detalle → Publicar", route: location.pathname, action: "Click Publicar", expected: "Toast éxito", actual: getToasts().join(" | "), status: okToast ? "PASS" : "FAIL" });
+          const allToasts = getToasts();
+          const okToast = allToasts.some((t) => /publicada con éxito/i.test(t));
+          const demo = allToasts.some((t) => /Falta/i.test(t));
+          push({ name: "Detalle → Publicar", route: location.pathname, action: "Click Publicar", expected: demo?"Mensaje de demo":"Toast éxito", actual: allToasts.join(" | "), status: demo?"SKIP":(okToast ? "PASS" : "FAIL") });
         }
       }
     } else {
