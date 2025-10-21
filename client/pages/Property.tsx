@@ -25,7 +25,7 @@ const LeadSchema = z.object({
 function useMeta(property?: any) {
   useEffect(() => {
     if (!property) return;
-    const title = `${property.title} · ${formatPrice(property.price, property.currency)}`;
+    const title = `${property.title} · ${formatPriceCompactMXN(property.price, (property.operation === "Rent" ? "Rent" : "Sale"))}`;
     document.title = title;
     const ensure = (sel: string, create: () => HTMLElement) => {
       let el = document.head.querySelector(sel) as HTMLElement | null;
