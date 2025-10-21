@@ -187,7 +187,7 @@ export default function Search() {
             {/* Ubicación */}
             <div className="md:col-span-4 w-full border rounded-xl px-3 py-2 focus-within:ring-2 focus-within:ring-blue-200 focus-within:border-blue-500">
               <label htmlFor="q" className="block text-xs font-medium text-gray-700">Ubicación</label>
-              <input id="q" defaultValue={qValue} onChange={(e) => setQDebounced(e.target.value)} placeholder="Ciudad, estado o código" className="w-full bg-transparent outline-none h-9" />
+              <input id="q" defaultValue={qValue} onChange={(e) => setQDebounced(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") { set({ q: (e.currentTarget as HTMLInputElement).value || null, page: 1 }); } if (e.key === "Escape") { (e.currentTarget as HTMLInputElement).value = ""; set({ q: null, page: 1 }); } }} placeholder="Ciudad, estado o código" className="w-full bg-transparent outline-none h-9" />
             </div>
 
             {/* Tipo */}
