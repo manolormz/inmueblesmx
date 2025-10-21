@@ -62,14 +62,13 @@ export default function Search() {
   const navigate = useNavigate();
   const headingRef = useRef<HTMLHeadingElement>(null);
 
-  const { data, isLoading } = useQuery({
+  const query = useQuery({
     queryKey: ["properties", filters, page, pageSize],
     queryFn: () => listProperties(filters as any, page, pageSize),
-    keepPreviousData: true,
   });
 
-  const items = data?.items ?? [];
-  const total = data?.total ?? 0;
+  const items = query.data?.items ?? [];
+  const total = query.data?.total ?? 0;
   const totalPages = Math.max(1, Math.ceil(total / pageSize));
 
   useEffect(() => {
