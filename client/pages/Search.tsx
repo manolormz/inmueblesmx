@@ -113,11 +113,18 @@ export default function Search() {
   const opParam = (params.get("operation") as "Sale" | "Rent" | null) || (localStorage.getItem("imx_operation") as "Sale" | "Rent" | null) || "Sale";
   const priceOptions = useMemo(() => getPriceOptionsMXNByOperation(opParam), [opParam]);
 
+  // Clear stored price key when operation changes, to reset selection
+  const opRef = useRef<string | null>(null);
+  if (opRef.current !== opParam) {
+    localStorage.removeItem("imx_priceRangeKey");
+    opRef.current = opParam;
+  }
+
   const priceKey = useMemo(() => {
     const min = params.get("priceMin");
     const max = params.get("priceMax");
     const match = priceOptions.find((o) => String(o.priceMin ?? "") === String(min ?? "") && String(o.priceMax ?? "") === String(max ?? ""));
-    return match?.key || (localStorage.getItem("imx_priceRangeKey") || "any");
+    return match?.key || "any";
   }, [params, priceOptions]);
 
   const activeChips = useMemo(() => {
