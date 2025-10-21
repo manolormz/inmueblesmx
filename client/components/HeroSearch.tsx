@@ -51,7 +51,7 @@ export function HeroSearch() {
   };
 
   return (
-    <section className="bg-gradient-to-br from-blue-50 to-blue-100 py-12 sm:py-20">
+    <section className="bg-gradient-to-br from-blue-50 to-blue-100 py-12 sm:py-20" data-loc="client/components/HeroSearch.tsx:54:5">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
@@ -73,6 +73,7 @@ export function HeroSearch() {
                 ? "bg-blue-600 text-white"
                 : "bg-white text-gray-700 border border-gray-300 hover:bg-gray-50"
             }`}
+            data-loc="HeroSearch"
           >
             Comprar
           </button>
@@ -84,6 +85,7 @@ export function HeroSearch() {
                 ? "bg-blue-600 text-white"
                 : "bg-white text-gray-700 border border-gray-300 hover:bg-gray-50"
             }`}
+            data-loc="HeroSearch"
           >
             Rentar
           </button>
@@ -147,7 +149,7 @@ export function HeroSearch() {
 
             {/* Search Button */}
             <div className="flex items-end">
-              <Button type="button" onClick={handleHeroSearch} className="w-full bg-blue-600 hover:bg-blue-700 h-12 text-base">
+              <Button type="button" onClick={handleHeroSearch} className="w-full bg-blue-600 hover:bg-blue-700 h-12 text-base" data-loc="HeroSearch">
                 <Search className="w-5 h-5 mr-2" />
                 Buscar
               </Button>
@@ -169,7 +171,10 @@ export function HeroSearch() {
               ].map((city) => (
                 <button
                   key={city}
+                  type="button"
+                  onClick={() => navigate(`/search?status=Published&q=${encodeURIComponent(city)}`)}
                   className="px-4 py-2 bg-gray-100 text-gray-700 rounded-full hover:bg-gray-200 transition text-sm"
+                  data-loc="HeroSearch"
                 >
                   {city}
                 </button>
