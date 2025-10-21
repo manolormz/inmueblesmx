@@ -10,6 +10,7 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Publish from "./pages/Publish";
 import Search from "./pages/Search";
+import Property from "./pages/Property";
 
 const queryClient = new QueryClient();
 
@@ -23,6 +24,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/publish" element={<Publish />} />
           <Route path="/search" element={<Search />} />
+          <Route path="/property/:slug" element={<Property />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
