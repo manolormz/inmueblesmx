@@ -129,12 +129,15 @@ export default function Search() {
   const activeChips = useMemo(() => {
     const chips: { key: string; label: string }[] = [];
     if (qValue) chips.push({ key: "q", label: `Texto: "${qValue}"` });
-    const op = params.get("operation");
-    if (op) chips.push({ key: "operation", label: `Operación: ${getOptionLabelEs("Operation", op as any)}` });
+    const op = opParam;
+    if (params.get("operation")) chips.push({ key: "operation", label: `Operación: ${getOptionLabelEs("Operation", op as any)}` });
     const tp = params.get("type");
     if (tp) chips.push({ key: "type", label: `Tipo: ${getOptionLabelEs("PropertyType", tp as any)}` });
     const pmin = params.get("priceMin"), pmax = params.get("priceMax");
-    if (pmin || pmax) chips.push({ key: "price", label: `Precio: ${pmin ?? 0} - ${pmax ?? "∞"}` });
+    if (pmin || pmax) {
+      const match = priceOptions.find((o) => String(o.priceMin ?? "") === String(pmin ?? "") && String(o.priceMax ?? "") === String(pmax ?? ""));
+      chips.push({ key: "price", label: match ? match.label : `Precio: ${pmin ?? 0} - ${pmax ?? "∞"}` });
+    }
     const beds = params.get("minBedrooms"); if (beds) chips.push({ key: "minBedrooms", label: `Recámaras: ${beds}+` });
     const baths = params.get("minBathrooms"); if (baths) chips.push({ key: "minBathrooms", label: `Baños: ${baths}+` });
     const park = params.get("minParking"); if (park) chips.push({ key: "minParking", label: `Estac.: ${park}+` });
@@ -142,10 +145,10 @@ export default function Search() {
     const lmin = params.get("landMin"), lmax = params.get("landMax"); if (lmin || lmax) chips.push({ key: "land", label: `Terreno: ${lmin ?? 0}–${lmax ?? "∞"} m²` });
     const curr = params.get("currency"); if (curr) chips.push({ key: "currency", label: `Moneda: ${curr}` });
     return chips;
-  }, [params]);
+  }, [params, priceOptions, opParam, qValue]);
 
   function clearChip(k: string) {
-    if (k === "price") set({ priceMin: null, priceMax: null, page: 1 });
+    if (k === "price") { set({ priceMin: null, priceMax: null, page: 1 }); localStorage.removeItem("imx_priceRangeKey"); }
     else if (k === "built") set({ builtMin: null, builtMax: null, page: 1 });
     else if (k === "land") set({ landMin: null, landMax: null, page: 1 });
     else set({ [k]: null, page: 1 } as any);
@@ -153,6 +156,7 @@ export default function Search() {
 
   function resetAll() {
     const keepStatus = params.get("status") || "Published";
+    localStorage.removeItem("imx_priceRangeKey");
     set({
       q: null,
       operation: null,
