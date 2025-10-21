@@ -41,6 +41,7 @@ const App = () => (
             <Route path="/auth/register" element={<Register />} />
             <Route path="/qa/buttons" element={<QAButtons />} />
             <Route path="/qa/autotest" element={<Autotest />} />
+            <Route path="/dashboard" element={<Dashboard />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
