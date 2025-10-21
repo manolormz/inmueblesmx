@@ -46,14 +46,15 @@ export function HeroSearch() {
   };
 
   function doSearch() {
-    const { priceMin, priceMax } = mapPriceKeyToRange(priceKey);
+    const options = getPriceOptionsMXNByOperation(operation);
+    const selected = options.find((o) => o.key === priceKey);
     const search = new URLSearchParams();
     if (operation) search.set("operation", operation);
     search.set("status", "Published");
     if (q.trim()) search.set("q", q.trim());
     if (typeValue) search.set("type", typeValue);
-    if (priceMin != null) search.set("priceMin", String(priceMin));
-    if (priceMax != null) search.set("priceMax", String(priceMax));
+    if (selected?.priceMin != null) search.set("priceMin", String(selected.priceMin));
+    if (selected?.priceMax != null) search.set("priceMax", String(selected.priceMax));
     navigate(`/search?${search.toString()}`);
   }
 
@@ -62,6 +63,8 @@ export function HeroSearch() {
     setTypeValue("");
     setPriceKey("any");
     setOperation("Sale");
+    localStorage.removeItem("imx_priceRangeKey");
+    localStorage.setItem("imx_operation", "Sale");
     const next = new URLSearchParams();
     next.set("status", "Published");
     next.set("operation", "Sale");
