@@ -2,17 +2,14 @@ import { useEffect, useMemo, useRef } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { listProperties } from "@shared/repo";
-import { OperationOptions, PropertyTypeOptions, CurrencyOptions } from "@shared/options";
+import { OperationOptions, PropertyTypeOptions } from "@shared/options";
+import { formatPrice, getOptionLabelEs } from "@shared/formatters";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
-function getCurrencySymbol(value: string | undefined) {
-  const found = CurrencyOptions.find((c) => c.value === value);
-  return found?.symbol ?? "";
-}
 
 function toInt(v: string | null, def: number) {
   const n = v ? parseInt(v, 10) : NaN;
@@ -78,8 +75,8 @@ export default function Search() {
   const activeChips = useMemo(() => {
     const chips: { key: string; label: string }[] = [];
     if (filters.q) chips.push({ key: "q", label: `Texto: "${filters.q}"` });
-    if (filters.operation) chips.push({ key: "operation", label: `Operación: ${filters.operation}` });
-    if (filters.type) chips.push({ key: "type", label: `Tipo: ${filters.type}` });
+    if (filters.operation) chips.push({ key: "operation", label: `Operación: ${getOptionLabelEs("Operation", filters.operation as any)}` });
+    if (filters.type) chips.push({ key: "type", label: `Tipo: ${getOptionLabelEs("PropertyType", filters.type as any)}` });
     if (filters.priceMin || filters.priceMax) chips.push({ key: "price", label: `Precio: ${filters.priceMin ?? 0} - ${filters.priceMax ?? "∞"}` });
     if (filters.status) chips.push({ key: "status", label: `Estado: ${filters.status}` });
     return chips;
@@ -108,7 +105,7 @@ export default function Search() {
       <main className="container mx-auto px-4 py-6 grid grid-cols-1 md:grid-cols-12 gap-6">
         <section className="md:col-span-9 order-2 md:order-1">
           <h1 ref={headingRef} tabIndex={-1} className="text-xl font-semibold mb-2">
-            {query.isLoading ? "Cargando..." : `${total} resultados`}
+            {query.isLoading ? "Cargando..." : `Resultados (${total})`}
           </h1>
           <div className="flex flex-wrap gap-2 mb-4">
             {activeChips.map((c) => (
@@ -130,7 +127,7 @@ export default function Search() {
               ))}
             </div>
           ) : items.length === 0 ? (
-            <div className="text-center text-gray-600 py-16">No hay resultados</div>
+            <div className="text-center text-gray-600 py-16">No encontramos resultados con tus filtros…</div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {items.map((p) => (
@@ -143,7 +140,7 @@ export default function Search() {
                     </div>
                     <h3 className="font-semibold text-lg">{p.title}</h3>
                     <div className="text-blue-700 font-semibold">
-                      {getCurrencySymbol(p.currency)} {p.price.toLocaleString()}
+                      {formatPrice(p.price, p.currency!)}
                     </div>
                     {p.address_text && <div className="text-sm text-gray-600">{p.address_text}</div>}
                   </div>
