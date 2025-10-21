@@ -2,7 +2,7 @@ import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import { handleDemo } from "./routes/demo";
-import { createProperty } from "./routes/cms";
+import { createProperty, publishProperty } from "./routes/cms";
 
 export function createServer() {
   const app = express();
