@@ -23,6 +23,7 @@ export function Header() {
               onClick={onClickLog("nav-comprar")}
               className="text-gray-700 hover:text-blue-600 transition"
               role="link"
+              data-loc="NavbarComprar"
             >
               Comprar
             </Link>
