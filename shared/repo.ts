@@ -2,16 +2,7 @@ import { CompanySchema, ProfileSchema, PropertySchema, LeadSchema } from "./sche
 import type { Company, Profile, Property, Lead, PropertyInput, LeadInput } from "./schemas";
 import type { Operation, PropertyType, PublicationStatus } from "./options";
 import { OperationOptions, PropertyTypeOptions } from "./options";
-
-function kebabCase(input: string): string {
-  return input
-    .normalize("NFKD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "")
-    .replace(/-{2,}/g, "-");
-}
+import { slugifyEs } from "./formatters";
 
 function shortId(len = 6): string {
   const chars = "abcdefghijklmnopqrstuvwxyz0123456789";
@@ -25,9 +16,9 @@ function genId(): string {
 }
 
 function uniqueSlug(base: string, existing: Set<string>): string {
-  let candidate = `${kebabCase(base)}-${shortId(6)}`;
+  let candidate = `${slugifyEs(base)}-${shortId(6)}`;
   while (existing.has(candidate)) {
-    candidate = `${kebabCase(base)}-${shortId(6)}`;
+    candidate = `${slugifyEs(base)}-${shortId(6)}`;
   }
   return candidate;
 }
