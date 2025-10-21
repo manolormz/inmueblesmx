@@ -17,12 +17,6 @@ function toInt(v: string | null, def: number) {
   return Number.isFinite(n) ? n : def;
 }
 
-function mapPriceKeyToRange(key: "any" | "0-1M" | "1-3M" | "3M+") {
-  if (key === "0-1M") return { priceMin: undefined, priceMax: 1_000_000 } as const;
-  if (key === "1-3M") return { priceMin: 1_000_000, priceMax: 3_000_000 } as const;
-  if (key === "3M+") return { priceMin: 3_000_000, priceMax: undefined } as const;
-  return { priceMin: undefined, priceMax: undefined } as const;
-}
 
 function useDebouncedCallback<T extends (...args: any[]) => void>(fn: T, delay = 300) {
   const ref = useRef<number | null>(null);
