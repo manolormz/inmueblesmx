@@ -228,7 +228,7 @@ export default function Search() {
             {/* Ordenar */}
             <div className="md:col-span-2">
               <label htmlFor="order" className="block text-xs font-medium text-gray-700">Ordenar por</label>
-              <select id="order" className="w-full border rounded-xl h-11 px-3" value={params.get("sort") || "recent"} onChange={(e) => set({ sort: e.target.value, page: 1 })} data-loc="SearchOrder">
+              <select id="order" name="order" className="w-full border rounded-xl h-11 px-3" value={params.get("sort") || "recent"} onChange={(e) => set({ sort: e.target.value, page: 1 })} data-loc="SearchOrder">
                 <option value="recent">Más recientes</option>
                 <option value="price_asc">Precio ascendente</option>
                 <option value="price_desc">Precio descendente</option>
