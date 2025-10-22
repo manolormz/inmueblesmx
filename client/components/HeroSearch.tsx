@@ -3,7 +3,10 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { PropertyTypeOptions } from "@shared/options";
 import { getPriceOptionsMXNByOperation } from "@shared/filters";
+import { API_BASE } from "@shared/api-base";
 import { MapPin, Search } from "lucide-react";
+
+if (typeof window !== "undefined") console.debug("API_BASE:", API_BASE);
 
 export function HeroSearch() {
   const [params, setParams] = useSearchParams();
@@ -35,8 +38,11 @@ export function HeroSearch() {
 
   async function queryLocations(term: string) {
     const short = term.trim().length < 2;
-    const url = short ? `/api/locations?limit=12` : `/api/locations?q=${encodeURIComponent(term)}&limit=12`;
-    const resp = await fetch(url).catch(() => null);
+    const params = new URLSearchParams();
+    params.set("limit", "12");
+    if (!short) params.set("q", term);
+    const url = `${API_BASE}/api/locations?${params.toString()}`;
+    const resp = await fetch(url, { credentials: "omit" }).catch(() => null);
     if (!resp) return [] as LocItem[];
     const json = await resp.json().catch(() => ({}));
     if (json?.ok && json.items && typeof json.items === 'object') {
