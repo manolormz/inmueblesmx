@@ -233,6 +233,50 @@ export default function Autotest() {
       push({ name: "Auto Mex", route: location.pathname + location.search, action: "CDMX + EdoMex", expected: "Ciudad de México y Estado de México", actual: groupText, status: (hasCDMX && hasEdoMex) ? "PASS" : "FAIL" });
     }
 
+    // QA: "san luis" expects San Luis Potosí (Municipio/Ciudad)
+    navigate("/");
+    await waitFor(() => !!document.querySelector('[data-loc="HeroLocationInput"]'));
+    const locInput3 = document.querySelector('[data-loc="HeroLocationInput"]') as HTMLInputElement | null;
+    if (locInput3) {
+      locInput3.focus();
+      locInput3.value = "san luis";
+      locInput3.dispatchEvent(new Event('input', { bubbles: true }));
+      await waitFor(() => !!document.querySelector('[data-loc="HeroLocationList"]'));
+      const itemsText = Array.from(document.querySelectorAll('[data-loc="HeroLocationItem"]')).map(el=>text(el)).join(" | ");
+      const hasSLP = /San Luis Potos[íi]/i.test(itemsText);
+      const inMunicipio = /Municipio/.test(itemsText) && hasSLP;
+      push({ name: "Auto San Luis", route: location.pathname + location.search, action: "SLP Municipio/Ciudad", expected: "San Luis Potosí visible (Municipio o Ciudad)", actual: itemsText, status: hasSLP ? "PASS" : "FAIL" });
+    }
+
+    // QA: "culiacan" expects Culiacán (Municipio/Ciudad)
+    navigate("/");
+    await waitFor(() => !!document.querySelector('[data-loc="HeroLocationInput"]'));
+    const locInput4 = document.querySelector('[data-loc="HeroLocationInput"]') as HTMLInputElement | null;
+    if (locInput4) {
+      locInput4.focus();
+      locInput4.value = "culiacan";
+      locInput4.dispatchEvent(new Event('input', { bubbles: true }));
+      await waitFor(() => !!document.querySelector('[data-loc="HeroLocationList"]'));
+      const itemsText = Array.from(document.querySelectorAll('[data-loc="HeroLocationItem"]')).map(el=>text(el)).join(" | ");
+      const hasCuliacan = /Culiac[áa]n/i.test(itemsText);
+      push({ name: "Auto Culiacán", route: location.pathname + location.search, action: "Culiacán Municipio/Ciudad", expected: "Culiacán visible (Municipio o Ciudad)", actual: itemsText, status: hasCuliacan ? "PASS" : "FAIL" });
+    }
+
+    // QA: "sonora" expects Sonora (Estado)
+    navigate("/");
+    await waitFor(() => !!document.querySelector('[data-loc="HeroLocationInput"]'));
+    const locInput5 = document.querySelector('[data-loc="HeroLocationInput"]') as HTMLInputElement | null;
+    if (locInput5) {
+      locInput5.focus();
+      locInput5.value = "sonora";
+      locInput5.dispatchEvent(new Event('input', { bubbles: true }));
+      await waitFor(() => !!document.querySelector('[data-loc="HeroLocationList"]'));
+      const itemsText = Array.from(document.querySelectorAll('[data-loc="HeroLocationItem"]')).map(el=>text(el)).join(" | ");
+      const hasSonora = /Sonora/i.test(itemsText);
+      const hasEstado = /Estado/.test(itemsText);
+      push({ name: "Auto Sonora", route: location.pathname + location.search, action: "Estado Sonora", expected: "Sonora en Estados", actual: itemsText, status: (hasSonora && hasEstado) ? "PASS" : "FAIL" });
+    }
+
     if (runIdRef.current === runId) setRunning(false);
   }
 
