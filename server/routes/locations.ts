@@ -23,56 +23,66 @@ function dedupeById<T extends { id: string }>(arr: T[]): T[] {
 export const handleLocationsSearch: RequestHandler = async (req, res) => {
   const qRaw = typeof req.query.q === "string" ? req.query.q : "";
   const q = qRaw.trim();
-  const type = typeof req.query.type === "string" ? req.query.type : undefined; // "state"|"city"|"neighborhood"|"metro"
+  const type = typeof req.query.type === "string" ? req.query.type : undefined; // "state"|"municipality"|"city"|"neighborhood"|"metro"
+  const stateSlug = typeof req.query.stateSlug === "string" ? req.query.stateSlug : undefined;
   const citySlug = typeof req.query.citySlug === "string" ? req.query.citySlug : undefined;
-  const limitRaw = Number(req.query.limit || 12);
-  const limit = Math.max(1, Math.min(20, Number.isFinite(limitRaw) ? limitRaw : 12));
+  const limitRaw = Number(req.query.limit || 15);
+  const limit = Math.max(1, Math.min(25, Number.isFinite(limitRaw) ? limitRaw : 15));
 
-  type Loc = { id: string; name: string; slug: string; type: "state"|"city"|"neighborhood"|"metro"; state?: string; city?: string; city_slug?: string; parent_slug?: string; lat?: number|null; lng?: number|null; popularity?: number };
+  type Loc = { id: string; name: string; slug: string; type: "state"|"municipality"|"city"|"neighborhood"|"metro"; state?: string; state_slug?: string; municipality?: string; municipality_slug?: string; city?: string; city_slug?: string; parent_slug?: string; lat?: number|null; lng?: number|null; popularity?: number };
 
-  async function meiliGrouped(): Promise<{cities: Loc[]; states: Loc[]; neighborhoods: Loc[]}> {
+  async function meiliGrouped(): Promise<{states: Loc[]; municipalities: Loc[]; cities: Loc[]; neighborhoods: Loc[]}> {
     const index = getIndex();
 
     // 1) Curated when short/empty query
     if (!q || q.length < 2) {
-      const [cRes, sRes] = await Promise.all([
+      const [sRes, mRes, cRes] = await Promise.all([
+        index.search("", { filter: 'type = "state"', sort: ["popularity:desc", "name:asc"], limit: 8 }),
+        index.search("", { filter: 'type = "municipality"', sort: ["popularity:desc", "name:asc"], limit: 8 }),
         index.search("", { filter: 'type = "city"', sort: ["popularity:desc", "name:asc"], limit: 8 }),
-        index.search("", { filter: 'type = "state"', sort: ["popularity:desc", "name:asc"], limit: 6 }),
       ]);
-      const cities = (cRes.hits || []).map((h: any) => toLoc(h));
       const states = (sRes.hits || []).map((h: any) => toLoc(h));
-      return { cities, states, neighborhoods: [] };
+      const municipalities = (mRes.hits || []).map((h: any) => toLoc(h));
+      const cities = (cRes.hits || []).map((h: any) => toLoc(h));
+      return { states, municipalities, cities, neighborhoods: [] };
     }
 
     // 2) Query >= 2
     if (type) {
       const filters: string[] = [`type = ${JSON.stringify(type)}`];
+      if (stateSlug) filters.push(`state_slug = ${JSON.stringify(stateSlug)}`);
       if (type === "neighborhood" && citySlug) filters.push(`city_slug = ${JSON.stringify(citySlug)}`);
       const resp = await index.search(q, { filter: filters.join(" AND "), limit, sort: ["popularity:desc", "name:asc"] });
       const arr = (resp.hits || []).map((h: any) => toLoc(h));
       return {
-        cities: type === "city" ? arr : [],
         states: type === "state" ? arr : [],
+        municipalities: type === "municipality" ? arr : [],
+        cities: type === "city" ? arr : [],
         neighborhoods: type === "neighborhood" ? arr : [],
       };
     }
 
-    // cities + states first
-    const resp = await index.search(q, { filter: 'type IN ["city", "state"]', limit: 15, sort: ["popularity:desc", "name:asc"] });
-    const hits = (resp.hits || []).map((h: any) => toLoc(h));
-    let cities = hits.filter((h) => h.type === "city");
-    let states = hits.filter((h) => h.type === "state");
+    const [sRes, mRes, cRes] = await Promise.all([
+      index.search(q, { filter: 'type = "state"', limit: 8, sort: ["popularity:desc", "name:asc"] }),
+      index.search(q, { filter: 'type = "municipality"', limit: 10, sort: ["popularity:desc", "name:asc"] }),
+      index.search(q, { filter: 'type = "city"', limit: 12, sort: ["popularity:desc", "name:asc"] }),
+    ]);
+    let states = (sRes.hits || []).map((h: any) => toLoc(h));
+    let municipalities = (mRes.hits || []).map((h: any) => toLoc(h));
+    let cities = (cRes.hits || []).map((h: any) => toLoc(h));
     let neighborhoods: Loc[] = [];
 
-    if (hits.length < 10) {
-      const nRes = await index.search(q, { filter: 'type = "neighborhood"', limit: 10, sort: ["popularity:desc", "name:asc"] });
+    const total = states.length + municipalities.length + cities.length;
+    if (total < 12 && q.length >= 3) {
+      const nRes = await index.search(q, { filter: 'type = "neighborhood"', limit: 8, sort: ["popularity:desc", "name:asc"] });
       neighborhoods = (nRes.hits || []).map((h: any) => toLoc(h));
     }
 
-    cities = dedupeById(cities);
     states = dedupeById(states);
+    municipalities = dedupeById(municipalities);
+    cities = dedupeById(cities);
     neighborhoods = dedupeById(neighborhoods);
-    return { cities, states, neighborhoods };
+    return { states, municipalities, cities, neighborhoods };
   }
 
   function toLoc(h: any): Loc {
@@ -82,6 +92,9 @@ export const handleLocationsSearch: RequestHandler = async (req, res) => {
       slug: h.slug,
       type: h.type,
       state: h.state,
+      state_slug: h.state_slug,
+      municipality: h.municipality,
+      municipality_slug: h.municipality_slug,
       city: h.city,
       city_slug: h.city_slug,
       parent_slug: h.parent_slug,
@@ -91,14 +104,14 @@ export const handleLocationsSearch: RequestHandler = async (req, res) => {
     };
   }
 
-  function localGrouped(): {cities: Loc[]; states: Loc[]; neighborhoods: Loc[]} {
+  function localGrouped(): {states: Loc[]; municipalities: Loc[]; cities: Loc[]; neighborhoods: Loc[]} {
     const full = path.resolve("shared/data/locations.mx.json");
     let raw: any[] = [];
     try {
       const txt = fs.readFileSync(full, "utf8");
       raw = JSON.parse(txt);
     } catch {
-      return { cities: [], states: [], neighborhoods: [] };
+      return { states: [], municipalities: [], cities: [], neighborhoods: [] };
     }
     const all: Loc[] = raw.map((h: any) => toLoc(h));
     const n = normalize(q);
@@ -113,33 +126,38 @@ export const handleLocationsSearch: RequestHandler = async (req, res) => {
     };
 
     if (!q || q.length < 2) {
+      const states = sortPop(byType("state").filter(match)).slice(0, 8);
+      const municipalities = sortPop(byType("municipality").filter(match)).slice(0, 8);
       const cities = sortPop(byType("city").filter(match)).slice(0, 8);
-      const states = sortPop(byType("state").filter(match)).slice(0, 4);
-      return { cities, states, neighborhoods: [] };
+      return { states, municipalities, cities, neighborhoods: [] };
     }
 
     if (type) {
       let pool = byType(type).filter(match);
       if (type === "neighborhood" && citySlug) pool = pool.filter((x) => x.city_slug === citySlug);
+      if (stateSlug) pool = pool.filter((x) => x.state_slug === stateSlug);
       pool = sortPop(pool).slice(0, limit);
       return {
-        cities: type === "city" ? pool : [],
         states: type === "state" ? pool : [],
+        municipalities: type === "municipality" ? pool : [],
+        cities: type === "city" ? pool : [],
         neighborhoods: type === "neighborhood" ? pool : [],
       };
     }
 
-    let cities = sortPop(byType("city").filter(match));
     let states = sortPop(byType("state").filter(match));
-    const topCombined = [...cities, ...states].slice(0, 15);
-    cities = topCombined.filter((x) => x.type === "city");
+    let municipalities = sortPop(byType("municipality").filter(match));
+    let cities = sortPop(byType("city").filter(match));
+    const topCombined = [...states, ...municipalities, ...cities].slice(0, 20);
     states = topCombined.filter((x) => x.type === "state");
+    municipalities = topCombined.filter((x) => x.type === "municipality");
+    cities = topCombined.filter((x) => x.type === "city");
 
     let neighborhoods: Loc[] = [];
-    if (topCombined.length < 10) {
-      neighborhoods = sortPop(byType("neighborhood").filter(match)).slice(0, 10);
+    if (topCombined.length < 12 && q.length >= 3) {
+      neighborhoods = sortPop(byType("neighborhood").filter(match)).slice(0, 8);
     }
-    return { cities, states, neighborhoods };
+    return { states, municipalities, cities, neighborhoods };
   }
 
   try {
