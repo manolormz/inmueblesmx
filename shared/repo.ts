@@ -70,6 +70,25 @@ function seedOnce() {
     const ownerCompany = [c1, c2, c3][i % 3];
     const ownerProfile = [p1, p2, p3][i % 3];
 
+    const citySlugMap: Record<string,string> = {
+      "CDMX": "ciudad-de-mexico",
+      "Guadalajara": "guadalajara",
+      "Monterrey": "monterrey",
+      "Cancún": "cancun",
+      "Playa del Carmen": "playa-del-carmen",
+    };
+    const citySlug = citySlugMap[city.name] || slugifyEs(city.name);
+
+    const candidateNeighborhoods: Record<string, string[]> = {
+      "ciudad-de-mexico": ["roma-norte", "polanco"],
+      "guadalajara": ["guadalajara-centro", "providencia"],
+      "monterrey": ["san-pedro-garza-garcia", "valle-oriente"],
+      "cancun": ["zona-hotelera"],
+      "playa-del-carmen": ["centro"],
+    };
+    const neighChoices = candidateNeighborhoods[citySlug] || [];
+    const neighborhood_slug = neighChoices.length && i % 3 === 0 ? neighChoices[(i / 3) % neighChoices.length | 0] : undefined;
+
     const base: PropertyInput = {
       id: genId(),
       title,
@@ -94,6 +113,8 @@ function seedOnce() {
       slug: "temp", // replaced below
       owner_company: ownerCompany.id,
       owner_profile: ownerProfile.id,
+      city_slug: citySlug,
+      neighborhood_slug: neighborhood_slug,
     };
 
     const parsed = PropertySchema.parse(base);
@@ -116,6 +137,9 @@ export type PropertyFilters = {
   status?: PublicationStatus;
   owner_company?: string; // company id
   q?: string; // text search title/description
+  // ubicación
+  locationSlug?: string; // city
+  neighborhoodSlug?: string; // neighborhood
   // extra facets
   minBedrooms?: number;
   minBathrooms?: number;
@@ -155,12 +179,15 @@ export async function listProperties(
     currency,
     sortBy = "id",
     sortDir = "desc",
-  } = filters;
+  } = filters as PropertyFilters & { locationSlug?: string; neighborhoodSlug?: string };
 
   let data = properties.slice();
 
   if (operation) data = data.filter((p) => p.operation === operation);
   if (type) data = data.filter((p) => p.type === type);
+  // ubicación primero para reducir dataset
+  if (filters.locationSlug) data = data.filter((p) => (p.city_slug ?? null) === filters.locationSlug);
+  if (filters.neighborhoodSlug) data = data.filter((p) => (p.neighborhood_slug ?? null) === filters.neighborhoodSlug);
   const effMinPrice = typeof minPrice === "number" ? minPrice : priceMin;
   const effMaxPrice = typeof maxPrice === "number" ? maxPrice : priceMax;
   if (typeof effMinPrice === "number") data = data.filter((p) => p.price >= effMinPrice);
