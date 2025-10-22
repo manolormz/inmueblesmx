@@ -22,6 +22,9 @@ export function createServer() {
 
   app.get("/api/demo", handleDemo);
 
+  // Locations search
+  app.get("/api/locations", require("./routes/locations").handleLocationsSearch);
+
   // CMS routes
   app.post("/api/cms/property", createProperty);
   app.post("/api/cms/property/publish", publishProperty);
