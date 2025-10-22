@@ -145,6 +145,43 @@ export default function Autotest() {
     const reMillions = /^\$[\d.,]+(?:\.\d)?\s*M\s*MXN$/;
     push({ name: "Precio formato (Venta)", route: location.pathname + location.search, action: "Validar millones compactos", expected: reMillions.toString(), actual: priceTextSale, status: reMillions.test(priceTextSale) ? "PASS" : "FAIL" });
 
+    // Selección de ubicación: Roma Norte (Colonia) en Home y Buscar
+    navigate("/");
+    await waitFor(() => document.querySelector('[data-loc="HeroLocationInput"]'));
+    const locInput = document.querySelector('[data-loc="HeroLocationInput"]') as HTMLInputElement | null;
+    if (locInput) {
+      locInput.focus();
+      locInput.value = "Roma";
+      locInput.dispatchEvent(new Event('input', { bubbles: true }));
+      const okList = await waitFor(() => !!document.querySelector('[data-loc="HeroLocationList"] [data-loc="HeroLocationItem"]'));
+      let clicked = false;
+      if (okList) {
+        const items = Array.from(document.querySelectorAll('[data-loc="HeroLocationList"] [data-loc="HeroLocationItem"]')) as HTMLLIElement[];
+        const romaItem = items.find((li) => /Roma\s*Norte/i.test(text(li)) || /Colonia/.test(text(li)));
+        if (romaItem) { (romaItem as any).dispatchEvent(new MouseEvent('mousedown', { bubbles: true })); clicked = true; }
+      }
+      const btn = document.querySelector('[data-loc="HeroSearchBtn"]') as HTMLButtonElement | null;
+      btn?.click();
+      await waitFor(() => location.pathname === "/search");
+      const spLoc = new URLSearchParams(location.search);
+      const gotNeigh = spLoc.get('neighborhoodSlug') === 'roma-norte';
+      const gotCity = spLoc.get('locationSlug') === 'ciudad-de-mexico';
+      const okSlug = gotNeigh || gotCity;
+      push({ name: "Ubicación seleccionada", route: location.pathname + location.search, action: "URL con slug", expected: "neighborhoodSlug=roma-norte o locationSlug=ciudad-de-mexico", actual: location.search, status: okSlug ? "PASS" : "FAIL" });
+      // Chip de ubicación
+      await waitFor(() => document.querySelector('[data-loc="SearchChips"]'));
+      const chipsLoc = getChipLabels();
+      const hasLocChip = chipsLoc.some((c) => /Ubicación:/.test(c) && (/Roma\s*Norte/.test(c) || /Ciudad de México/.test(c)));
+      push({ name: "Chip de ubicación", route: location.pathname + location.search, action: "Etiqueta correcta", expected: "Ubicación: Col. Roma Norte, Ciudad de México (o Ciudad de México)", actual: chipsLoc.join(" | "), status: hasLocChip ? "PASS" : "FAIL" });
+      // Quitar chip
+      const xBtn = document.querySelector('[data-loc="SearchChips"] button[aria-label^="Quitar"]') as HTMLButtonElement | null;
+      xBtn?.click();
+      await sleep(150);
+      const spAfter = new URLSearchParams(location.search);
+      const removed = !spAfter.get('neighborhoodSlug') && !spAfter.get('locationSlug');
+      push({ name: "Quitar chip ubicación", route: location.pathname + location.search, action: "Slugs removidos", expected: "sin neighborhoodSlug/locationSlug", actual: location.search, status: removed ? "PASS" : "FAIL" });
+    }
+
     // Restablecer todo (asegurar que aparezca)
     let resetBtn = document.querySelector('[data-loc="SearchResetAll"]') as HTMLButtonElement | null;
     if (!resetBtn) {
