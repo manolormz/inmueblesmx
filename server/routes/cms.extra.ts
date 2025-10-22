@@ -1,6 +1,4 @@
 import type { RequestHandler } from "express";
-
-import type { RequestHandler } from "express";
 import { listProperties } from "../../shared/repo";
 
 export const listSeededProperties: RequestHandler = async (req, res) => {
