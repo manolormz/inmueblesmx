@@ -1,5 +1,19 @@
 import type { RequestHandler } from "express";
 
+import type { RequestHandler } from "express";
+import { listProperties } from "../../shared/repo";
+
+export const listSeededProperties: RequestHandler = async (req, res) => {
+  try {
+    const page = Math.max(1, parseInt(String(req.query.page || "1"), 10) || 1);
+    const pageSize = Math.max(1, Math.min(100, parseInt(String(req.query.pageSize || "20"), 10) || 20));
+    const { items, total } = await listProperties({ status: "Published" } as any, page, pageSize);
+    res.json({ ok: true, items, total, page, pageSize });
+  } catch (e: any) {
+    res.status(500).json({ ok: false, message: e?.message || "Error" });
+  }
+};
+
 export const unpublishProperty: RequestHandler = async (req, res) => {
   try {
     const privateKey = process.env.BUILDER_PRIVATE_API_KEY;
@@ -9,7 +23,7 @@ export const unpublishProperty: RequestHandler = async (req, res) => {
 
     if (!privateKey) {
       if (isProd) {
-        return res.status(401).json({ ok: false, message: "Falta configuración del servidor (BUILDER_PRIVATE_API_KEY)" });
+        return res.status(401).json({ ok: false, message: "Falta configuraci��n del servidor (BUILDER_PRIVATE_API_KEY)" });
       } else {
         return res.status(200).json({ ok: false, devHint: true, message: "Falta BUILDER_PRIVATE_API_KEY; ejecutando en modo demo (no se guardó en CMS)." });
       }
