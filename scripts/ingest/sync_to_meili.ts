@@ -75,18 +75,37 @@ async function ensureIndexForName(client: MeiliSearch, name: string) {
   }
   const idx = client.index(name);
   await idx.updateSettings({
-    searchableAttributes: ["name", "search_keywords", "city", "state", "postal_codes"],
-    filterableAttributes: ["type", "state", "city", "city_slug", "parent_slug"],
+    searchableAttributes: [
+      "name",
+      "search_keywords",
+      "city",
+      "municipality",
+      "state",
+      "postal_codes",
+    ],
+    filterableAttributes: [
+      "type",
+      "state",
+      "state_slug",
+      "city",
+      "city_slug",
+      "municipality",
+      "municipality_slug",
+      "parent_slug",
+    ],
     sortableAttributes: ["popularity", "name"],
     rankingRules: ["typo", "words", "proximity", "attribute", "exactness", "sort"],
     synonyms: {
-      cdmx: ["df", "ciudad de mexico", "d.f."],
+      cdmx: ["df", "ciudad de mexico", "d.f.", "mexico, d.f."],
+      slp: ["san luis potosi", "san luis p."],
+      qro: ["queretaro", "querétaro"],
       gdl: ["guadalajara", "zmg"],
-      qro: ["queretaro"],
-      nl: ["nuevo leon"],
-      edomex: ["estado de mexico"],
+      gto: ["guanajuato"],
+      edomex: ["estado de mexico", "edoméx", "e do mex"],
+      culiacan: ["culiacán", "culiacan sinaloa"],
     },
-  });
+    typoTolerance: { enabled: true, minWordSizeForTypos: { oneTypo: 4, twoTypos: 8 } as any } as any,
+  } as any);
   return idx;
 }
 
