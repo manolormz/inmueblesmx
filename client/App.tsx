@@ -53,4 +53,5 @@ const App = () => (
   </QueryClientProvider>
 );
 
+console.log("✅ App mounted");
 createRoot(document.getElementById("root")!).render(<App />);
