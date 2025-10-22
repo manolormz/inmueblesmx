@@ -18,7 +18,8 @@
     "start": "node dist/server/node-build.mjs",
     "test": "vitest --run",
     "format.fix": "prettier --write .",
-    "typecheck": "tsc"
+    "typecheck": "tsc",
+    "sync:locations": "tsx scripts/ingest/sync_to_meili.ts"
   },
   "dependencies": {
     "dotenv": "^17.2.1",
