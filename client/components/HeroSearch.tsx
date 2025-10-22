@@ -4,6 +4,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { PropertyTypeOptions } from "@shared/options";
 import { getPriceOptionsMXNByOperation } from "@shared/filters";
+import { MapPin, Search } from "lucide-react";
 
 export function HeroSearch() {
   const [params, setParams] = useSearchParams();
@@ -23,32 +24,50 @@ export function HeroSearch() {
   const debounceRef = useRef<number | null>(null);
 
   // Autocomplete state
-  type LocItem = { id?: string; name: string; slug: string; type: "city"|"state"|"neighborhood"|"metro"; lat?: number; lng?: number };
+  type LocItem = { id?: string; name: string; slug: string; type: "city"|"state"|"neighborhood"|"metro"; state?: string; city?: string; city_slug?: string; lat?: number; lng?: number };
   const [locItems, setLocItems] = useState<LocItem[]>([]);
   const [locOpen, setLocOpen] = useState(false);
   const [locActive, setLocActive] = useState(0);
-  const [locSelected, setLocSelected] = useState<{ slug: string | null; type: LocItem["type"] | null }>({ slug: null, type: null });
+  const [locSelected, setLocSelected] = useState<{ slug: string | null; type: LocItem["type"] | null; city_slug?: string | null }>({ slug: null, type: null, city_slug: null });
 
   function normalize(s: string) {
     return s.normalize("NFKD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
   }
 
   async function queryLocations(term: string) {
-    const resp = await fetch(`/api/locations?q=${encodeURIComponent(term)}&limit=8`).catch(() => null);
+    const url = term.trim().length < 2 ? `/api/locations?limit=10` : `/api/locations?q=${encodeURIComponent(term)}&limit=12`;
+    const resp = await fetch(url).catch(() => null);
     if (!resp) return [] as LocItem[];
     const json = await resp.json().catch(() => ({}));
     if (json?.ok && Array.isArray(json.items)) return json.items as LocItem[];
     if (json?.devHint) {
       try {
-        const seeds: LocItem[] = (await import("@shared/data/locations.mx.json")).default as any;
+        const seeds: any[] = (await import("@shared/data/locations.mx.json")).default as any;
         const n = normalize(term);
-        const filtered = seeds.filter((x: any) => {
-          const name = normalize(x.name || "");
-          const keys = normalize(String(x.search_keywords || ""));
-          return name.startsWith(n) || name.includes(n) || keys.includes(n);
-        });
-        filtered.sort((a: any, b: any) => (b.popularity || 0) - (a.popularity || 0) || String(a.name).localeCompare(String(b.name)));
-        return filtered.slice(0, 8);
+        const withMeta: LocItem[] = seeds.map((x: any) => ({
+          id: x.id,
+          name: x.name,
+          slug: x.slug,
+          type: x.type,
+          state: x.state,
+          city: x.city,
+          city_slug: x.city_slug,
+          lat: x.lat,
+          lng: x.lng,
+        }));
+        let filtered: LocItem[] = [];
+        if (term.trim().length < 2) {
+          filtered = withMeta.filter((x) => x.type === "city" || x.type === "state");
+          filtered.sort((a: any, b: any) => (b.popularity || 0) - (a.popularity || 0) || String(a.name).localeCompare(String(b.name)));
+        } else {
+          filtered = withMeta.filter((x) => {
+            const name = normalize(x.name || "");
+            const keys = normalize(String((seeds.find(s=>s.slug===x.slug)?.search_keywords) || ""));
+            return name.startsWith(n) || name.includes(n) || keys.includes(n);
+          });
+          filtered.sort((a: any, b: any) => (b.popularity || 0) - (a.popularity || 0) || String(a.name).localeCompare(String(b.name)));
+        }
+        return filtered.slice(0, term.trim().length < 2 ? 10 : 12);
       } catch {
         return [] as LocItem[];
       }
@@ -74,12 +93,15 @@ export function HeroSearch() {
   }, []);
 
   function selectLocation(it: LocItem) {
-    setLocSelected({ slug: it.slug, type: it.type });
+    setLocSelected({ slug: it.slug, type: it.type, city_slug: it.city_slug ?? null });
     setLocOpen(false);
     if (inputRef.current) {
       inputRef.current.value = it.name;
     }
     setQ(it.name);
+    try {
+      localStorage.setItem("imx_last_location", JSON.stringify({ slug: it.slug, type: it.type, name: it.name, city: it.city, state: it.state, city_slug: it.city_slug }));
+    } catch {}
   }
 
   const handleLocationKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -120,10 +142,20 @@ export function HeroSearch() {
     const search = new URLSearchParams();
     if (operation) search.set("operation", operation);
     search.set("status", "Published");
-    if (q.trim()) search.set("q", q.trim());
     if (typeValue) search.set("type", typeValue);
     if (selected?.priceMin != null) search.set("priceMin", String(selected.priceMin));
     if (selected?.priceMax != null) search.set("priceMax", String(selected.priceMax));
+    // Slugs de ubicación: priorizar ciudad (MVP). Si seleccionó colonia, pasar neighborhoodSlug y citySlug
+    if (locSelected.slug && locSelected.type) {
+      if (locSelected.type === "city") {
+        search.set("locationSlug", locSelected.slug);
+      } else if (locSelected.type === "neighborhood") {
+        if (locSelected.city_slug) search.set("locationSlug", locSelected.city_slug);
+        search.set("neighborhoodSlug", locSelected.slug);
+      }
+    } else if (q.trim()) {
+      search.set("q", q.trim());
+    }
     navigate(`/search?${search.toString()}`);
   }
 
@@ -202,12 +234,16 @@ export function HeroSearch() {
                 </div>
                 {/* Autocomplete dropdown */}
                 {locOpen && (
-                  <ul className="absolute z-30 mt-1 left-0 right-0 bg-white border rounded-xl shadow-lg max-h-56 overflow-auto" role="listbox" data-loc="HeroLocationList">
-                    {locItems.length === 0 ? (
-                      <li className="px-3 py-2 text-sm text-gray-500">Sin resultados</li>
-                    ) : (
-                      locItems.map((it, idx) => (
-                        <li key={it.slug}
+                  <ul className="absolute z-30 mt-1 left-0 right-0 bg-white border rounded-xl shadow-lg max-h-72 overflow-auto" role="listbox" data-loc="HeroLocationList">
+                    {(() => {
+                      if (locItems.length === 0) {
+                        return <li className="px-3 py-2 text-sm text-gray-500">Sin resultados</li>;
+                      }
+                      const cities = locItems.filter(i => i.type === "city");
+                      const neighborhoods = locItems.filter(i => i.type === "neighborhood");
+                      const states = locItems.filter(i => i.type === "state");
+                      const renderItem = (it: LocItem, idx: number) => (
+                        <li key={`${it.type}:${it.slug}`}
                             role="option"
                             aria-selected={idx === locActive}
                             className={`px-3 py-2 cursor-pointer flex items-center justify-between ${idx===locActive?"bg-blue-50":"hover:bg-gray-50"}`}
@@ -215,13 +251,32 @@ export function HeroSearch() {
                             onMouseDown={(e) => { e.preventDefault(); selectLocation(it); }}
                             data-loc="HeroLocationItem"
                         >
-                          <span className="font-medium">{it.name}</span>
+                          <div className="flex flex-col text-left">
+                            <span className="font-medium">{it.name}</span>
+                            <span className="text-xs text-gray-500">{it.type === 'neighborhood' ? `Colonia · ${it.city || ''}` : it.type === 'city' ? `Ciudad · ${it.state || ''}` : 'Estado'}</span>
+                          </div>
                           <span className="ml-2 text-xs text-gray-500 px-2 py-0.5 rounded-full border">
                             {it.type === 'city' ? 'Ciudad' : it.type === 'state' ? 'Estado' : it.type === 'neighborhood' ? 'Colonia' : 'Metro'}
                           </span>
                         </li>
-                      ))
-                    )}
+                      );
+                      const flat: LocItem[] = [];
+                      const nodes: JSX.Element[] = [];
+                      let idx = 0;
+                      if (cities.length) {
+                        nodes.push(<li key="hdr-c" className="px-3 pt-2 pb-1 text-[11px] uppercase tracking-wide text-gray-500">Ciudades</li>);
+                        cities.forEach(it => { flat.push(it); nodes.push(renderItem(it, idx++)); });
+                      }
+                      if (neighborhoods.length) {
+                        nodes.push(<li key="hdr-n" className="px-3 pt-2 pb-1 text-[11px] uppercase tracking-wide text-gray-500">Colonias</li>);
+                        neighborhoods.forEach(it => { flat.push(it); nodes.push(renderItem(it, idx++)); });
+                      }
+                      if (states.length) {
+                        nodes.push(<li key="hdr-s" className="px-3 pt-2 pb-1 text-[11px] uppercase tracking-wide text-gray-500">Estados</li>);
+                        states.forEach(it => { flat.push(it); nodes.push(renderItem(it, idx++)); });
+                      }
+                      return nodes;
+                    })()}
                   </ul>
                 )}
                 <p id={helpId} className="sr-only">Presiona Enter para seleccionar. Escape para cerrar.</p>
