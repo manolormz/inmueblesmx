@@ -22,6 +22,75 @@ export function HeroSearch() {
   const inputRef = useRef<HTMLInputElement>(null);
   const debounceRef = useRef<number | null>(null);
 
+  // Autocomplete state
+  type LocItem = { id?: string; name: string; slug: string; type: "city"|"state"|"neighborhood"|"metro"; lat?: number; lng?: number };
+  const [locItems, setLocItems] = useState<LocItem[]>([]);
+  const [locOpen, setLocOpen] = useState(false);
+  const [locActive, setLocActive] = useState(0);
+  const [locSelected, setLocSelected] = useState<{ slug: string | null; type: LocItem["type"] | null }>({ slug: null, type: null });
+
+  function normalize(s: string) {
+    return s.normalize("NFKD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+  }
+
+  async function queryLocations(term: string) {
+    const resp = await fetch(`/api/locations?q=${encodeURIComponent(term)}&limit=8`).catch(() => null);
+    if (!resp) return [] as LocItem[];
+    const json = await resp.json().catch(() => ({}));
+    if (json?.ok && Array.isArray(json.items)) return json.items as LocItem[];
+    if (json?.devHint) {
+      try {
+        const seeds: LocItem[] = (await import("@shared/data/locations.mx.json")).default as any;
+        const n = normalize(term);
+        const filtered = seeds.filter((x: any) => {
+          const name = normalize(x.name || "");
+          const keys = normalize(String(x.search_keywords || ""));
+          return name.startsWith(n) || name.includes(n) || keys.includes(n);
+        });
+        filtered.sort((a: any, b: any) => (b.popularity || 0) - (a.popularity || 0) || String(a.name).localeCompare(String(b.name)));
+        return filtered.slice(0, 8);
+      } catch {
+        return [] as LocItem[];
+      }
+    }
+    return [] as LocItem[];
+  }
+
+  const handleLocationInput = useCallback((val: string) => {
+    if (debounceRef.current) window.clearTimeout(debounceRef.current);
+    debounceRef.current = window.setTimeout(async () => {
+      // update q used for search
+      setQ(val);
+      if (val.trim().length >= 2) {
+        const items = await queryLocations(val.trim());
+        setLocItems(items);
+        setLocActive(0);
+        setLocOpen(true);
+      } else {
+        setLocItems([]);
+        setLocOpen(false);
+      }
+    }, 280);
+  }, []);
+
+  function selectLocation(it: LocItem) {
+    setLocSelected({ slug: it.slug, type: it.type });
+    setLocOpen(false);
+    if (inputRef.current) {
+      inputRef.current.value = it.name;
+    }
+    setQ(it.name);
+  }
+
+  const handleLocationKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "ArrowDown") { e.preventDefault(); setLocActive((i) => Math.min(i + 1, Math.max(0, locItems.length - 1))); }
+    else if (e.key === "ArrowUp") { e.preventDefault(); setLocActive((i) => Math.max(i - 1, 0)); }
+    else if (e.key === "Enter") {
+      if (locOpen && locItems[locActive]) { e.preventDefault(); selectLocation(locItems[locActive]); }
+      else { doSearch(); }
+    } else if (e.key === "Escape") { setLocOpen(false); (e.currentTarget as HTMLInputElement).blur(); }
+  };
+
   useEffect(() => {
     const next = new URLSearchParams(params);
     if (operation) next.set("operation", operation);
