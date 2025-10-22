@@ -75,10 +75,17 @@ async function ensureIndexForName(client: MeiliSearch, name: string) {
   }
   const idx = client.index(name);
   await idx.updateSettings({
-    sortableAttributes: ["popularity", "name"],
+    searchableAttributes: ["name", "search_keywords", "city", "state", "postal_codes"],
     filterableAttributes: ["type", "state", "city", "city_slug", "parent_slug"],
-    searchableAttributes: ["name", "search_keywords", "postal_codes", "city", "state"],
+    sortableAttributes: ["popularity", "name"],
     rankingRules: ["typo", "words", "proximity", "attribute", "exactness", "sort"],
+    synonyms: {
+      cdmx: ["df", "ciudad de mexico", "d.f."],
+      gdl: ["guadalajara", "zmg"],
+      qro: ["queretaro"],
+      nl: ["nuevo leon"],
+      edomex: ["estado de mexico"],
+    },
   });
   return idx;
 }
