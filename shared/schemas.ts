@@ -55,6 +55,9 @@ export const PropertySchema = z.object({
   slug: z.string().min(1),
   owner_company: z.string().optional().nullable(),
   owner_profile: z.string().optional().nullable(),
+  // filtros de ubicación
+  city_slug: z.string().optional().nullable(),
+  neighborhood_slug: z.string().optional().nullable(),
 });
 
 export const LeadSchema = z.object({
