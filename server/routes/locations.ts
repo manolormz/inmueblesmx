@@ -1,4 +1,5 @@
 import type { RequestHandler } from "express";
+import { getIndex, isMeiliConfigured } from "../search/meili";
 
 function normalize(s: string): string {
   return s
@@ -9,30 +10,68 @@ function normalize(s: string): string {
 }
 
 export const handleLocationsSearch: RequestHandler = async (req, res) => {
-  const qRaw = String(req.query.q || "");
-  const type = typeof req.query.type === "string" ? req.query.type : undefined;
-  const limitRaw = Number(req.query.limit || 8);
-  const limit = Math.max(1, Math.min(20, Number.isFinite(limitRaw) ? limitRaw : 8));
+  const qRaw = typeof req.query.q === "string" ? req.query.q : "";
+  const q = qRaw.trim();
+  const type = typeof req.query.type === "string" ? req.query.type : undefined; // "state"|"city"|"neighborhood"|"metro"
+  const citySlug = typeof req.query.citySlug === "string" ? req.query.citySlug : undefined;
+  const limitRaw = Number(req.query.limit || 10);
+  const limit = Math.max(1, Math.min(20, Number.isFinite(limitRaw) ? limitRaw : 10));
 
-  if (!qRaw || qRaw.trim().length < 1) {
-    return res.status(400).json({ ok: false, message: "Parámetro 'q' es requerido" });
-  }
-
-  const hasKey = !!process.env.BUILDER_PRIVATE_API_KEY;
-  if (!hasKey) {
-    if (process.env.NODE_ENV === "production") {
-      return res.status(401).json({ ok: false, message: "Falta configuración del servidor (BUILDER_PRIVATE_API_KEY)" });
-    }
-    // Dev hint: let client use local seeds
+  if (!isMeiliConfigured()) {
+    // Sin Meili configurado, el cliente debe usar el fallback local
     return res.status(200).json({ ok: false, devHint: true, items: [] });
   }
 
-  // If we had a real CMS, we'd query it here. Placeholder: return empty with ok true to keep contract.
-  const q = normalize(qRaw);
-  const items: any[] = [];
-  // TODO: Replace with real CMS query using BUILDER_PRIVATE_API_KEY when available.
+  try {
+    const index = getIndex();
 
-  // sort & slice
-  items.sort((a, b) => (b.popularity || 0) - (a.popularity || 0) || String(a.name).localeCompare(String(b.name)));
-  return res.json({ ok: true, items: items.slice(0, limit).map(({ id, name, slug, type, lat, lng }) => ({ id, name, slug, type, lat, lng })) });
+    // Construir filtros
+    const filters: string[] = [];
+    const allowedTypes: string[] = [];
+    if (!q || q.length < 2) {
+      // Solo estados y ciudades cuando no hay consulta o es corta
+      allowedTypes.push("state", "city");
+    } else {
+      // Incluir colonias con consultas más largas
+      allowedTypes.push("state", "city", "neighborhood");
+    }
+    if (type && ["state","city","neighborhood","metro"].includes(type)) {
+      // restringir aún más si el usuario pide un tipo específico
+      filters.push(`type = ${JSON.stringify(type)}`);
+    } else if (allowedTypes.length) {
+      const inList = allowedTypes.map(t => JSON.stringify(t)).join(", ");
+      filters.push(`type IN [${inList}]`);
+    }
+    if (citySlug) {
+      filters.push(`city_slug = ${JSON.stringify(citySlug)}`);
+    }
+
+    // Cuando q está vacío/corto, usar sort por popularidad y nombre
+    const opts: any = {
+      filter: filters.length ? filters.join(" AND ") : undefined,
+      limit,
+    };
+    if (!q || q.length < 2) {
+      opts.sort = ["popularity:desc", "name:asc"];
+    }
+
+    const resp = await index.search(q, opts);
+    const items = (resp.hits || []).map((h: any) => ({
+      id: h.id,
+      name: h.name,
+      slug: h.slug,
+      type: h.type,
+      state: h.state,
+      city: h.city,
+      city_slug: h.city_slug,
+      parent_slug: h.parent_slug,
+      lat: typeof h.lat === "number" ? h.lat : undefined,
+      lng: typeof h.lng === "number" ? h.lng : undefined,
+    }));
+
+    return res.status(200).json({ ok: true, items });
+  } catch (err: any) {
+    const msg = (err && (err.message || err.msg)) || "Error de búsqueda";
+    return res.status(500).json({ ok: false, message: msg });
+  }
 };
