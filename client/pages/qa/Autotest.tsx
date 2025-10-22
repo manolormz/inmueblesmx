@@ -68,7 +68,7 @@ export default function Autotest() {
 
     // Home → Rentar
     navigate("/");
-    await waitFor(() => document.querySelector('[data-loc="HeroTabs"]'));
+    await waitFor(() => !!document.querySelector('[data-loc="HeroTabs"]'));
     const rentTab = Array.from(document.querySelectorAll('[data-loc="HeroTabs"] button')).find((b) => /Rentar/i.test(text(b))) as HTMLButtonElement | undefined;
     rentTab?.click();
     // Validar opciones de precio (Renta)
