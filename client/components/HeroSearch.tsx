@@ -114,7 +114,7 @@ export function HeroSearch() {
             {/* Inputs row */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-3 items-end">
               {/* Ubicación */}
-              <div className="w-full border rounded-xl px-3 py-2 focus-within:ring-2 focus-within:ring-blue-200 focus-within:border-blue-500" data-loc="HeroLocation">
+              <div className="w-full border rounded-xl px-3 py-2 focus-within:ring-2 focus-within:ring-blue-200 focus-within:border-blue-500 relative" data-loc="HeroLocation">
                 <label htmlFor="hero-q" className="block text-xs font-medium text-gray-700">Ubicación</label>
                 <div className="flex items-center gap-2">
                   <MapPin className="w-4 h-4 text-gray-400" />
@@ -125,11 +125,37 @@ export function HeroSearch() {
                     placeholder="Ciudad, estado o código"
                     className="w-full bg-transparent outline-none placeholder-gray-500"
                     aria-describedby={helpId}
-                    onChange={(e) => debouncedSetQ(e.target.value)}
-                    onKeyDown={onKeyDown}
+                    onChange={(e) => handleLocationInput(e.target.value)}
+                    onKeyDown={handleLocationKey}
+                    autoComplete="off"
+                    data-loc="HeroLocationInput"
                   />
                 </div>
-                <p id={helpId} className="sr-only">Presiona Enter para buscar. Escape para limpiar.</p>
+                {/* Autocomplete dropdown */}
+                {locOpen && (
+                  <ul className="absolute z-30 mt-1 left-0 right-0 bg-white border rounded-xl shadow-lg max-h-56 overflow-auto" role="listbox" data-loc="HeroLocationList">
+                    {locItems.length === 0 ? (
+                      <li className="px-3 py-2 text-sm text-gray-500">Sin resultados</li>
+                    ) : (
+                      locItems.map((it, idx) => (
+                        <li key={it.slug}
+                            role="option"
+                            aria-selected={idx === locActive}
+                            className={`px-3 py-2 cursor-pointer flex items-center justify-between ${idx===locActive?"bg-blue-50":"hover:bg-gray-50"}`}
+                            onMouseEnter={() => setLocActive(idx)}
+                            onMouseDown={(e) => { e.preventDefault(); selectLocation(it); }}
+                            data-loc="HeroLocationItem"
+                        >
+                          <span className="font-medium">{it.name}</span>
+                          <span className="ml-2 text-xs text-gray-500 px-2 py-0.5 rounded-full border">
+                            {it.type === 'city' ? 'Ciudad' : it.type === 'state' ? 'Estado' : it.type === 'neighborhood' ? 'Colonia' : 'Metro'}
+                          </span>
+                        </li>
+                      ))
+                    )}
+                  </ul>
+                )}
+                <p id={helpId} className="sr-only">Presiona Enter para seleccionar. Escape para cerrar.</p>
               </div>
 
               {/* Tipo */}
