@@ -1,0 +1,22 @@
+[
+  {"id":"cdmx","name":"Ciudad de México","slug":"ciudad-de-mexico","type":"city","lat":19.4326,"lng":-99.1332,"search_keywords":"CDMX, DF, Ciudad de Mexico","popularity":100},
+  {"id":"gdl","name":"Guadalajara","slug":"guadalajara","type":"city","lat":20.6597,"lng":-103.3496,"search_keywords":"GDL, Guadalajara Jalisco","popularity":90},
+  {"id":"mty","name":"Monterrey","slug":"monterrey","type":"city","lat":25.6866,"lng":-100.3161,"search_keywords":"MTY, Monterrey Nuevo Leon","popularity":85},
+  {"id":"pue","name":"Puebla","slug":"puebla","type":"city","lat":19.0433,"lng":-98.2019,"search_keywords":"Puebla de Zaragoza","popularity":70},
+  {"id":"qro","name":"Querétaro","slug":"queretaro","type":"city","lat":20.5888,"lng":-100.3899,"search_keywords":"Queretaro","popularity":68},
+  {"id":"mid","name":"Mérida","slug":"merida","type":"city","lat":20.9674,"lng":-89.5926,"search_keywords":"Merida Yucatan","popularity":66},
+  {"id":"len","name":"León","slug":"leon","type":"city","lat":21.1221,"lng":-101.68,"search_keywords":"Leon Gto","popularity":60},
+  {"id":"tol","name":"Toluca","slug":"toluca","type":"city","lat":19.2826,"lng":-99.6557,"search_keywords":"Toluca de Lerdo","popularity":58},
+  {"id":"tij","name":"Tijuana","slug":"tijuana","type":"city","lat":32.5149,"lng":-117.0382,"search_keywords":"TJ","popularity":62},
+  {"id":"cun","name":"Cancún","slug":"cancun","type":"city","lat":21.1619,"lng":-86.8515,"search_keywords":"Cancun","popularity":75},
+  {"id":"pdc","name":"Playa del Carmen","slug":"playa-del-carmen","type":"city","lat":20.6296,"lng":-87.0739,"search_keywords":"Playa, PDC","popularity":72},
+  {"id":"cul","name":"Culiacán","slug":"culiacan","type":"city","lat":24.8091,"lng":-107.394,"search_keywords":"Culiacan","popularity":55},
+  {"id":"hmo","name":"Hermosillo","slug":"hermosillo","type":"city","lat":29.0729,"lng":-110.9559,"search_keywords":"HMO","popularity":54},
+  {"id":"ags","name":"Aguascalientes","slug":"aguascalientes","type":"city","lat":21.8853,"lng":-102.2916,"search_keywords":"Ags","popularity":53},
+  {"id":"slp","name":"San Luis Potosí","slug":"san-luis-potosi","type":"city","lat":22.1565,"lng":-100.9855,"search_keywords":"SLP, San Luis Potosi","popularity":57},
+  {"id":"chih","name":"Chihuahua","slug":"chihuahua","type":"city","lat":28.632996,"lng":-106.0691,"search_keywords":"Chih","popularity":56},
+  {"id":"mor","name":"Morelia","slug":"morelia","type":"city","lat":19.7008,"lng":-101.1844,"search_keywords":"","popularity":52},
+  {"id":"ver","name":"Veracruz","slug":"veracruz","type":"city","lat":19.1738,"lng":-96.1342,"search_keywords":"Puerto de Veracruz","popularity":59},
+  {"id":"vhs","name":"Villahermosa","slug":"villahermosa","type":"city","lat":17.9869,"lng":-92.9303,"search_keywords":"VHS","popularity":50},
+  {"id":"cva","name":"Cuernavaca","slug":"cuernavaca","type":"city","lat":18.9242,"lng":-99.2216,"search_keywords":"","popularity":51}
+]
