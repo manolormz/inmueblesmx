@@ -96,6 +96,7 @@ function main() {
   }
 
   const states = new Map<string, any>();
+  const municipalities = new Map<string, any>();
   const cities = new Map<string, any>();
   const neighborhoods = new Map<string, any>();
 
@@ -106,44 +107,81 @@ function main() {
     if (!rawCity || !rawState) continue;
 
     // states
+    const stSlug = slugifyEs(rawState);
     if (!states.has(rawState)) {
-      const stSlug = slugifyEs(rawState);
+      const noAcc = rawState.normalize("NFKD").replace(/[\u0300-\u036f]/g, "");
+      const kws: string[] = [];
+      if (/^ciudad de mexico|cdmx|d\.?f\.?$/i.test(noAcc)) kws.push("cdmx", "ciudad de mexico", "df", "d.f.");
+      if (/^estado de mexico|edomex/i.test(noAcc)) kws.push("estado de mexico", "edomex", "edoméx", "e do mex");
       states.set(rawState, {
         id: `st-${stSlug}`,
         name: rawState,
         slug: stSlug,
         type: "state",
         state: rawState,
+        state_slug: stSlug,
         city: "",
         city_slug: "",
         parent_slug: "",
         lat: null,
         lng: null,
         popularity: 80,
-        search_keywords: [],
+        search_keywords: kws,
         postal_codes: [],
       });
     }
 
-    // cities
-    const citySlug = slugifyEs(rawCity);
-    const stSlug = slugifyEs(rawState);
-    const ckey = `${rawState}|${rawCity}`;
+    // municipalities
+    const munName = rawCity;
+    const munSlug = slugifyEs(munName);
+    const mkey = `${rawState}|${munName}`;
+    if (!municipalities.has(mkey)) {
+      const noAccMun = munName.normalize("NFKD").replace(/[\u0300-\u036f]/g, "");
+      const kws = ["mun.", "mpio", noAccMun];
+      if (/^san luis potosi/i.test(noAccMun)) kws.push("slp", "san luis p.", "s l potosi");
+      if (/^culiacan/i.test(noAccMun)) kws.push("culiacan", "culiacan sinaloa", "culiacán");
+      if (/^queretaro/i.test(noAccMun) || /^querétaro/i.test(munName)) kws.push("queretaro", "querétaro", "qro");
+      municipalities.set(mkey, {
+        id: `mun-${stSlug}-${munSlug}`,
+        name: munName,
+        slug: munSlug,
+        type: "municipality",
+        state: rawState,
+        state_slug: stSlug,
+        municipality: munName,
+        municipality_slug: munSlug,
+        city: "",
+        city_slug: "",
+        parent_slug: stSlug,
+        lat: null,
+        lng: null,
+        popularity: 65,
+        search_keywords: kws,
+        postal_codes: [],
+      });
+    }
+
+    // cities (use municipio name as seat fallback)
+    const citySlug = slugifyEs(munName);
+    const ckey = `${rawState}|${munName}`;
     if (!cities.has(ckey)) {
-      const info = cityInfo.get(`${rawState.toLowerCase()}|${rawCity.toLowerCase()}`);
+      const info = cityInfo.get(`${rawState.toLowerCase()}|${munName.toLowerCase()}`);
       cities.set(ckey, {
         id: citySlug,
-        name: rawCity,
+        name: munName,
         slug: citySlug,
         type: "city",
         state: rawState,
-        city: rawCity,
+        state_slug: stSlug,
+        municipality: munName,
+        municipality_slug: munSlug,
+        city: munName,
         city_slug: citySlug,
-        parent_slug: stSlug,
+        parent_slug: munSlug,
         lat: info?.lat ?? null,
         lng: info?.lng ?? null,
-        popularity: popularityForCity(info?.population),
-        search_keywords: [],
+        popularity: Math.max(60, popularityForCity(info?.population)),
+        search_keywords: [munName.normalize("NFKD").replace(/[\u0300-\u036f]/g, "")],
         postal_codes: [],
       });
     }
@@ -162,7 +200,10 @@ function main() {
           slug: nSlug,
           type: "neighborhood",
           state: rawState,
-          city: rawCity,
+          state_slug: stSlug,
+          municipality: munName,
+          municipality_slug: munSlug,
+          city: munName,
           city_slug: citySlug,
           parent_slug: citySlug,
           lat: r.lat ?? null,
@@ -190,6 +231,7 @@ function main() {
 
   const out = [
     ...Array.from(states.values()),
+    ...Array.from(municipalities.values()),
     ...Array.from(cities.values()),
     ...Array.from(neighborhoods.values()),
   ];
