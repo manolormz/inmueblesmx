@@ -139,7 +139,7 @@ export default function Autotest() {
     await expectUrlHas("Orden precio desc", { sort: "price_desc" });
 
     // Verificar formato M MXN en primera tarjeta
-    await waitFor(() => document.querySelector('[data-loc="SearchCard"] .text-blue-700'));
+    await waitFor(() => !!document.querySelector('[data-loc="SearchCard"] .text-blue-700'));
     const firstPriceSale = document.querySelector('[data-loc="SearchCard"] .text-blue-700') as HTMLElement | null;
     const priceTextSale = text(firstPriceSale);
     const reMillions = /^\$[\d.,]+(?:\.\d)?\s*M\s*MXN$/;
@@ -147,7 +147,7 @@ export default function Autotest() {
 
     // Selección de ubicación: Roma Norte (Colonia) en Home y Buscar
     navigate("/");
-    await waitFor(() => document.querySelector('[data-loc="HeroLocationInput"]'));
+    await waitFor(() => !!document.querySelector('[data-loc="HeroLocationInput"]'));
     const locInput = document.querySelector('[data-loc="HeroLocationInput"]') as HTMLInputElement | null;
     if (locInput) {
       locInput.focus();
@@ -169,7 +169,7 @@ export default function Autotest() {
       const okSlug = gotNeigh || gotCity;
       push({ name: "Ubicación seleccionada", route: location.pathname + location.search, action: "URL con slug", expected: "neighborhoodSlug=roma-norte o locationSlug=ciudad-de-mexico", actual: location.search, status: okSlug ? "PASS" : "FAIL" });
       // Chip de ubicación
-      await waitFor(() => document.querySelector('[data-loc="SearchChips"]'));
+      await waitFor(() => !!document.querySelector('[data-loc="SearchChips"]'));
       const chipsLoc = getChipLabels();
       const hasLocChip = chipsLoc.some((c) => /Ubicación:/.test(c) && (/Roma\s*Norte/.test(c) || /Ciudad de México/.test(c)));
       push({ name: "Chip de ubicación", route: location.pathname + location.search, action: "Etiqueta correcta", expected: "Ubicación: Col. Roma Norte, Ciudad de México (o Ciudad de México)", actual: chipsLoc.join(" | "), status: hasLocChip ? "PASS" : "FAIL" });
