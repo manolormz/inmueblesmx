@@ -45,13 +45,13 @@ export function HeroSearch() {
     const resp = await fetch(url, { credentials: "omit" }).catch(() => null);
     if (!resp) return [] as LocItem[];
     const json = await resp.json().catch(() => ({}));
-    if (json?.ok && json.items && typeof json.items === 'object') {
+    if (json?.ok && json.items && typeof json.items === 'object' && (json.items.states || json.items.municipalities || json.items.cities)) {
       const groups = json.items as { states?: LocItem[]; municipalities?: LocItem[]; cities?: LocItem[]; neighborhoods?: LocItem[] };
       const municipalities = Array.isArray(groups.municipalities) ? groups.municipalities : [];
       const cities = Array.isArray(groups.cities) ? groups.cities : [];
       const states = Array.isArray(groups.states) ? groups.states : [];
       const neighborhoods = Array.isArray(groups.neighborhoods) ? groups.neighborhoods : [];
-      const maxTotal = short ? 15 : 15;
+      const maxTotal = 15;
       const take = (arr: LocItem[], n: number) => arr.slice(0, Math.max(0, n));
       if (short) {
         const m = take(municipalities, 6);
@@ -67,37 +67,39 @@ export function HeroSearch() {
         return [...m, ...c, ...s, ...n].slice(0, maxTotal);
       }
     }
-    if (json?.devHint) {
-      try {
-        const seeds: any[] = (await import("@shared/data/locations.mx.json")).default as any;
-        const n = normalize(term);
-        const withMeta: any[] = seeds.slice();
-        const municipalities = withMeta.filter((x) => x.type === "municipality");
-        const cities = withMeta.filter((x) => x.type === "city");
-        const states = withMeta.filter((x) => x.type === "state");
-        const neighborhoods = withMeta.filter((x) => x.type === "neighborhood");
-        const sortPop = (arr: any[]) => arr.sort((a, b) => (b.popularity || 0) - (a.popularity || 0) || String(a.name).localeCompare(String(b.name)));
-        const match = (x: any) => {
-          const name = normalize(x.name || "");
-          const keys = normalize(String(x.search_keywords || ""));
-          return !n || name.startsWith(n) || name.includes(n) || keys.includes(n);
-        };
-        if (short) {
-          const m = sortPop(municipalities.filter(match)).slice(0, 6);
-          const c = sortPop(cities.filter(match)).slice(0, Math.max(0, 9 - m.length));
-          const s = sortPop(states.filter(match)).slice(0, Math.max(0, 15 - m.length - c.length));
-          return [...m, ...c, ...s] as LocItem[];
-        } else {
-          const m = sortPop(municipalities.filter(match)).slice(0, 6);
-          const c = sortPop(cities.filter(match)).slice(0, 6);
-          const s = sortPop(states.filter(match)).slice(0, 3);
-          const used = m.length + c.length + s.length;
-          const nn = sortPop(neighborhoods.filter(match)).slice(0, Math.max(0, 15 - used));
-          return [...m, ...c, ...s, ...nn] as LocItem[];
-        }
-      } catch {
-        return [] as LocItem[];
+    // Robust local fallback (grouped)
+    try {
+      const seedsMod: any = await import("@shared/data/locations.fallback.mx.json");
+      const seeds: any[] = (seedsMod.default || seedsMod) as any[];
+      const n = normalize(term);
+      const withMeta: any[] = seeds.slice();
+      const municipalities = withMeta.filter((x) => x.type === "municipality");
+      const cities = withMeta.filter((x) => x.type === "city");
+      const states = withMeta.filter((x) => x.type === "state");
+      const neighborhoods = withMeta.filter((x) => x.type === "neighborhood");
+      const sortPop = (arr: any[]) => arr.sort((a, b) => (b.popularity || 0) - (a.popularity || 0) || String(a.name).localeCompare(String(b.name)));
+      const match = (x: any) => {
+        const parts = [x.name, x.city, x.state].concat(Array.isArray(x.search_keywords)? x.search_keywords : (x.search_keywords? String(x.search_keywords).split(/\s*,\s*/) : []));
+        const hay = parts.filter(Boolean).map((s: string) => normalize(s)).join(" ");
+        return !n || hay.startsWith(n) || hay.includes(n);
+      };
+      if (short) {
+        const m = sortPop(municipalities.filter(match)).slice(0, 6);
+        const c = sortPop(cities.filter(match)).slice(0, Math.max(0, 9 - m.length));
+        const s = sortPop(states.filter(match)).slice(0, Math.max(0, 15 - m.length - c.length));
+        console.debug("[locations] source: local-fallback");
+        return [...m, ...c, ...s] as LocItem[];
+      } else {
+        const m = sortPop(municipalities.filter(match)).slice(0, 6);
+        const c = sortPop(cities.filter(match)).slice(0, 6);
+        const s = sortPop(states.filter(match)).slice(0, 3);
+        const used = m.length + c.length + s.length;
+        const nn = sortPop(neighborhoods.filter(match)).slice(0, Math.max(0, 15 - used));
+        console.debug("[locations] source: local-fallback");
+        return [...m, ...c, ...s, ...nn] as LocItem[];
       }
+    } catch {
+      return [] as LocItem[];
     }
     return [] as LocItem[];
   }
