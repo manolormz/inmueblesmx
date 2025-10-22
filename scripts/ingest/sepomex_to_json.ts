@@ -71,10 +71,10 @@ function splitCsvLine(line: string): string[] {
 }
 
 function popularityForCity(pop?: number): number {
-  if (!pop || pop <= 0) return 55;
+  if (!pop || pop <= 0) return 60;
   if (pop >= 500_000) return 90 + Math.min(10, Math.floor((pop - 500_000) / 1_000_000));
   if (pop >= 100_000) return 60 + Math.min(24, Math.floor((pop - 100_000) / 17_500));
-  return 45 + Math.min(14, Math.floor(pop / 10_000));
+  return 50 + Math.min(10, Math.floor(pop / 10_000));
 }
 
 function main() {
@@ -181,7 +181,7 @@ function main() {
 
   // Heurística de popularidad para estados y colonias
   for (const v of states.values()) {
-    v.popularity = 75 + Math.floor(Math.random() * 10);
+    v.popularity = 70 + Math.floor(Math.random() * 16); // 70–85
   }
   for (const v of neighborhoods.values()) {
     if (v.city_slug && /ciudad-de-mexico|guadalajara|monterrey/.test(v.city_slug)) v.popularity = 55 + Math.floor(Math.random() * 25);
