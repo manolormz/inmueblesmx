@@ -44,6 +44,8 @@ function useFilters() {
   const priceMin = params.get("priceMin");
   const priceMax = params.get("priceMax");
   const status = params.get("status") || "Published";
+  const locationSlug = params.get("locationSlug") || "";
+  const neighborhoodSlug = params.get("neighborhoodSlug") || "";
 
   const minBedrooms = params.get("minBedrooms");
   const minBathrooms = params.get("minBathrooms");
@@ -65,12 +67,15 @@ function useFilters() {
   }
 
   const filtersForRepo = {
-    q: q || undefined,
+    // si hay slugs de ubicación, no mezclar con q para evitar ruido
+    q: (locationSlug || neighborhoodSlug) ? undefined : (q || undefined),
     operation: operation || undefined,
     type: type || undefined,
     priceMin: priceMin ? Number(priceMin) : undefined,
     priceMax: priceMax ? Number(priceMax) : undefined,
     status: status || "Published",
+    locationSlug: locationSlug || undefined,
+    neighborhoodSlug: neighborhoodSlug || undefined,
     minBedrooms: minBedrooms ? Number(minBedrooms) : undefined,
     minBathrooms: minBathrooms ? Number(minBathrooms) : undefined,
     minParking: minParking ? Number(minParking) : undefined,
@@ -129,7 +134,22 @@ export default function Search() {
 
   const activeChips = useMemo(() => {
     const chips: { key: string; label: string }[] = [];
-    if (qValue) chips.push({ key: "q", label: `Texto: "${qValue}"` });
+    const lastLoc = (() => {
+      try { return JSON.parse(localStorage.getItem("imx_last_location") || "null"); } catch { return null; }
+    })();
+    const locSlug = params.get("locationSlug");
+    const neighSlug = params.get("neighborhoodSlug");
+    if (neighSlug || locSlug) {
+      if (neighSlug && lastLoc && lastLoc.slug === neighSlug) {
+        const cityName = lastLoc.city || "";
+        chips.push({ key: "neighborhoodSlug", label: `Ubicación: Col. ${lastLoc.name}, ${cityName}` });
+      } else if (locSlug && lastLoc && (lastLoc.slug === locSlug || lastLoc.city_slug === locSlug)) {
+        chips.push({ key: "locationSlug", label: `Ubicación: ${lastLoc.name}` });
+      } else if (locSlug) {
+        chips.push({ key: "locationSlug", label: `Ubicación: ${locSlug}` });
+      }
+    }
+    if (qValue && !(neighSlug || locSlug)) chips.push({ key: "q", label: `Texto: "${qValue}"` });
     const op = opParam;
     if (params.get("operation")) chips.push({ key: "operation", label: `Operación: ${getOptionLabelEs("Operation", op as any)}` });
     const tp = params.get("type");
@@ -152,6 +172,8 @@ export default function Search() {
     if (k === "price") { set({ priceMin: null, priceMax: null, page: 1 }); localStorage.removeItem("imx_priceRangeKey"); }
     else if (k === "built") set({ builtMin: null, builtMax: null, page: 1 });
     else if (k === "land") set({ landMin: null, landMax: null, page: 1 });
+    else if (k === "locationSlug") set({ locationSlug: null, neighborhoodSlug: null, page: 1 });
+    else if (k === "neighborhoodSlug") set({ neighborhoodSlug: null, page: 1 });
     else set({ [k]: null, page: 1 } as any);
   }
 
@@ -173,6 +195,8 @@ export default function Search() {
       landMax: null,
       currency: null,
       sort: null,
+      locationSlug: null,
+      neighborhoodSlug: null,
       page: 1,
       status: keepStatus,
     } as any);
