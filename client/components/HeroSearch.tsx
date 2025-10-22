@@ -23,7 +23,7 @@ export function HeroSearch() {
   const debounceRef = useRef<number | null>(null);
 
   // Autocomplete state
-  type LocItem = { id?: string; name: string; slug: string; type: "city"|"state"|"neighborhood"|"metro"; state?: string; city?: string; city_slug?: string; lat?: number; lng?: number };
+  type LocItem = { id?: string; name: string; slug: string; type: "municipality"|"city"|"state"|"neighborhood"|"metro"; state?: string; state_slug?: string; municipality?: string; municipality_slug?: string; city?: string; city_slug?: string; lat?: number; lng?: number };
   const [locItems, setLocItems] = useState<LocItem[]>([]);
   const [locOpen, setLocOpen] = useState(false);
   const [locActive, setLocActive] = useState(0);
@@ -40,24 +40,25 @@ export function HeroSearch() {
     if (!resp) return [] as LocItem[];
     const json = await resp.json().catch(() => ({}));
     if (json?.ok && json.items && typeof json.items === 'object') {
-      const groups = json.items as { cities?: LocItem[]; states?: LocItem[]; neighborhoods?: LocItem[] };
+      const groups = json.items as { states?: LocItem[]; municipalities?: LocItem[]; cities?: LocItem[]; neighborhoods?: LocItem[] };
+      const municipalities = Array.isArray(groups.municipalities) ? groups.municipalities : [];
       const cities = Array.isArray(groups.cities) ? groups.cities : [];
       const states = Array.isArray(groups.states) ? groups.states : [];
       const neighborhoods = Array.isArray(groups.neighborhoods) ? groups.neighborhoods : [];
-      const out: LocItem[] = [];
-      // Order: Ciudades, Estados, Colonias. Hide Colonias on short query.
-      const maxTotal = short ? 12 : 15;
+      const maxTotal = short ? 15 : 15;
       const take = (arr: LocItem[], n: number) => arr.slice(0, Math.max(0, n));
       if (short) {
-        const c = take(cities, 8);
-        const s = take(states, 4);
-        return [...c, ...s].slice(0, maxTotal);
+        const m = take(municipalities, 6);
+        const c = take(cities, Math.max(0, 9 - m.length));
+        const s = take(states, Math.max(0, 15 - m.length - c.length));
+        return [...m, ...c, ...s].slice(0, maxTotal);
       } else {
-        const c = take(cities, 12);
-        const s = take(states, Math.max(0, 15 - c.length));
-        const used = c.length + s.length;
+        const m = take(municipalities, 6);
+        const c = take(cities, 6);
+        const s = take(states, 3);
+        const used = m.length + c.length + s.length;
         const n = take(neighborhoods, Math.max(0, 15 - used));
-        return [...c, ...s, ...n].slice(0, maxTotal);
+        return [...m, ...c, ...s, ...n].slice(0, maxTotal);
       }
     }
     if (json?.devHint) {
@@ -65,6 +66,7 @@ export function HeroSearch() {
         const seeds: any[] = (await import("@shared/data/locations.mx.json")).default as any;
         const n = normalize(term);
         const withMeta: any[] = seeds.slice();
+        const municipalities = withMeta.filter((x) => x.type === "municipality");
         const cities = withMeta.filter((x) => x.type === "city");
         const states = withMeta.filter((x) => x.type === "state");
         const neighborhoods = withMeta.filter((x) => x.type === "neighborhood");
@@ -75,15 +77,17 @@ export function HeroSearch() {
           return !n || name.startsWith(n) || name.includes(n) || keys.includes(n);
         };
         if (short) {
-          const c = sortPop(cities.filter(match)).slice(0, 8);
-          const s = sortPop(states.filter(match)).slice(0, 4);
-          return [...c, ...s] as LocItem[];
+          const m = sortPop(municipalities.filter(match)).slice(0, 6);
+          const c = sortPop(cities.filter(match)).slice(0, Math.max(0, 9 - m.length));
+          const s = sortPop(states.filter(match)).slice(0, Math.max(0, 15 - m.length - c.length));
+          return [...m, ...c, ...s] as LocItem[];
         } else {
-          const c = sortPop(cities.filter(match)).slice(0, 12);
-          const s = sortPop(states.filter(match)).slice(0, Math.max(0, 15 - c.length));
-          const used = c.length + s.length;
+          const m = sortPop(municipalities.filter(match)).slice(0, 6);
+          const c = sortPop(cities.filter(match)).slice(0, 6);
+          const s = sortPop(states.filter(match)).slice(0, 3);
+          const used = m.length + c.length + s.length;
           const nn = sortPop(neighborhoods.filter(match)).slice(0, Math.max(0, 15 - used));
-          return [...c, ...s, ...nn] as LocItem[];
+          return [...m, ...c, ...s, ...nn] as LocItem[];
         }
       } catch {
         return [] as LocItem[];
@@ -250,6 +254,7 @@ export function HeroSearch() {
                       if (locItems.length === 0) {
                         return <li className="px-3 py-2 text-sm text-gray-500">Sin resultados</li>;
                       }
+                      const municipalities = locItems.filter(i => i.type === "municipality");
                       const cities = locItems.filter(i => i.type === "city");
                       const states = locItems.filter(i => i.type === "state");
                       const neighborhoods = q.trim().length < 2 ? [] : locItems.filter(i => i.type === "neighborhood");
@@ -264,16 +269,20 @@ export function HeroSearch() {
                         >
                           <div className="flex flex-col text-left">
                             <span className="font-medium">{it.name}</span>
-                            <span className="text-xs text-gray-500">{it.type === 'neighborhood' ? `Colonia · ${it.city || ''}` : it.type === 'city' ? `Ciudad · ${it.state || ''}` : 'Estado'}</span>
+                            <span className="text-xs text-gray-500">{it.type === 'neighborhood' ? `Colonia · ${it.city || ''}` : it.type === 'city' ? `Ciudad · ${it.state || ''}` : it.type === 'municipality' ? `Municipio · ${it.state || ''}` : 'Estado'}</span>
                           </div>
                           <span className="ml-2 text-xs text-gray-500 px-2 py-0.5 rounded-full border">
-                            {it.type === 'city' ? 'Ciudad' : it.type === 'state' ? 'Estado' : it.type === 'neighborhood' ? 'Colonia' : 'Metro'}
+                            {it.type === 'municipality' ? 'Municipio' : it.type === 'city' ? 'Ciudad' : it.type === 'state' ? 'Estado' : it.type === 'neighborhood' ? 'Colonia' : 'Metro'}
                           </span>
                         </li>
                       );
                       const flat: LocItem[] = [];
                       const nodes: JSX.Element[] = [];
                       let idx = 0;
+                      if (municipalities.length) {
+                        nodes.push(<li key="hdr-m" className="px-3 pt-2 pb-1 text-[11px] uppercase tracking-wide text-gray-500">Municipios</li>);
+                        municipalities.forEach(it => { flat.push(it); nodes.push(renderItem(it, idx++)); });
+                      }
                       if (cities.length) {
                         nodes.push(<li key="hdr-c" className="px-3 pt-2 pb-1 text-[11px] uppercase tracking-wide text-gray-500">Ciudades</li>);
                         cities.forEach(it => { flat.push(it); nodes.push(renderItem(it, idx++)); });
