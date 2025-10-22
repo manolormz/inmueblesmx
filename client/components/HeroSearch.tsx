@@ -34,39 +34,57 @@ export function HeroSearch() {
   }
 
   async function queryLocations(term: string) {
-    const url = term.trim().length < 2 ? `/api/locations?limit=10` : `/api/locations?q=${encodeURIComponent(term)}&limit=12`;
+    const short = term.trim().length < 2;
+    const url = short ? `/api/locations?limit=12` : `/api/locations?q=${encodeURIComponent(term)}&limit=12`;
     const resp = await fetch(url).catch(() => null);
     if (!resp) return [] as LocItem[];
     const json = await resp.json().catch(() => ({}));
-    if (json?.ok && Array.isArray(json.items)) return json.items as LocItem[];
+    if (json?.ok && json.items && typeof json.items === 'object') {
+      const groups = json.items as { cities?: LocItem[]; states?: LocItem[]; neighborhoods?: LocItem[] };
+      const cities = Array.isArray(groups.cities) ? groups.cities : [];
+      const states = Array.isArray(groups.states) ? groups.states : [];
+      const neighborhoods = Array.isArray(groups.neighborhoods) ? groups.neighborhoods : [];
+      const out: LocItem[] = [];
+      // Order: Ciudades, Estados, Colonias. Hide Colonias on short query.
+      const maxTotal = short ? 12 : 15;
+      const take = (arr: LocItem[], n: number) => arr.slice(0, Math.max(0, n));
+      if (short) {
+        const c = take(cities, 8);
+        const s = take(states, 4);
+        return [...c, ...s].slice(0, maxTotal);
+      } else {
+        const c = take(cities, 12);
+        const s = take(states, Math.max(0, 15 - c.length));
+        const used = c.length + s.length;
+        const n = take(neighborhoods, Math.max(0, 15 - used));
+        return [...c, ...s, ...n].slice(0, maxTotal);
+      }
+    }
     if (json?.devHint) {
       try {
         const seeds: any[] = (await import("@shared/data/locations.mx.json")).default as any;
         const n = normalize(term);
-        const withMeta: LocItem[] = seeds.map((x: any) => ({
-          id: x.id,
-          name: x.name,
-          slug: x.slug,
-          type: x.type,
-          state: x.state,
-          city: x.city,
-          city_slug: x.city_slug,
-          lat: x.lat,
-          lng: x.lng,
-        }));
-        let filtered: LocItem[] = [];
-        if (term.trim().length < 2) {
-          filtered = withMeta.filter((x) => x.type === "city" || x.type === "state");
-          filtered.sort((a: any, b: any) => (b.popularity || 0) - (a.popularity || 0) || String(a.name).localeCompare(String(b.name)));
+        const withMeta: any[] = seeds.slice();
+        const cities = withMeta.filter((x) => x.type === "city");
+        const states = withMeta.filter((x) => x.type === "state");
+        const neighborhoods = withMeta.filter((x) => x.type === "neighborhood");
+        const sortPop = (arr: any[]) => arr.sort((a, b) => (b.popularity || 0) - (a.popularity || 0) || String(a.name).localeCompare(String(b.name)));
+        const match = (x: any) => {
+          const name = normalize(x.name || "");
+          const keys = normalize(String(x.search_keywords || ""));
+          return !n || name.startsWith(n) || name.includes(n) || keys.includes(n);
+        };
+        if (short) {
+          const c = sortPop(cities.filter(match)).slice(0, 8);
+          const s = sortPop(states.filter(match)).slice(0, 4);
+          return [...c, ...s] as LocItem[];
         } else {
-          filtered = withMeta.filter((x) => {
-            const name = normalize(x.name || "");
-            const keys = normalize(String((seeds.find(s=>s.slug===x.slug)?.search_keywords) || ""));
-            return name.startsWith(n) || name.includes(n) || keys.includes(n);
-          });
-          filtered.sort((a: any, b: any) => (b.popularity || 0) - (a.popularity || 0) || String(a.name).localeCompare(String(b.name)));
+          const c = sortPop(cities.filter(match)).slice(0, 12);
+          const s = sortPop(states.filter(match)).slice(0, Math.max(0, 15 - c.length));
+          const used = c.length + s.length;
+          const nn = sortPop(neighborhoods.filter(match)).slice(0, Math.max(0, 15 - used));
+          return [...c, ...s, ...nn] as LocItem[];
         }
-        return filtered.slice(0, term.trim().length < 2 ? 10 : 12);
       } catch {
         return [] as LocItem[];
       }
@@ -77,17 +95,11 @@ export function HeroSearch() {
   const handleLocationInput = useCallback((val: string) => {
     if (debounceRef.current) window.clearTimeout(debounceRef.current);
     debounceRef.current = window.setTimeout(async () => {
-      // update q used for search
       setQ(val);
-      if (val.trim().length >= 2) {
-        const items = await queryLocations(val.trim());
-        setLocItems(items);
-        setLocActive(0);
-        setLocOpen(true);
-      } else {
-        setLocItems([]);
-        setLocOpen(false);
-      }
+      const items = await queryLocations(val);
+      setLocItems(items);
+      setLocActive(0);
+      setLocOpen(true);
     }, 280);
   }, []);
 
@@ -239,8 +251,8 @@ export function HeroSearch() {
                         return <li className="px-3 py-2 text-sm text-gray-500">Sin resultados</li>;
                       }
                       const cities = locItems.filter(i => i.type === "city");
-                      const neighborhoods = locItems.filter(i => i.type === "neighborhood");
                       const states = locItems.filter(i => i.type === "state");
+                      const neighborhoods = q.trim().length < 2 ? [] : locItems.filter(i => i.type === "neighborhood");
                       const renderItem = (it: LocItem, idx: number) => (
                         <li key={`${it.type}:${it.slug}`}
                             role="option"
@@ -266,13 +278,13 @@ export function HeroSearch() {
                         nodes.push(<li key="hdr-c" className="px-3 pt-2 pb-1 text-[11px] uppercase tracking-wide text-gray-500">Ciudades</li>);
                         cities.forEach(it => { flat.push(it); nodes.push(renderItem(it, idx++)); });
                       }
-                      if (neighborhoods.length) {
-                        nodes.push(<li key="hdr-n" className="px-3 pt-2 pb-1 text-[11px] uppercase tracking-wide text-gray-500">Colonias</li>);
-                        neighborhoods.forEach(it => { flat.push(it); nodes.push(renderItem(it, idx++)); });
-                      }
                       if (states.length) {
                         nodes.push(<li key="hdr-s" className="px-3 pt-2 pb-1 text-[11px] uppercase tracking-wide text-gray-500">Estados</li>);
                         states.forEach(it => { flat.push(it); nodes.push(renderItem(it, idx++)); });
+                      }
+                      if (neighborhoods.length) {
+                        nodes.push(<li key="hdr-n" className="px-3 pt-2 pb-1 text-[11px] uppercase tracking-wide text-gray-500">Colonias</li>);
+                        neighborhoods.forEach(it => { flat.push(it); nodes.push(renderItem(it, idx++)); });
                       }
                       return nodes;
                     })()}
