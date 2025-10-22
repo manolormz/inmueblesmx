@@ -50,6 +50,9 @@ export interface Property {
   slug: string; // unique
   owner_company?: ID | null; // reference -> Company
   owner_profile?: ID | null; // reference -> Profile
+  // filtros de ubicación
+  city_slug?: string | null;
+  neighborhood_slug?: string | null;
 }
 
 export interface Lead {
