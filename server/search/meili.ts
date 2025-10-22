@@ -34,31 +34,52 @@ export async function ensureIndex() {
   }
   const idx = c.index(MEILI_INDEX_LOCATIONS);
   await idx.updateSettings({
-    searchableAttributes: ["name", "search_keywords", "city", "state", "postal_codes"],
-    filterableAttributes: ["type", "state", "city", "city_slug", "parent_slug"],
+    searchableAttributes: [
+      "name",
+      "search_keywords",
+      "city",
+      "municipality",
+      "state",
+      "postal_codes",
+    ],
+    filterableAttributes: [
+      "type",
+      "state",
+      "state_slug",
+      "city",
+      "city_slug",
+      "municipality",
+      "municipality_slug",
+      "parent_slug",
+    ],
     sortableAttributes: ["popularity", "name"],
     rankingRules: ["typo", "words", "proximity", "attribute", "exactness", "sort"],
     synonyms: {
-      cdmx: ["df", "ciudad de mexico", "d.f."],
+      cdmx: ["df", "ciudad de mexico", "d.f.", "mexico, d.f."],
+      slp: ["san luis potosi", "san luis p."],
+      qro: ["queretaro", "querétaro"],
       gdl: ["guadalajara", "zmg"],
-      qro: ["queretaro"],
-      nl: ["nuevo leon"],
-      edomex: ["estado de mexico"],
+      gto: ["guanajuato"],
+      edomex: ["estado de mexico", "edoméx", "e do mex"],
+      culiacan: ["culiacán", "culiacan sinaloa"],
     },
-  });
+    typoTolerance: { enabled: true, minWordSizeForTypos: { oneTypo: 4, twoTypos: 8 } as any } as any,
+  } as any);
   return idx;
 }
 
 export async function getIndexStats() {
   const idx = getIndex();
-  const [st, ct, nt] = await Promise.all([
+  const [st, mt, ct, nt] = await Promise.all([
     idx.search("", { filter: 'type = "state"', limit: 1 }),
+    idx.search("", { filter: 'type = "municipality"', limit: 1 }),
     idx.search("", { filter: 'type = "city"', limit: 1 }),
     idx.search("", { filter: 'type = "neighborhood"', limit: 1 }),
   ]);
   const settings = await idx.getSettings();
   return {
     states: st.estimatedTotalHits ?? (st.hits?.length || 0),
+    municipalities: mt.estimatedTotalHits ?? (mt.hits?.length || 0),
     cities: ct.estimatedTotalHits ?? (ct.hits?.length || 0),
     neighborhoods: nt.estimatedTotalHits ?? (nt.hits?.length || 0),
     settings: {
@@ -67,4 +88,20 @@ export async function getIndexStats() {
       sortable: settings.sortableAttributes,
     },
   } as const;
+}
+
+export async function probeQueries(qs: string[]) {
+  const idx = getIndex();
+  for (const q of qs) {
+    const [s, m, c] = await Promise.all([
+      idx.search(q, { filter: 'type = "state"', limit: 10 }),
+      idx.search(q, { filter: 'type = "municipality"', limit: 15 }),
+      idx.search(q, { filter: 'type = "city"', limit: 15 }),
+    ]);
+    const top = (r: any, n: number) => (r.hits || []).slice(0, n).map((h: any) => h.name).join(", ");
+    console.log(`【Meili Probe】q="${q}"`);
+    console.log(`  states: ${top(s, 5)}`);
+    console.log(`  municipalities: ${top(m, 5)}`);
+    console.log(`  cities: ${top(c, 5)}`);
+  }
 }
