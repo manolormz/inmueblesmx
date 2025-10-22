@@ -197,6 +197,42 @@ export default function Autotest() {
     const chipsAfter = getChipLabels();
     push({ name: "Restablecer todo", route: location.pathname + location.search, action: "Reset filtros", expected: "status=Published&page=1 y sin chips", actual: `${location.search} || chips: ${chipsAfter.join(" | ")}`, status: onlyMinimal && chipsAfter.length === 0 ? "PASS" : "FAIL" });
 
+    // QA: Autocomplete agrupado — "Gua"
+    navigate("/");
+    await waitFor(() => !!document.querySelector('[data-loc="HeroLocationInput"]'));
+    const locInput1 = document.querySelector('[data-loc="HeroLocationInput"]') as HTMLInputElement | null;
+    if (locInput1) {
+      locInput1.focus();
+      locInput1.value = "Gua";
+      locInput1.dispatchEvent(new Event('input', { bubbles: true }));
+      const okList = await waitFor(() => !!document.querySelector('[data-loc="HeroLocationList"]'));
+      const hasHdrCities = !!document.querySelector('[data-loc="HeroLocationList"] li:nth-child(1)');
+      const citiesText = Array.from(document.querySelectorAll('[data-loc="HeroLocationList"] li')).map(el=>text(el)).join(" | ");
+      const hasGuadalajara = /Guadalajara/.test(citiesText);
+      const hasGuanajuato = /Guanajuato/.test(citiesText);
+      push({ name: "Auto Gua", route: location.pathname + location.search, action: "Guadalajara + Guanajuato", expected: "Guadalajara y Guanajuato visibles", actual: citiesText, status: (okList && hasHdrCities && hasGuadalajara && hasGuanajuato) ? "PASS" : "FAIL" });
+      // Contar grupos
+      const countCities = Array.from(document.querySelectorAll('[data-loc="HeroLocationItem"]')).filter(li=>/Ciudad/.test(text(li))).length;
+      const countStates = Array.from(document.querySelectorAll('[data-loc="HeroLocationItem"]')).filter(li=>/Estado/.test(text(li))).length;
+      const countNeigh = Array.from(document.querySelectorAll('[data-loc="HeroLocationItem"]')).filter(li=>/Colonia/.test(text(li))).length;
+      push({ name: "Auto Gua grupos", route: location.pathname + location.search, action: "Conteos", expected: ">=1 ciudad y >=1 estado", actual: `c:${countCities} s:${countStates} n:${countNeigh}` , status: (countCities>=1 && countStates>=1) ? "PASS" : "FAIL" });
+    }
+
+    // QA: Autocomplete agrupado — "Mex"
+    navigate("/");
+    await waitFor(() => !!document.querySelector('[data-loc="HeroLocationInput"]'));
+    const locInput2 = document.querySelector('[data-loc="HeroLocationInput"]') as HTMLInputElement | null;
+    if (locInput2) {
+      locInput2.focus();
+      locInput2.value = "Mex";
+      locInput2.dispatchEvent(new Event('input', { bubbles: true }));
+      await waitFor(() => !!document.querySelector('[data-loc="HeroLocationList"]'));
+      const groupText = Array.from(document.querySelectorAll('[data-loc="HeroLocationList"] li')).map(el=>text(el)).join(" | ");
+      const hasCDMX = /Ciudad de México/.test(groupText);
+      const hasEdoMex = /Estado/.test(groupText) && /México/.test(groupText);
+      push({ name: "Auto Mex", route: location.pathname + location.search, action: "CDMX + EdoMex", expected: "Ciudad de México y Estado de México", actual: groupText, status: (hasCDMX && hasEdoMex) ? "PASS" : "FAIL" });
+    }
+
     if (runIdRef.current === runId) setRunning(false);
   }
 
