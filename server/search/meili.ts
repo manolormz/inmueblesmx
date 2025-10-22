@@ -34,10 +34,37 @@ export async function ensureIndex() {
   }
   const idx = c.index(MEILI_INDEX_LOCATIONS);
   await idx.updateSettings({
-    sortableAttributes: ["popularity", "name"],
+    searchableAttributes: ["name", "search_keywords", "city", "state", "postal_codes"],
     filterableAttributes: ["type", "state", "city", "city_slug", "parent_slug"],
-    searchableAttributes: ["name", "search_keywords", "postal_codes", "city", "state"],
+    sortableAttributes: ["popularity", "name"],
     rankingRules: ["typo", "words", "proximity", "attribute", "exactness", "sort"],
+    synonyms: {
+      cdmx: ["df", "ciudad de mexico", "d.f."],
+      gdl: ["guadalajara", "zmg"],
+      qro: ["queretaro"],
+      nl: ["nuevo leon"],
+      edomex: ["estado de mexico"],
+    },
   });
   return idx;
+}
+
+export async function getIndexStats() {
+  const idx = getIndex();
+  const [st, ct, nt] = await Promise.all([
+    idx.search("", { filter: 'type = "state"', limit: 1 }),
+    idx.search("", { filter: 'type = "city"', limit: 1 }),
+    idx.search("", { filter: 'type = "neighborhood"', limit: 1 }),
+  ]);
+  const settings = await idx.getSettings();
+  return {
+    states: st.estimatedTotalHits ?? (st.hits?.length || 0),
+    cities: ct.estimatedTotalHits ?? (ct.hits?.length || 0),
+    neighborhoods: nt.estimatedTotalHits ?? (nt.hits?.length || 0),
+    settings: {
+      searchable: settings.searchableAttributes,
+      filterable: settings.filterableAttributes,
+      sortable: settings.sortableAttributes,
+    },
+  } as const;
 }
