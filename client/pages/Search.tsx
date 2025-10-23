@@ -8,6 +8,7 @@ import { getPriceOptionsMXNByOperation } from "@shared/filters";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import SafeMapToggle from "@/components/SafeMapToggle";
+import GeocoderInput from "@/components/GeocoderInput";
 import { useMapSearchSync } from "@/hooks/useMapSearchSync";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
