@@ -255,6 +255,11 @@ export default function MapView({
         ref={containerRef}
         className="w-full h-[60vh] md:h-[70vh] rounded-2xl overflow-hidden border bg-white"
       />
+      {mapRef.current && (
+        <div className="absolute bottom-2 left-2 z-20 px-2 py-1 text-xs bg-white/90 border rounded">
+          token:{String(!!(import.meta as any).env?.VITE_MAPBOX_TOKEN)} • mode:{clusterModeRef.current ? 'cluster' : 'dom'} • markers:{Array.isArray(markers) ? markers.length : 0}
+        </div>
+      )}
       {error && (
         <div className="absolute inset-0 grid place-items-center bg-white/85 backdrop-blur-sm">
           <div className="text-sm text-red-700 border border-red-200 bg-red-50 px-3 py-2 rounded-lg max-w-sm text-center">
