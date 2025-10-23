@@ -43,7 +43,10 @@ const App = () => (
             <Route path="/qa/buttons" element={<QAButtons />} />
             <Route path="/qa/autotest" element={<Autotest />} />
             <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/dashboard/properties/:slug/edit" element={<DashboardPropertyEdit />} />
+            <Route
+              path="/dashboard/properties/:slug/edit"
+              element={<DashboardPropertyEdit />}
+            />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

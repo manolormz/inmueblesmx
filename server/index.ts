@@ -3,9 +3,18 @@ import express from "express";
 import cors from "cors";
 import { handleDemo } from "./routes/demo";
 import { createProperty, publishProperty } from "./routes/cms";
-import { unpublishProperty, deleteProperty, updateProperty } from "./routes/cms.extra";
+import {
+  unpublishProperty,
+  deleteProperty,
+  updateProperty,
+} from "./routes/cms.extra";
 import { handleSitemapXml, handleRobotsTxt } from "./routes/sitemap.xml";
-import { ensureIndex, getIndexStats, isMeiliConfigured, probeQueries } from "./search/meili";
+import {
+  ensureIndex,
+  getIndexStats,
+  isMeiliConfigured,
+  probeQueries,
+} from "./search/meili";
 
 export function createServer() {
   const app = express();
@@ -24,10 +33,16 @@ export function createServer() {
   app.get("/api/demo", handleDemo);
 
   // Locations search
-  app.get("/api/locations", require("./routes/locations").handleLocationsSearch);
+  app.get(
+    "/api/locations",
+    require("./routes/locations").handleLocationsSearch,
+  );
 
   // CMS routes
-  app.get("/api/cms/property", require("./routes/cms.extra").listSeededProperties);
+  app.get(
+    "/api/cms/property",
+    require("./routes/cms.extra").listSeededProperties,
+  );
   app.post("/api/cms/property", createProperty);
   app.post("/api/cms/property/publish", publishProperty);
   app.post("/api/cms/property/unpublish", unpublishProperty);
@@ -44,9 +59,20 @@ export function createServer() {
       if (isMeiliConfigured()) {
         await ensureIndex();
         const s = await getIndexStats();
-        console.log(`【Meili】total: states=${s.states} municipalities=${(s as any).municipalities ?? 0} cities=${s.cities} neighborhoods=${s.neighborhoods}`);
-        console.log(`【Meili】settings: searchable=${JSON.stringify(s.settings.searchable)} filterable=${JSON.stringify(s.settings.filterable)} sortable=${JSON.stringify(s.settings.sortable)}`);
-        await probeQueries(["san luis", "san luis potosi", "culiacan", "sonora", "mexicali", "queretaro"]);
+        console.log(
+          `【Meili】total: states=${s.states} municipalities=${(s as any).municipalities ?? 0} cities=${s.cities} neighborhoods=${s.neighborhoods}`,
+        );
+        console.log(
+          `【Meili】settings: searchable=${JSON.stringify(s.settings.searchable)} filterable=${JSON.stringify(s.settings.filterable)} sortable=${JSON.stringify(s.settings.sortable)}`,
+        );
+        await probeQueries([
+          "san luis",
+          "san luis potosi",
+          "culiacan",
+          "sonora",
+          "mexicali",
+          "queretaro",
+        ]);
       } else {
         console.log("【Meili】No configurado (usar fallback local)");
       }
