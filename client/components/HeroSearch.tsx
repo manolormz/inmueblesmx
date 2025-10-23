@@ -1,71 +1,65 @@
+// client/components/HeroSearch.tsx
 import SearchButton from "@/components/SearchButton";
-import { PropertyTypeOptions } from "@shared/options";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
-export function HeroSearch() {
-  const navigate = useNavigate();
+function HeroSearch() {
+  const [operation, setOperation] = useState("buy");
 
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = new FormData(e.currentTarget);
-
-    const operation = (form.get("operation") || "").toString().trim();
-    const type = (form.get("type") || "").toString().trim();
+    const propertyType = (form.get("type") || "").toString().trim();
     const priceMin = (form.get("priceMin") || "").toString().trim();
     const priceMax = (form.get("priceMax") || "").toString().trim();
 
     const params = new URLSearchParams();
-    if (operation) params.set("operation", operation);
-    if (type) params.set("type", type);
+    params.set("operation", operation);
+    if (propertyType) params.set("type", propertyType);
     if (priceMin) params.set("priceMin", priceMin);
     if (priceMax) params.set("priceMax", priceMax);
 
-    navigate(`/search?${params.toString()}`);
+    window.location.href = `/search?${params.toString()}`;
   }
 
   return (
-    <section className="bg-gradient-to-br from-blue-50 to-blue-100 py-10 sm:py-16">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-white rounded-2xl shadow-2xl p-4 sm:p-5">
-          <form onSubmit={onSubmit} className="flex flex-col gap-3 w-full">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              <select name="operation" className="border rounded p-2">
-                <option value="">Operación</option>
-                <option value="Sale">Comprar</option>
-                <option value="Rent">Rentar</option>
-              </select>
-
-              <select name="type" className="border rounded p-2">
-                <option value="">Tipo de propiedad</option>
-                {PropertyTypeOptions.map((o) => (
-                  <option key={o.value} value={o.value}>{o.label_es}</option>
-                ))}
-              </select>
-
-              <input
-                type="number"
-                name="priceMin"
-                placeholder="Precio mínimo"
-                className="border rounded p-2"
-                min={0}
-              />
-              <input
-                type="number"
-                name="priceMax"
-                placeholder="Precio máximo"
-                className="border rounded p-2"
-                min={0}
-              />
-            </div>
-
-            <div className="flex justify-end">
-              <SearchButton label="Buscar" />
-            </div>
-          </form>
-        </div>
+    <div className="w-full flex flex-col items-center text-center">
+      <div className="flex gap-3 justify-center mb-4">
+        {["buy","rent","sell"].map(op => (
+          <button
+            key={op}
+            type="button"
+            onClick={() => setOperation(op)}
+            className={`px-5 py-2 rounded-lg border ${
+              operation === op ? "bg-blue-600 text-white" : "bg-white text-gray-700 border-gray-300"
+            }`}
+          >
+            {op === "buy" ? "Comprar" : op === "rent" ? "Rentar" : "Vender"}
+          </button>
+        ))}
       </div>
-    </section>
+
+      <form
+        onSubmit={onSubmit}
+        className="bg-white shadow-md rounded-xl p-4 flex flex-col md:flex-row items-center gap-3 w-full max-w-4xl"
+      >
+        <select name="type" className="border rounded-lg p-2 w-full md:w-1/4" defaultValue="">
+          <option value="">Tipo de propiedad</option>
+          <option value="house">Casa</option>
+          <option value="apartment">Departamento</option>
+          <option value="land">Terreno</option>
+          <option value="office">Oficina</option>
+        </select>
+
+        <input type="number" name="priceMin" placeholder="Precio mínimo" className="border rounded-lg p-2 w-full md:w-1/4" />
+        <input type="number" name="priceMax" placeholder="Precio máximo" className="border rounded-lg p-2 w-full md:w-1/4" />
+
+        <div className="w-full md:w-auto">
+          <SearchButton label="Buscar" />
+        </div>
+      </form>
+    </div>
   );
 }
 
-export default HeroSearch;
+export default HeroSearch;   // ✅ default export
+export { HeroSearch };       // ✅ named export (para imports antiguos)
