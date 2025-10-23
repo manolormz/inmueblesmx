@@ -324,6 +324,7 @@ export default function Search() {
     <div className="min-h-screen bg-white">
       <Header />
 
+      <SafePreview>
       {/* Sticky filter bar */}
       <div
         className="sticky top-16 z-40 bg-white/90 backdrop-blur border-b"
@@ -692,6 +693,8 @@ export default function Search() {
           </Button>
         </nav>
       </main>
+
+      </SafePreview>
 
       <Footer />
 
