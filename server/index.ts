@@ -35,6 +35,8 @@ export function createServer() {
 
   // Listings API
   app.use("/api/listings", require("./api/listings").listings);
+  // Geocode proxy
+  app.get("/api/geocode", require("./routes/geocode").handleGeocode);
   // Leads + Chat API
   app.use("/api", require("./api/leads_and_chat").comms);
   // Public stubs (visit/auth/agency)
