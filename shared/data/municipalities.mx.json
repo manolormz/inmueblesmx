@@ -1,1 +1,1538 @@
-[]
+[
+  {
+    "stateId": "AGU",
+    "stateName": "Aguascalientes",
+    "municipalityId": "AGS",
+    "municipalityName": "Aguascalientes"
+  },
+  {
+    "stateId": "AGU",
+    "stateName": "Aguascalientes",
+    "municipalityId": "ASI",
+    "municipalityName": "Asientos"
+  },
+  {
+    "stateId": "AGU",
+    "stateName": "Aguascalientes",
+    "municipalityId": "CAL",
+    "municipalityName": "Calvillo"
+  },
+  {
+    "stateId": "AGU",
+    "stateName": "Aguascalientes",
+    "municipalityId": "COS",
+    "municipalityName": "Cosío"
+  },
+  {
+    "stateId": "AGU",
+    "stateName": "Aguascalientes",
+    "municipalityId": "PAB",
+    "municipalityName": "Pabellón de Arteaga"
+  },
+  {
+    "stateId": "AGU",
+    "stateName": "Aguascalientes",
+    "municipalityId": "SJR",
+    "municipalityName": "San José de Gracia"
+  },
+  {
+    "stateId": "AGU",
+    "stateName": "Aguascalientes",
+    "municipalityId": "RIN",
+    "municipalityName": "Rincón de Romos"
+  },
+  {
+    "stateId": "AGU",
+    "stateName": "Aguascalientes",
+    "municipalityId": "TEP",
+    "municipalityName": "Tepezalá"
+  },
+  {
+    "stateId": "BCN",
+    "stateName": "Baja California",
+    "municipalityId": "TIJ",
+    "municipalityName": "Tijuana"
+  },
+  {
+    "stateId": "BCN",
+    "stateName": "Baja California",
+    "municipalityId": "MXL",
+    "municipalityName": "Mexicali"
+  },
+  {
+    "stateId": "BCN",
+    "stateName": "Baja California",
+    "municipalityId": "ENS",
+    "municipalityName": "Ensenada"
+  },
+  {
+    "stateId": "BCN",
+    "stateName": "Baja California",
+    "municipalityId": "TEC",
+    "municipalityName": "Tecate"
+  },
+  {
+    "stateId": "BCN",
+    "stateName": "Baja California",
+    "municipalityId": "ROS",
+    "municipalityName": "Playas de Rosarito"
+  },
+  {
+    "stateId": "BCN",
+    "stateName": "Baja California",
+    "municipalityId": "SFE",
+    "municipalityName": "San Felipe"
+  },
+  {
+    "stateId": "BCN",
+    "stateName": "Baja California",
+    "municipalityId": "SQA",
+    "municipalityName": "San Quintín"
+  },
+  {
+    "stateId": "BCN",
+    "stateName": "Baja California",
+    "municipalityId": "VIC",
+    "municipalityName": "Vicente Guerrero"
+  },
+  {
+    "stateId": "BCS",
+    "stateName": "Baja California Sur",
+    "municipalityId": "001",
+    "municipalityName": "Municipio Uno de Baja California Sur"
+  },
+  {
+    "stateId": "BCS",
+    "stateName": "Baja California Sur",
+    "municipalityId": "002",
+    "municipalityName": "Municipio Dos de Baja California Sur"
+  },
+  {
+    "stateId": "BCS",
+    "stateName": "Baja California Sur",
+    "municipalityId": "003",
+    "municipalityName": "Municipio Tres de Baja California Sur"
+  },
+  {
+    "stateId": "BCS",
+    "stateName": "Baja California Sur",
+    "municipalityId": "004",
+    "municipalityName": "Municipio Cuatro de Baja California Sur"
+  },
+  {
+    "stateId": "BCS",
+    "stateName": "Baja California Sur",
+    "municipalityId": "005",
+    "municipalityName": "Municipio Cinco de Baja California Sur"
+  },
+  {
+    "stateId": "BCS",
+    "stateName": "Baja California Sur",
+    "municipalityId": "006",
+    "municipalityName": "Municipio Seis de Baja California Sur"
+  },
+  {
+    "stateId": "BCS",
+    "stateName": "Baja California Sur",
+    "municipalityId": "007",
+    "municipalityName": "Municipio Siete de Baja California Sur"
+  },
+  {
+    "stateId": "BCS",
+    "stateName": "Baja California Sur",
+    "municipalityId": "008",
+    "municipalityName": "Municipio Ocho de Baja California Sur"
+  },
+  {
+    "stateId": "CAM",
+    "stateName": "Campeche",
+    "municipalityId": "001",
+    "municipalityName": "Municipio Uno de Campeche"
+  },
+  {
+    "stateId": "CAM",
+    "stateName": "Campeche",
+    "municipalityId": "002",
+    "municipalityName": "Municipio Dos de Campeche"
+  },
+  {
+    "stateId": "CAM",
+    "stateName": "Campeche",
+    "municipalityId": "003",
+    "municipalityName": "Municipio Tres de Campeche"
+  },
+  {
+    "stateId": "CAM",
+    "stateName": "Campeche",
+    "municipalityId": "004",
+    "municipalityName": "Municipio Cuatro de Campeche"
+  },
+  {
+    "stateId": "CAM",
+    "stateName": "Campeche",
+    "municipalityId": "005",
+    "municipalityName": "Municipio Cinco de Campeche"
+  },
+  {
+    "stateId": "CAM",
+    "stateName": "Campeche",
+    "municipalityId": "006",
+    "municipalityName": "Municipio Seis de Campeche"
+  },
+  {
+    "stateId": "CAM",
+    "stateName": "Campeche",
+    "municipalityId": "007",
+    "municipalityName": "Municipio Siete de Campeche"
+  },
+  {
+    "stateId": "CAM",
+    "stateName": "Campeche",
+    "municipalityId": "008",
+    "municipalityName": "Municipio Ocho de Campeche"
+  },
+  {
+    "stateId": "CHP",
+    "stateName": "Chiapas",
+    "municipalityId": "001",
+    "municipalityName": "Municipio Uno de Chiapas"
+  },
+  {
+    "stateId": "CHP",
+    "stateName": "Chiapas",
+    "municipalityId": "002",
+    "municipalityName": "Municipio Dos de Chiapas"
+  },
+  {
+    "stateId": "CHP",
+    "stateName": "Chiapas",
+    "municipalityId": "003",
+    "municipalityName": "Municipio Tres de Chiapas"
+  },
+  {
+    "stateId": "CHP",
+    "stateName": "Chiapas",
+    "municipalityId": "004",
+    "municipalityName": "Municipio Cuatro de Chiapas"
+  },
+  {
+    "stateId": "CHP",
+    "stateName": "Chiapas",
+    "municipalityId": "005",
+    "municipalityName": "Municipio Cinco de Chiapas"
+  },
+  {
+    "stateId": "CHP",
+    "stateName": "Chiapas",
+    "municipalityId": "006",
+    "municipalityName": "Municipio Seis de Chiapas"
+  },
+  {
+    "stateId": "CHP",
+    "stateName": "Chiapas",
+    "municipalityId": "007",
+    "municipalityName": "Municipio Siete de Chiapas"
+  },
+  {
+    "stateId": "CHP",
+    "stateName": "Chiapas",
+    "municipalityId": "008",
+    "municipalityName": "Municipio Ocho de Chiapas"
+  },
+  {
+    "stateId": "CHI",
+    "stateName": "Chihuahua",
+    "municipalityId": "001",
+    "municipalityName": "Municipio Uno de Chihuahua"
+  },
+  {
+    "stateId": "CHI",
+    "stateName": "Chihuahua",
+    "municipalityId": "002",
+    "municipalityName": "Municipio Dos de Chihuahua"
+  },
+  {
+    "stateId": "CHI",
+    "stateName": "Chihuahua",
+    "municipalityId": "003",
+    "municipalityName": "Municipio Tres de Chihuahua"
+  },
+  {
+    "stateId": "CHI",
+    "stateName": "Chihuahua",
+    "municipalityId": "004",
+    "municipalityName": "Municipio Cuatro de Chihuahua"
+  },
+  {
+    "stateId": "CHI",
+    "stateName": "Chihuahua",
+    "municipalityId": "005",
+    "municipalityName": "Municipio Cinco de Chihuahua"
+  },
+  {
+    "stateId": "CHI",
+    "stateName": "Chihuahua",
+    "municipalityId": "006",
+    "municipalityName": "Municipio Seis de Chihuahua"
+  },
+  {
+    "stateId": "CHI",
+    "stateName": "Chihuahua",
+    "municipalityId": "007",
+    "municipalityName": "Municipio Siete de Chihuahua"
+  },
+  {
+    "stateId": "CHI",
+    "stateName": "Chihuahua",
+    "municipalityId": "008",
+    "municipalityName": "Municipio Ocho de Chihuahua"
+  },
+  {
+    "stateId": "CMX",
+    "stateName": "Ciudad de México",
+    "municipalityId": "001",
+    "municipalityName": "Municipio Uno de Ciudad de México"
+  },
+  {
+    "stateId": "CMX",
+    "stateName": "Ciudad de México",
+    "municipalityId": "002",
+    "municipalityName": "Municipio Dos de Ciudad de México"
+  },
+  {
+    "stateId": "CMX",
+    "stateName": "Ciudad de México",
+    "municipalityId": "003",
+    "municipalityName": "Municipio Tres de Ciudad de México"
+  },
+  {
+    "stateId": "CMX",
+    "stateName": "Ciudad de México",
+    "municipalityId": "004",
+    "municipalityName": "Municipio Cuatro de Ciudad de México"
+  },
+  {
+    "stateId": "CMX",
+    "stateName": "Ciudad de México",
+    "municipalityId": "005",
+    "municipalityName": "Municipio Cinco de Ciudad de México"
+  },
+  {
+    "stateId": "CMX",
+    "stateName": "Ciudad de México",
+    "municipalityId": "006",
+    "municipalityName": "Municipio Seis de Ciudad de México"
+  },
+  {
+    "stateId": "CMX",
+    "stateName": "Ciudad de México",
+    "municipalityId": "007",
+    "municipalityName": "Municipio Siete de Ciudad de México"
+  },
+  {
+    "stateId": "CMX",
+    "stateName": "Ciudad de México",
+    "municipalityId": "008",
+    "municipalityName": "Municipio Ocho de Ciudad de México"
+  },
+  {
+    "stateId": "COA",
+    "stateName": "Coahuila de Zaragoza",
+    "municipalityId": "001",
+    "municipalityName": "Municipio Uno de Coahuila de Zaragoza"
+  },
+  {
+    "stateId": "COA",
+    "stateName": "Coahuila de Zaragoza",
+    "municipalityId": "002",
+    "municipalityName": "Municipio Dos de Coahuila de Zaragoza"
+  },
+  {
+    "stateId": "COA",
+    "stateName": "Coahuila de Zaragoza",
+    "municipalityId": "003",
+    "municipalityName": "Municipio Tres de Coahuila de Zaragoza"
+  },
+  {
+    "stateId": "COA",
+    "stateName": "Coahuila de Zaragoza",
+    "municipalityId": "004",
+    "municipalityName": "Municipio Cuatro de Coahuila de Zaragoza"
+  },
+  {
+    "stateId": "COA",
+    "stateName": "Coahuila de Zaragoza",
+    "municipalityId": "005",
+    "municipalityName": "Municipio Cinco de Coahuila de Zaragoza"
+  },
+  {
+    "stateId": "COA",
+    "stateName": "Coahuila de Zaragoza",
+    "municipalityId": "006",
+    "municipalityName": "Municipio Seis de Coahuila de Zaragoza"
+  },
+  {
+    "stateId": "COA",
+    "stateName": "Coahuila de Zaragoza",
+    "municipalityId": "007",
+    "municipalityName": "Municipio Siete de Coahuila de Zaragoza"
+  },
+  {
+    "stateId": "COA",
+    "stateName": "Coahuila de Zaragoza",
+    "municipalityId": "008",
+    "municipalityName": "Municipio Ocho de Coahuila de Zaragoza"
+  },
+  {
+    "stateId": "COL",
+    "stateName": "Colima",
+    "municipalityId": "001",
+    "municipalityName": "Municipio Uno de Colima"
+  },
+  {
+    "stateId": "COL",
+    "stateName": "Colima",
+    "municipalityId": "002",
+    "municipalityName": "Municipio Dos de Colima"
+  },
+  {
+    "stateId": "COL",
+    "stateName": "Colima",
+    "municipalityId": "003",
+    "municipalityName": "Municipio Tres de Colima"
+  },
+  {
+    "stateId": "COL",
+    "stateName": "Colima",
+    "municipalityId": "004",
+    "municipalityName": "Municipio Cuatro de Colima"
+  },
+  {
+    "stateId": "COL",
+    "stateName": "Colima",
+    "municipalityId": "005",
+    "municipalityName": "Municipio Cinco de Colima"
+  },
+  {
+    "stateId": "COL",
+    "stateName": "Colima",
+    "municipalityId": "006",
+    "municipalityName": "Municipio Seis de Colima"
+  },
+  {
+    "stateId": "COL",
+    "stateName": "Colima",
+    "municipalityId": "007",
+    "municipalityName": "Municipio Siete de Colima"
+  },
+  {
+    "stateId": "COL",
+    "stateName": "Colima",
+    "municipalityId": "008",
+    "municipalityName": "Municipio Ocho de Colima"
+  },
+  {
+    "stateId": "DUR",
+    "stateName": "Durango",
+    "municipalityId": "001",
+    "municipalityName": "Municipio Uno de Durango"
+  },
+  {
+    "stateId": "DUR",
+    "stateName": "Durango",
+    "municipalityId": "002",
+    "municipalityName": "Municipio Dos de Durango"
+  },
+  {
+    "stateId": "DUR",
+    "stateName": "Durango",
+    "municipalityId": "003",
+    "municipalityName": "Municipio Tres de Durango"
+  },
+  {
+    "stateId": "DUR",
+    "stateName": "Durango",
+    "municipalityId": "004",
+    "municipalityName": "Municipio Cuatro de Durango"
+  },
+  {
+    "stateId": "DUR",
+    "stateName": "Durango",
+    "municipalityId": "005",
+    "municipalityName": "Municipio Cinco de Durango"
+  },
+  {
+    "stateId": "DUR",
+    "stateName": "Durango",
+    "municipalityId": "006",
+    "municipalityName": "Municipio Seis de Durango"
+  },
+  {
+    "stateId": "DUR",
+    "stateName": "Durango",
+    "municipalityId": "007",
+    "municipalityName": "Municipio Siete de Durango"
+  },
+  {
+    "stateId": "DUR",
+    "stateName": "Durango",
+    "municipalityId": "008",
+    "municipalityName": "Municipio Ocho de Durango"
+  },
+  {
+    "stateId": "GUA",
+    "stateName": "Guanajuato",
+    "municipalityId": "001",
+    "municipalityName": "Municipio Uno de Guanajuato"
+  },
+  {
+    "stateId": "GUA",
+    "stateName": "Guanajuato",
+    "municipalityId": "002",
+    "municipalityName": "Municipio Dos de Guanajuato"
+  },
+  {
+    "stateId": "GUA",
+    "stateName": "Guanajuato",
+    "municipalityId": "003",
+    "municipalityName": "Municipio Tres de Guanajuato"
+  },
+  {
+    "stateId": "GUA",
+    "stateName": "Guanajuato",
+    "municipalityId": "004",
+    "municipalityName": "Municipio Cuatro de Guanajuato"
+  },
+  {
+    "stateId": "GUA",
+    "stateName": "Guanajuato",
+    "municipalityId": "005",
+    "municipalityName": "Municipio Cinco de Guanajuato"
+  },
+  {
+    "stateId": "GUA",
+    "stateName": "Guanajuato",
+    "municipalityId": "006",
+    "municipalityName": "Municipio Seis de Guanajuato"
+  },
+  {
+    "stateId": "GUA",
+    "stateName": "Guanajuato",
+    "municipalityId": "007",
+    "municipalityName": "Municipio Siete de Guanajuato"
+  },
+  {
+    "stateId": "GUA",
+    "stateName": "Guanajuato",
+    "municipalityId": "008",
+    "municipalityName": "Municipio Ocho de Guanajuato"
+  },
+  {
+    "stateId": "GRO",
+    "stateName": "Guerrero",
+    "municipalityId": "001",
+    "municipalityName": "Municipio Uno de Guerrero"
+  },
+  {
+    "stateId": "GRO",
+    "stateName": "Guerrero",
+    "municipalityId": "002",
+    "municipalityName": "Municipio Dos de Guerrero"
+  },
+  {
+    "stateId": "GRO",
+    "stateName": "Guerrero",
+    "municipalityId": "003",
+    "municipalityName": "Municipio Tres de Guerrero"
+  },
+  {
+    "stateId": "GRO",
+    "stateName": "Guerrero",
+    "municipalityId": "004",
+    "municipalityName": "Municipio Cuatro de Guerrero"
+  },
+  {
+    "stateId": "GRO",
+    "stateName": "Guerrero",
+    "municipalityId": "005",
+    "municipalityName": "Municipio Cinco de Guerrero"
+  },
+  {
+    "stateId": "GRO",
+    "stateName": "Guerrero",
+    "municipalityId": "006",
+    "municipalityName": "Municipio Seis de Guerrero"
+  },
+  {
+    "stateId": "GRO",
+    "stateName": "Guerrero",
+    "municipalityId": "007",
+    "municipalityName": "Municipio Siete de Guerrero"
+  },
+  {
+    "stateId": "GRO",
+    "stateName": "Guerrero",
+    "municipalityId": "008",
+    "municipalityName": "Municipio Ocho de Guerrero"
+  },
+  {
+    "stateId": "HGO",
+    "stateName": "Hidalgo",
+    "municipalityId": "001",
+    "municipalityName": "Municipio Uno de Hidalgo"
+  },
+  {
+    "stateId": "HGO",
+    "stateName": "Hidalgo",
+    "municipalityId": "002",
+    "municipalityName": "Municipio Dos de Hidalgo"
+  },
+  {
+    "stateId": "HGO",
+    "stateName": "Hidalgo",
+    "municipalityId": "003",
+    "municipalityName": "Municipio Tres de Hidalgo"
+  },
+  {
+    "stateId": "HGO",
+    "stateName": "Hidalgo",
+    "municipalityId": "004",
+    "municipalityName": "Municipio Cuatro de Hidalgo"
+  },
+  {
+    "stateId": "HGO",
+    "stateName": "Hidalgo",
+    "municipalityId": "005",
+    "municipalityName": "Municipio Cinco de Hidalgo"
+  },
+  {
+    "stateId": "HGO",
+    "stateName": "Hidalgo",
+    "municipalityId": "006",
+    "municipalityName": "Municipio Seis de Hidalgo"
+  },
+  {
+    "stateId": "HGO",
+    "stateName": "Hidalgo",
+    "municipalityId": "007",
+    "municipalityName": "Municipio Siete de Hidalgo"
+  },
+  {
+    "stateId": "HGO",
+    "stateName": "Hidalgo",
+    "municipalityId": "008",
+    "municipalityName": "Municipio Ocho de Hidalgo"
+  },
+  {
+    "stateId": "JAL",
+    "stateName": "Jalisco",
+    "municipalityId": "001",
+    "municipalityName": "Municipio Uno de Jalisco"
+  },
+  {
+    "stateId": "JAL",
+    "stateName": "Jalisco",
+    "municipalityId": "002",
+    "municipalityName": "Municipio Dos de Jalisco"
+  },
+  {
+    "stateId": "JAL",
+    "stateName": "Jalisco",
+    "municipalityId": "003",
+    "municipalityName": "Municipio Tres de Jalisco"
+  },
+  {
+    "stateId": "JAL",
+    "stateName": "Jalisco",
+    "municipalityId": "004",
+    "municipalityName": "Municipio Cuatro de Jalisco"
+  },
+  {
+    "stateId": "JAL",
+    "stateName": "Jalisco",
+    "municipalityId": "005",
+    "municipalityName": "Municipio Cinco de Jalisco"
+  },
+  {
+    "stateId": "JAL",
+    "stateName": "Jalisco",
+    "municipalityId": "006",
+    "municipalityName": "Municipio Seis de Jalisco"
+  },
+  {
+    "stateId": "JAL",
+    "stateName": "Jalisco",
+    "municipalityId": "007",
+    "municipalityName": "Municipio Siete de Jalisco"
+  },
+  {
+    "stateId": "JAL",
+    "stateName": "Jalisco",
+    "municipalityId": "008",
+    "municipalityName": "Municipio Ocho de Jalisco"
+  },
+  {
+    "stateId": "MEX",
+    "stateName": "México",
+    "municipalityId": "001",
+    "municipalityName": "Municipio Uno de México"
+  },
+  {
+    "stateId": "MEX",
+    "stateName": "México",
+    "municipalityId": "002",
+    "municipalityName": "Municipio Dos de México"
+  },
+  {
+    "stateId": "MEX",
+    "stateName": "México",
+    "municipalityId": "003",
+    "municipalityName": "Municipio Tres de México"
+  },
+  {
+    "stateId": "MEX",
+    "stateName": "México",
+    "municipalityId": "004",
+    "municipalityName": "Municipio Cuatro de México"
+  },
+  {
+    "stateId": "MEX",
+    "stateName": "México",
+    "municipalityId": "005",
+    "municipalityName": "Municipio Cinco de México"
+  },
+  {
+    "stateId": "MEX",
+    "stateName": "México",
+    "municipalityId": "006",
+    "municipalityName": "Municipio Seis de México"
+  },
+  {
+    "stateId": "MEX",
+    "stateName": "México",
+    "municipalityId": "007",
+    "municipalityName": "Municipio Siete de México"
+  },
+  {
+    "stateId": "MEX",
+    "stateName": "México",
+    "municipalityId": "008",
+    "municipalityName": "Municipio Ocho de México"
+  },
+  {
+    "stateId": "MIC",
+    "stateName": "Michoacán de Ocampo",
+    "municipalityId": "001",
+    "municipalityName": "Municipio Uno de Michoacán de Ocampo"
+  },
+  {
+    "stateId": "MIC",
+    "stateName": "Michoacán de Ocampo",
+    "municipalityId": "002",
+    "municipalityName": "Municipio Dos de Michoacán de Ocampo"
+  },
+  {
+    "stateId": "MIC",
+    "stateName": "Michoacán de Ocampo",
+    "municipalityId": "003",
+    "municipalityName": "Municipio Tres de Michoacán de Ocampo"
+  },
+  {
+    "stateId": "MIC",
+    "stateName": "Michoacán de Ocampo",
+    "municipalityId": "004",
+    "municipalityName": "Municipio Cuatro de Michoacán de Ocampo"
+  },
+  {
+    "stateId": "MIC",
+    "stateName": "Michoacán de Ocampo",
+    "municipalityId": "005",
+    "municipalityName": "Municipio Cinco de Michoacán de Ocampo"
+  },
+  {
+    "stateId": "MIC",
+    "stateName": "Michoacán de Ocampo",
+    "municipalityId": "006",
+    "municipalityName": "Municipio Seis de Michoacán de Ocampo"
+  },
+  {
+    "stateId": "MIC",
+    "stateName": "Michoacán de Ocampo",
+    "municipalityId": "007",
+    "municipalityName": "Municipio Siete de Michoacán de Ocampo"
+  },
+  {
+    "stateId": "MIC",
+    "stateName": "Michoacán de Ocampo",
+    "municipalityId": "008",
+    "municipalityName": "Municipio Ocho de Michoacán de Ocampo"
+  },
+  {
+    "stateId": "MOR",
+    "stateName": "Morelos",
+    "municipalityId": "001",
+    "municipalityName": "Municipio Uno de Morelos"
+  },
+  {
+    "stateId": "MOR",
+    "stateName": "Morelos",
+    "municipalityId": "002",
+    "municipalityName": "Municipio Dos de Morelos"
+  },
+  {
+    "stateId": "MOR",
+    "stateName": "Morelos",
+    "municipalityId": "003",
+    "municipalityName": "Municipio Tres de Morelos"
+  },
+  {
+    "stateId": "MOR",
+    "stateName": "Morelos",
+    "municipalityId": "004",
+    "municipalityName": "Municipio Cuatro de Morelos"
+  },
+  {
+    "stateId": "MOR",
+    "stateName": "Morelos",
+    "municipalityId": "005",
+    "municipalityName": "Municipio Cinco de Morelos"
+  },
+  {
+    "stateId": "MOR",
+    "stateName": "Morelos",
+    "municipalityId": "006",
+    "municipalityName": "Municipio Seis de Morelos"
+  },
+  {
+    "stateId": "MOR",
+    "stateName": "Morelos",
+    "municipalityId": "007",
+    "municipalityName": "Municipio Siete de Morelos"
+  },
+  {
+    "stateId": "MOR",
+    "stateName": "Morelos",
+    "municipalityId": "008",
+    "municipalityName": "Municipio Ocho de Morelos"
+  },
+  {
+    "stateId": "NAY",
+    "stateName": "Nayarit",
+    "municipalityId": "001",
+    "municipalityName": "Municipio Uno de Nayarit"
+  },
+  {
+    "stateId": "NAY",
+    "stateName": "Nayarit",
+    "municipalityId": "002",
+    "municipalityName": "Municipio Dos de Nayarit"
+  },
+  {
+    "stateId": "NAY",
+    "stateName": "Nayarit",
+    "municipalityId": "003",
+    "municipalityName": "Municipio Tres de Nayarit"
+  },
+  {
+    "stateId": "NAY",
+    "stateName": "Nayarit",
+    "municipalityId": "004",
+    "municipalityName": "Municipio Cuatro de Nayarit"
+  },
+  {
+    "stateId": "NAY",
+    "stateName": "Nayarit",
+    "municipalityId": "005",
+    "municipalityName": "Municipio Cinco de Nayarit"
+  },
+  {
+    "stateId": "NAY",
+    "stateName": "Nayarit",
+    "municipalityId": "006",
+    "municipalityName": "Municipio Seis de Nayarit"
+  },
+  {
+    "stateId": "NAY",
+    "stateName": "Nayarit",
+    "municipalityId": "007",
+    "municipalityName": "Municipio Siete de Nayarit"
+  },
+  {
+    "stateId": "NAY",
+    "stateName": "Nayarit",
+    "municipalityId": "008",
+    "municipalityName": "Municipio Ocho de Nayarit"
+  },
+  {
+    "stateId": "NLE",
+    "stateName": "Nuevo León",
+    "municipalityId": "001",
+    "municipalityName": "Municipio Uno de Nuevo León"
+  },
+  {
+    "stateId": "NLE",
+    "stateName": "Nuevo León",
+    "municipalityId": "002",
+    "municipalityName": "Municipio Dos de Nuevo León"
+  },
+  {
+    "stateId": "NLE",
+    "stateName": "Nuevo León",
+    "municipalityId": "003",
+    "municipalityName": "Municipio Tres de Nuevo León"
+  },
+  {
+    "stateId": "NLE",
+    "stateName": "Nuevo León",
+    "municipalityId": "004",
+    "municipalityName": "Municipio Cuatro de Nuevo León"
+  },
+  {
+    "stateId": "NLE",
+    "stateName": "Nuevo León",
+    "municipalityId": "005",
+    "municipalityName": "Municipio Cinco de Nuevo León"
+  },
+  {
+    "stateId": "NLE",
+    "stateName": "Nuevo León",
+    "municipalityId": "006",
+    "municipalityName": "Municipio Seis de Nuevo León"
+  },
+  {
+    "stateId": "NLE",
+    "stateName": "Nuevo León",
+    "municipalityId": "007",
+    "municipalityName": "Municipio Siete de Nuevo León"
+  },
+  {
+    "stateId": "NLE",
+    "stateName": "Nuevo León",
+    "municipalityId": "008",
+    "municipalityName": "Municipio Ocho de Nuevo León"
+  },
+  {
+    "stateId": "OAX",
+    "stateName": "Oaxaca",
+    "municipalityId": "001",
+    "municipalityName": "Municipio Uno de Oaxaca"
+  },
+  {
+    "stateId": "OAX",
+    "stateName": "Oaxaca",
+    "municipalityId": "002",
+    "municipalityName": "Municipio Dos de Oaxaca"
+  },
+  {
+    "stateId": "OAX",
+    "stateName": "Oaxaca",
+    "municipalityId": "003",
+    "municipalityName": "Municipio Tres de Oaxaca"
+  },
+  {
+    "stateId": "OAX",
+    "stateName": "Oaxaca",
+    "municipalityId": "004",
+    "municipalityName": "Municipio Cuatro de Oaxaca"
+  },
+  {
+    "stateId": "OAX",
+    "stateName": "Oaxaca",
+    "municipalityId": "005",
+    "municipalityName": "Municipio Cinco de Oaxaca"
+  },
+  {
+    "stateId": "OAX",
+    "stateName": "Oaxaca",
+    "municipalityId": "006",
+    "municipalityName": "Municipio Seis de Oaxaca"
+  },
+  {
+    "stateId": "OAX",
+    "stateName": "Oaxaca",
+    "municipalityId": "007",
+    "municipalityName": "Municipio Siete de Oaxaca"
+  },
+  {
+    "stateId": "OAX",
+    "stateName": "Oaxaca",
+    "municipalityId": "008",
+    "municipalityName": "Municipio Ocho de Oaxaca"
+  },
+  {
+    "stateId": "PUE",
+    "stateName": "Puebla",
+    "municipalityId": "001",
+    "municipalityName": "Municipio Uno de Puebla"
+  },
+  {
+    "stateId": "PUE",
+    "stateName": "Puebla",
+    "municipalityId": "002",
+    "municipalityName": "Municipio Dos de Puebla"
+  },
+  {
+    "stateId": "PUE",
+    "stateName": "Puebla",
+    "municipalityId": "003",
+    "municipalityName": "Municipio Tres de Puebla"
+  },
+  {
+    "stateId": "PUE",
+    "stateName": "Puebla",
+    "municipalityId": "004",
+    "municipalityName": "Municipio Cuatro de Puebla"
+  },
+  {
+    "stateId": "PUE",
+    "stateName": "Puebla",
+    "municipalityId": "005",
+    "municipalityName": "Municipio Cinco de Puebla"
+  },
+  {
+    "stateId": "PUE",
+    "stateName": "Puebla",
+    "municipalityId": "006",
+    "municipalityName": "Municipio Seis de Puebla"
+  },
+  {
+    "stateId": "PUE",
+    "stateName": "Puebla",
+    "municipalityId": "007",
+    "municipalityName": "Municipio Siete de Puebla"
+  },
+  {
+    "stateId": "PUE",
+    "stateName": "Puebla",
+    "municipalityId": "008",
+    "municipalityName": "Municipio Ocho de Puebla"
+  },
+  {
+    "stateId": "QUE",
+    "stateName": "Querétaro",
+    "municipalityId": "001",
+    "municipalityName": "Municipio Uno de Querétaro"
+  },
+  {
+    "stateId": "QUE",
+    "stateName": "Querétaro",
+    "municipalityId": "002",
+    "municipalityName": "Municipio Dos de Querétaro"
+  },
+  {
+    "stateId": "QUE",
+    "stateName": "Querétaro",
+    "municipalityId": "003",
+    "municipalityName": "Municipio Tres de Querétaro"
+  },
+  {
+    "stateId": "QUE",
+    "stateName": "Querétaro",
+    "municipalityId": "004",
+    "municipalityName": "Municipio Cuatro de Querétaro"
+  },
+  {
+    "stateId": "QUE",
+    "stateName": "Querétaro",
+    "municipalityId": "005",
+    "municipalityName": "Municipio Cinco de Querétaro"
+  },
+  {
+    "stateId": "QUE",
+    "stateName": "Querétaro",
+    "municipalityId": "006",
+    "municipalityName": "Municipio Seis de Querétaro"
+  },
+  {
+    "stateId": "QUE",
+    "stateName": "Querétaro",
+    "municipalityId": "007",
+    "municipalityName": "Municipio Siete de Querétaro"
+  },
+  {
+    "stateId": "QUE",
+    "stateName": "Querétaro",
+    "municipalityId": "008",
+    "municipalityName": "Municipio Ocho de Querétaro"
+  },
+  {
+    "stateId": "QROO",
+    "stateName": "Quintana Roo",
+    "municipalityId": "001",
+    "municipalityName": "Municipio Uno de Quintana Roo"
+  },
+  {
+    "stateId": "QROO",
+    "stateName": "Quintana Roo",
+    "municipalityId": "002",
+    "municipalityName": "Municipio Dos de Quintana Roo"
+  },
+  {
+    "stateId": "QROO",
+    "stateName": "Quintana Roo",
+    "municipalityId": "003",
+    "municipalityName": "Municipio Tres de Quintana Roo"
+  },
+  {
+    "stateId": "QROO",
+    "stateName": "Quintana Roo",
+    "municipalityId": "004",
+    "municipalityName": "Municipio Cuatro de Quintana Roo"
+  },
+  {
+    "stateId": "QROO",
+    "stateName": "Quintana Roo",
+    "municipalityId": "005",
+    "municipalityName": "Municipio Cinco de Quintana Roo"
+  },
+  {
+    "stateId": "QROO",
+    "stateName": "Quintana Roo",
+    "municipalityId": "006",
+    "municipalityName": "Municipio Seis de Quintana Roo"
+  },
+  {
+    "stateId": "QROO",
+    "stateName": "Quintana Roo",
+    "municipalityId": "007",
+    "municipalityName": "Municipio Siete de Quintana Roo"
+  },
+  {
+    "stateId": "QROO",
+    "stateName": "Quintana Roo",
+    "municipalityId": "008",
+    "municipalityName": "Municipio Ocho de Quintana Roo"
+  },
+  {
+    "stateId": "SLP",
+    "stateName": "San Luis Potosí",
+    "municipalityId": "001",
+    "municipalityName": "Municipio Uno de San Luis Potosí"
+  },
+  {
+    "stateId": "SLP",
+    "stateName": "San Luis Potosí",
+    "municipalityId": "002",
+    "municipalityName": "Municipio Dos de San Luis Potosí"
+  },
+  {
+    "stateId": "SLP",
+    "stateName": "San Luis Potosí",
+    "municipalityId": "003",
+    "municipalityName": "Municipio Tres de San Luis Potosí"
+  },
+  {
+    "stateId": "SLP",
+    "stateName": "San Luis Potosí",
+    "municipalityId": "004",
+    "municipalityName": "Municipio Cuatro de San Luis Potosí"
+  },
+  {
+    "stateId": "SLP",
+    "stateName": "San Luis Potosí",
+    "municipalityId": "005",
+    "municipalityName": "Municipio Cinco de San Luis Potosí"
+  },
+  {
+    "stateId": "SLP",
+    "stateName": "San Luis Potosí",
+    "municipalityId": "006",
+    "municipalityName": "Municipio Seis de San Luis Potosí"
+  },
+  {
+    "stateId": "SLP",
+    "stateName": "San Luis Potosí",
+    "municipalityId": "007",
+    "municipalityName": "Municipio Siete de San Luis Potosí"
+  },
+  {
+    "stateId": "SLP",
+    "stateName": "San Luis Potosí",
+    "municipalityId": "008",
+    "municipalityName": "Municipio Ocho de San Luis Potosí"
+  },
+  {
+    "stateId": "SIN",
+    "stateName": "Sinaloa",
+    "municipalityId": "001",
+    "municipalityName": "Municipio Uno de Sinaloa"
+  },
+  {
+    "stateId": "SIN",
+    "stateName": "Sinaloa",
+    "municipalityId": "002",
+    "municipalityName": "Municipio Dos de Sinaloa"
+  },
+  {
+    "stateId": "SIN",
+    "stateName": "Sinaloa",
+    "municipalityId": "003",
+    "municipalityName": "Municipio Tres de Sinaloa"
+  },
+  {
+    "stateId": "SIN",
+    "stateName": "Sinaloa",
+    "municipalityId": "004",
+    "municipalityName": "Municipio Cuatro de Sinaloa"
+  },
+  {
+    "stateId": "SIN",
+    "stateName": "Sinaloa",
+    "municipalityId": "005",
+    "municipalityName": "Municipio Cinco de Sinaloa"
+  },
+  {
+    "stateId": "SIN",
+    "stateName": "Sinaloa",
+    "municipalityId": "006",
+    "municipalityName": "Municipio Seis de Sinaloa"
+  },
+  {
+    "stateId": "SIN",
+    "stateName": "Sinaloa",
+    "municipalityId": "007",
+    "municipalityName": "Municipio Siete de Sinaloa"
+  },
+  {
+    "stateId": "SIN",
+    "stateName": "Sinaloa",
+    "municipalityId": "008",
+    "municipalityName": "Municipio Ocho de Sinaloa"
+  },
+  {
+    "stateId": "SON",
+    "stateName": "Sonora",
+    "municipalityId": "001",
+    "municipalityName": "Municipio Uno de Sonora"
+  },
+  {
+    "stateId": "SON",
+    "stateName": "Sonora",
+    "municipalityId": "002",
+    "municipalityName": "Municipio Dos de Sonora"
+  },
+  {
+    "stateId": "SON",
+    "stateName": "Sonora",
+    "municipalityId": "003",
+    "municipalityName": "Municipio Tres de Sonora"
+  },
+  {
+    "stateId": "SON",
+    "stateName": "Sonora",
+    "municipalityId": "004",
+    "municipalityName": "Municipio Cuatro de Sonora"
+  },
+  {
+    "stateId": "SON",
+    "stateName": "Sonora",
+    "municipalityId": "005",
+    "municipalityName": "Municipio Cinco de Sonora"
+  },
+  {
+    "stateId": "SON",
+    "stateName": "Sonora",
+    "municipalityId": "006",
+    "municipalityName": "Municipio Seis de Sonora"
+  },
+  {
+    "stateId": "SON",
+    "stateName": "Sonora",
+    "municipalityId": "007",
+    "municipalityName": "Municipio Siete de Sonora"
+  },
+  {
+    "stateId": "SON",
+    "stateName": "Sonora",
+    "municipalityId": "008",
+    "municipalityName": "Municipio Ocho de Sonora"
+  },
+  {
+    "stateId": "TAB",
+    "stateName": "Tabasco",
+    "municipalityId": "001",
+    "municipalityName": "Municipio Uno de Tabasco"
+  },
+  {
+    "stateId": "TAB",
+    "stateName": "Tabasco",
+    "municipalityId": "002",
+    "municipalityName": "Municipio Dos de Tabasco"
+  },
+  {
+    "stateId": "TAB",
+    "stateName": "Tabasco",
+    "municipalityId": "003",
+    "municipalityName": "Municipio Tres de Tabasco"
+  },
+  {
+    "stateId": "TAB",
+    "stateName": "Tabasco",
+    "municipalityId": "004",
+    "municipalityName": "Municipio Cuatro de Tabasco"
+  },
+  {
+    "stateId": "TAB",
+    "stateName": "Tabasco",
+    "municipalityId": "005",
+    "municipalityName": "Municipio Cinco de Tabasco"
+  },
+  {
+    "stateId": "TAB",
+    "stateName": "Tabasco",
+    "municipalityId": "006",
+    "municipalityName": "Municipio Seis de Tabasco"
+  },
+  {
+    "stateId": "TAB",
+    "stateName": "Tabasco",
+    "municipalityId": "007",
+    "municipalityName": "Municipio Siete de Tabasco"
+  },
+  {
+    "stateId": "TAB",
+    "stateName": "Tabasco",
+    "municipalityId": "008",
+    "municipalityName": "Municipio Ocho de Tabasco"
+  },
+  {
+    "stateId": "TAM",
+    "stateName": "Tamaulipas",
+    "municipalityId": "001",
+    "municipalityName": "Municipio Uno de Tamaulipas"
+  },
+  {
+    "stateId": "TAM",
+    "stateName": "Tamaulipas",
+    "municipalityId": "002",
+    "municipalityName": "Municipio Dos de Tamaulipas"
+  },
+  {
+    "stateId": "TAM",
+    "stateName": "Tamaulipas",
+    "municipalityId": "003",
+    "municipalityName": "Municipio Tres de Tamaulipas"
+  },
+  {
+    "stateId": "TAM",
+    "stateName": "Tamaulipas",
+    "municipalityId": "004",
+    "municipalityName": "Municipio Cuatro de Tamaulipas"
+  },
+  {
+    "stateId": "TAM",
+    "stateName": "Tamaulipas",
+    "municipalityId": "005",
+    "municipalityName": "Municipio Cinco de Tamaulipas"
+  },
+  {
+    "stateId": "TAM",
+    "stateName": "Tamaulipas",
+    "municipalityId": "006",
+    "municipalityName": "Municipio Seis de Tamaulipas"
+  },
+  {
+    "stateId": "TAM",
+    "stateName": "Tamaulipas",
+    "municipalityId": "007",
+    "municipalityName": "Municipio Siete de Tamaulipas"
+  },
+  {
+    "stateId": "TAM",
+    "stateName": "Tamaulipas",
+    "municipalityId": "008",
+    "municipalityName": "Municipio Ocho de Tamaulipas"
+  },
+  {
+    "stateId": "TLA",
+    "stateName": "Tlaxcala",
+    "municipalityId": "001",
+    "municipalityName": "Municipio Uno de Tlaxcala"
+  },
+  {
+    "stateId": "TLA",
+    "stateName": "Tlaxcala",
+    "municipalityId": "002",
+    "municipalityName": "Municipio Dos de Tlaxcala"
+  },
+  {
+    "stateId": "TLA",
+    "stateName": "Tlaxcala",
+    "municipalityId": "003",
+    "municipalityName": "Municipio Tres de Tlaxcala"
+  },
+  {
+    "stateId": "TLA",
+    "stateName": "Tlaxcala",
+    "municipalityId": "004",
+    "municipalityName": "Municipio Cuatro de Tlaxcala"
+  },
+  {
+    "stateId": "TLA",
+    "stateName": "Tlaxcala",
+    "municipalityId": "005",
+    "municipalityName": "Municipio Cinco de Tlaxcala"
+  },
+  {
+    "stateId": "TLA",
+    "stateName": "Tlaxcala",
+    "municipalityId": "006",
+    "municipalityName": "Municipio Seis de Tlaxcala"
+  },
+  {
+    "stateId": "TLA",
+    "stateName": "Tlaxcala",
+    "municipalityId": "007",
+    "municipalityName": "Municipio Siete de Tlaxcala"
+  },
+  {
+    "stateId": "TLA",
+    "stateName": "Tlaxcala",
+    "municipalityId": "008",
+    "municipalityName": "Municipio Ocho de Tlaxcala"
+  },
+  {
+    "stateId": "VER",
+    "stateName": "Veracruz",
+    "municipalityId": "001",
+    "municipalityName": "Municipio Uno de Veracruz"
+  },
+  {
+    "stateId": "VER",
+    "stateName": "Veracruz",
+    "municipalityId": "002",
+    "municipalityName": "Municipio Dos de Veracruz"
+  },
+  {
+    "stateId": "VER",
+    "stateName": "Veracruz",
+    "municipalityId": "003",
+    "municipalityName": "Municipio Tres de Veracruz"
+  },
+  {
+    "stateId": "VER",
+    "stateName": "Veracruz",
+    "municipalityId": "004",
+    "municipalityName": "Municipio Cuatro de Veracruz"
+  },
+  {
+    "stateId": "VER",
+    "stateName": "Veracruz",
+    "municipalityId": "005",
+    "municipalityName": "Municipio Cinco de Veracruz"
+  },
+  {
+    "stateId": "VER",
+    "stateName": "Veracruz",
+    "municipalityId": "006",
+    "municipalityName": "Municipio Seis de Veracruz"
+  },
+  {
+    "stateId": "VER",
+    "stateName": "Veracruz",
+    "municipalityId": "007",
+    "municipalityName": "Municipio Siete de Veracruz"
+  },
+  {
+    "stateId": "VER",
+    "stateName": "Veracruz",
+    "municipalityId": "008",
+    "municipalityName": "Municipio Ocho de Veracruz"
+  },
+  {
+    "stateId": "YUC",
+    "stateName": "Yucatán",
+    "municipalityId": "001",
+    "municipalityName": "Municipio Uno de Yucatán"
+  },
+  {
+    "stateId": "YUC",
+    "stateName": "Yucatán",
+    "municipalityId": "002",
+    "municipalityName": "Municipio Dos de Yucatán"
+  },
+  {
+    "stateId": "YUC",
+    "stateName": "Yucatán",
+    "municipalityId": "003",
+    "municipalityName": "Municipio Tres de Yucatán"
+  },
+  {
+    "stateId": "YUC",
+    "stateName": "Yucatán",
+    "municipalityId": "004",
+    "municipalityName": "Municipio Cuatro de Yucatán"
+  },
+  {
+    "stateId": "YUC",
+    "stateName": "Yucatán",
+    "municipalityId": "005",
+    "municipalityName": "Municipio Cinco de Yucatán"
+  },
+  {
+    "stateId": "YUC",
+    "stateName": "Yucatán",
+    "municipalityId": "006",
+    "municipalityName": "Municipio Seis de Yucatán"
+  },
+  {
+    "stateId": "YUC",
+    "stateName": "Yucatán",
+    "municipalityId": "007",
+    "municipalityName": "Municipio Siete de Yucatán"
+  },
+  {
+    "stateId": "YUC",
+    "stateName": "Yucatán",
+    "municipalityId": "008",
+    "municipalityName": "Municipio Ocho de Yucatán"
+  },
+  {
+    "stateId": "ZAC",
+    "stateName": "Zacatecas",
+    "municipalityId": "001",
+    "municipalityName": "Municipio Uno de Zacatecas"
+  },
+  {
+    "stateId": "ZAC",
+    "stateName": "Zacatecas",
+    "municipalityId": "002",
+    "municipalityName": "Municipio Dos de Zacatecas"
+  },
+  {
+    "stateId": "ZAC",
+    "stateName": "Zacatecas",
+    "municipalityId": "003",
+    "municipalityName": "Municipio Tres de Zacatecas"
+  },
+  {
+    "stateId": "ZAC",
+    "stateName": "Zacatecas",
+    "municipalityId": "004",
+    "municipalityName": "Municipio Cuatro de Zacatecas"
+  },
+  {
+    "stateId": "ZAC",
+    "stateName": "Zacatecas",
+    "municipalityId": "005",
+    "municipalityName": "Municipio Cinco de Zacatecas"
+  },
+  {
+    "stateId": "ZAC",
+    "stateName": "Zacatecas",
+    "municipalityId": "006",
+    "municipalityName": "Municipio Seis de Zacatecas"
+  },
+  {
+    "stateId": "ZAC",
+    "stateName": "Zacatecas",
+    "municipalityId": "007",
+    "municipalityName": "Municipio Siete de Zacatecas"
+  },
+  {
+    "stateId": "ZAC",
+    "stateName": "Zacatecas",
+    "municipalityId": "008",
+    "municipalityName": "Municipio Ocho de Zacatecas"
+  }
+][]
