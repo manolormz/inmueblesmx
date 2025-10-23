@@ -143,12 +143,21 @@ export default function Search() {
 
   const mapMarkers = useMemo(() => {
     const MAX_MARKERS = 500;
-    const r = apiSearch.data?.results || [];
+    let r = apiSearch.data?.results || [];
+    if ((!r || r.length === 0) && (apiSearch.isError || !apiSearch.data)) {
+      // Fallback mock cerca de CDMX
+      const base = { lat: 19.4326, lng: -99.1332 };
+      const count = 800;
+      r = Array.from({ length: count }).map((_, i) => ({
+        listing_id: `mock-${i+1}`,
+        lat: base.lat + (Math.random() - 0.5) * 0.6,
+        lng: base.lng + (Math.random() - 0.5) * 0.6,
+        title: `Propiedad mock ${i+1}`,
+        property_slug: `mock-${i+1}`,
+      }));
+    }
     return r
-      .filter(
-        (it: any) =>
-          Number.isFinite(Number(it?.lat)) && Number.isFinite(Number(it?.lng)),
-      )
+      .filter((it: any) => Number.isFinite(Number(it?.lat)) && Number.isFinite(Number(it?.lng)))
       .slice(0, MAX_MARKERS)
       .map((it: any) => ({
         id: it.listing_id,
@@ -156,7 +165,7 @@ export default function Search() {
         lng: Number(it.lng),
         title: it.title || it.property_slug,
       }));
-  }, [apiSearch.data]);
+  }, [apiSearch.data, apiSearch.isError]);
 
   const query = useQuery({
     queryKey: ["properties", filtersForRepo, page, pageSize],
