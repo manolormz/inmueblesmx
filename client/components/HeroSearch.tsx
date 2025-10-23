@@ -1,20 +1,32 @@
-// client/components/HeroSearch.tsx
+import { useMemo, useState } from "react";
 import SearchButton from "@/components/SearchButton";
-import { useState } from "react";
+import LocationField from "@/components/LocationField";
+import { PropertyTypeOptions } from "@shared/options";
 
-function HeroSearch() {
-  const [operation, setOperation] = useState("buy");
+export function HeroSearch() {
+  type OperationLocal = "Sale" | "Rent";
+  const [operation, setOperation] = useState<OperationLocal>("Sale");
+
+  const [location, setLocation] = useState<any | null>(null);
+  const [type, setType] = useState("");
+  const priceRange = useMemo(
+    () =>
+      operation === "Rent"
+        ? { placeholderMin: "3,000", placeholderMax: "100,000" }
+        : { placeholderMin: "500,000", placeholderMax: "20,000,000" },
+    [operation]
+  );
+  const [priceMin, setPriceMin] = useState<string>("");
+  const [priceMax, setPriceMax] = useState<string>("");
 
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const form = new FormData(e.currentTarget);
-    const propertyType = (form.get("type") || "").toString().trim();
-    const priceMin = (form.get("priceMin") || "").toString().trim();
-    const priceMax = (form.get("priceMax") || "").toString().trim();
 
     const params = new URLSearchParams();
     params.set("operation", operation);
-    if (propertyType) params.set("type", propertyType);
+    if (location?.stateId) params.set("state", String(location.stateId));
+    if (location?.municipalityId) params.set("municipality", String(location.municipalityId));
+    if (type) params.set("type", type);
     if (priceMin) params.set("priceMin", priceMin);
     if (priceMax) params.set("priceMax", priceMax);
 
@@ -22,38 +34,64 @@ function HeroSearch() {
   }
 
   return (
-    <div className="w-full flex flex-col items-center text-center">
-      <div className="flex gap-3 justify-center mb-4">
-        {["buy","rent","sell"].map(op => (
+    <div className="w-full flex flex-col items-center text-center gap-4">
+      <div className="flex gap-3 justify-center">
+        {(["Sale", "Rent"] as OperationLocal[]).map((op) => (
           <button
             key={op}
             type="button"
             onClick={() => setOperation(op)}
             className={`px-5 py-2 rounded-lg border ${
-              operation === op ? "bg-blue-600 text-white" : "bg-white text-gray-700 border-gray-300"
+              operation === op ? "bg-blue-600 text-white border-blue-600" : "bg-white text-gray-700 border-gray-300"
             }`}
           >
-            {op === "buy" ? "Comprar" : op === "rent" ? "Rentar" : "Vender"}
+            {op === "Sale" ? "Comprar" : "Rentar"}
           </button>
         ))}
       </div>
 
       <form
         onSubmit={onSubmit}
-        className="bg-white shadow-md rounded-xl p-4 flex flex-col md:flex-row items-center gap-3 w-full max-w-4xl"
+        className="bg-white shadow-md rounded-xl p-4 flex flex-col gap-3 w-full max-w-5xl"
       >
-        <select name="type" className="border rounded-lg p-2 w-full md:w-1/4" defaultValue="">
-          <option value="">Tipo de propiedad</option>
-          <option value="house">Casa</option>
-          <option value="apartment">Departamento</option>
-          <option value="land">Terreno</option>
-          <option value="office">Oficina</option>
-        </select>
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-3">
+          <div className="md:col-span-2">
+            <LocationField value={location} onChange={setLocation} />
+          </div>
 
-        <input type="number" name="priceMin" placeholder="Precio mínimo" className="border rounded-lg p-2 w-full md:w-1/4" />
-        <input type="number" name="priceMax" placeholder="Precio máximo" className="border rounded-lg p-2 w-full md:w-1/4" />
+          <select
+            name="type"
+            className="border rounded-lg p-2"
+            value={type}
+            onChange={(e) => setType(e.target.value)}
+          >
+            <option value="">Tipo de propiedad</option>
+            {PropertyTypeOptions.map((o) => (
+              <option key={o.value} value={o.value}>{o.label_es}</option>
+            ))}
+          </select>
 
-        <div className="w-full md:w-auto">
+          <input
+            type="number"
+            name="priceMin"
+            placeholder={`Precio mínimo (${priceRange.placeholderMin})`}
+            className="border rounded-lg p-2"
+            value={priceMin}
+            onChange={(e) => setPriceMin(e.target.value)}
+            min={0}
+          />
+          <input
+            type="number"
+            name="priceMax"
+            placeholder={`Precio máximo (${priceRange.placeholderMax})`}
+            className="border rounded-lg p-2"
+            value={priceMax}
+            onChange={(e) => setPriceMax(e.target.value)}
+            min={0}
+          />
+        </div>
+
+        <div className="flex justify-end">
           <SearchButton label="Buscar" />
         </div>
       </form>
@@ -61,5 +99,4 @@ function HeroSearch() {
   );
 }
 
-export default HeroSearch;   // ✅ default export
-export { HeroSearch };       // ✅ named export (para imports antiguos)
+export default HeroSearch;

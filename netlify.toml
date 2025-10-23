@@ -10,6 +10,12 @@
   
 [[redirects]]
   force = true
+  from = "/api/locations"
+  status = 200
+  to = "/.netlify/functions/locations"
+
+[[redirects]]
+  force = true
   from = "/api/*"
   status = 200
   to = "/.netlify/functions/api/:splat"

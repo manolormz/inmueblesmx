@@ -27,6 +27,8 @@ export function createServer() {
 
   app.get("/api/demo", handleDemo);
 
+  // Locations (dev/local)
+  app.get("/api/locations", require("./routes/locations.local").handleLocationsLocal);
 
   // CMS routes
   app.get(
