@@ -1,6 +1,4 @@
-import { Suspense, lazy } from "react";
-
-const MapView = lazy(() => import("@/components/MapView"));
+import MapView from '@/components/MapView';
 
 type Marker = { id: string; lat: number; lng: number; title?: string };
 
@@ -17,21 +15,14 @@ export default function LazyMapView({
   initialZoom?: number;
   fitBbox?: string;
 }) {
+  // Import estático para evitar el error de dynamic import en iframe/preview
   return (
-    <Suspense
-      fallback={
-        <div className="w-full h-full grid place-items-center bg-white">
-          <div className="text-sm opacity-70">Cargando mapa…</div>
-        </div>
-      }
-    >
-      <MapView
-        onBoundsChange={onBoundsChange}
-        markers={markers}
-        initialCenter={initialCenter}
-        initialZoom={initialZoom}
-        fitBbox={fitBbox}
-      />
-    </Suspense>
+    <MapView
+      onBoundsChange={onBoundsChange}
+      markers={markers}
+      initialCenter={initialCenter}
+      initialZoom={initialZoom}
+      fitBbox={fitBbox}
+    />
   );
 }
