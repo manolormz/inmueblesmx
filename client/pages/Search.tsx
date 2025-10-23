@@ -458,26 +458,22 @@ export default function Search() {
           markers={mapMarkers}
           initialCenter={{ lat: 19.4326, lng: -99.1332 }}
           initialZoom={11}
+          fitBbox={fitBbox}
           controls={
-            pendingBbox && (
-              <div className="flex gap-2">
-                <Button
-                  type="button"
-                  onClick={applyPending}
-                  className="bg-white"
-                >
-                  Buscar en esta área
-                </Button>
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={clearPending}
-                  className="bg-white"
-                >
-                  Cancelar
-                </Button>
-              </div>
-            )
+            <div className="flex gap-2 items-center">
+              <GeocoderInput onPick={(f)=>{
+                const bbox = (f.bbox && f.bbox.length===4) ? `${f.bbox[0]},${f.bbox[1]},${f.bbox[2]},${f.bbox[3]}` : `${f.center[0]-0.02},${f.center[1]-0.02},${f.center[0]+0.02},${f.center[1]+0.02}`;
+                set({ q: f.place_name, page: 1 });
+                setBbox(bbox);
+                setFitBbox(bbox);
+              }} />
+              {pendingBbox && (
+                <>
+                  <Button type="button" onClick={applyPending} className="bg-white">Buscar en esta área</Button>
+                  <Button type="button" variant="outline" onClick={clearPending} className="bg-white">Cancelar</Button>
+                </>
+              )}
+            </div>
           }
         />
       </section>
