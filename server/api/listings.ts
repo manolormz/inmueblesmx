@@ -81,6 +81,8 @@ listings.get('/:slugOrId', async (req, res) => {
     `
     SELECT l.id as listing_id, l.operation, l.price, l.currency, l.status, l.published_at,
            p.*,
+           ST_X(p.geo_point::geometry) AS lng,
+           ST_Y(p.geo_point::geometry) AS lat,
            COALESCE((
              SELECT json_agg(json_build_object('url', url, 'is_cover', is_cover, 'sort', sort_order))
              FROM property_image WHERE property_id = p.id
