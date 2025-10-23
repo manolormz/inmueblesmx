@@ -240,11 +240,7 @@ export const handleLocationsSearch: RequestHandler = async (req, res) => {
   }
 
   try {
-    if (!isMeiliConfigured()) {
-      const items = localGrouped();
-      return res.status(200).json({ ok: true, items });
-    }
-    const items = await meiliGrouped();
+    const items = localGrouped();
     return res.status(200).json({ ok: true, items });
   } catch (err: any) {
     const msg = (err && (err.message || err.msg)) || "Error de búsqueda";
