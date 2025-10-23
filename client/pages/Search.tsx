@@ -128,7 +128,7 @@ export default function Search() {
     pageSize: String(pageSize),
   }), [params, page, pageSize]);
 
-  const { search: apiSearch, setBbox } = useMapSearchSync(baseParams);
+  const { search: apiSearch, setBbox, pendingBbox, applyPending, clearPending } = useMapSearchSync(baseParams, { auto: false });
 
   const mapMarkers = useMemo(() => {
     const r = apiSearch.data?.results || [];
