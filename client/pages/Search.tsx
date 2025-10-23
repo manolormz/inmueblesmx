@@ -474,38 +474,70 @@ export default function Search() {
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
             data-loc="SearchCard"
           >
-            {items.map((p) => (
-              <article key={p.id} className="rounded-xl border overflow-hidden">
-                <a
-                  href={`/property/${p.slug}`}
-                  className="block focus:outline-none focus:ring-2 focus:ring-blue-500"
-                >
-                  <img
-                    src={p.cover || "/placeholder.svg"}
-                    alt={p.title}
-                    className="w-full h-40 object-cover"
-                  />
-                  <div className="p-4 space-y-2">
-                    <div className="flex items-center gap-2">
-                      <Badge>{p.operation}</Badge>
-                      <Badge variant="outline">{p.type}</Badge>
-                    </div>
-                    <h3 className="font-semibold text-lg">{p.title}</h3>
-                    <div className="text-blue-700 font-semibold">
-                      {formatPriceCompactMXN(
-                        p.price,
-                        p.operation === "Rent" ? "Rent" : "Sale",
-                      )}
-                    </div>
-                    {p.address_text && (
-                      <div className="text-sm text-gray-600">
-                        {p.address_text}
+            {(apiSearch.data?.results as any[] | undefined)?.length
+              ? (apiSearch.data!.results as any[]).map((p: any) => (
+                  <article key={p.listing_id} className="rounded-xl border overflow-hidden">
+                    <a
+                      href={`/property/${p.property_slug || p.slug}`}
+                      className="block focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
+                      <img
+                        src={(p.cover_url || p.cover) ?? "/placeholder.svg"}
+                        alt={p.title || p.property_slug}
+                        className="w-full h-40 object-cover"
+                      />
+                      <div className="p-4 space-y-2">
+                        <div className="flex items-center gap-2">
+                          <Badge>{p.operation}</Badge>
+                          <Badge variant="outline">{p.property_type || p.type}</Badge>
+                        </div>
+                        <h3 className="font-semibold text-lg">{p.title || p.property_slug}</h3>
+                        <div className="text-blue-700 font-semibold">
+                          {typeof p.price === 'number'
+                            ? Intl.NumberFormat('es-MX', { style: 'currency', currency: p.currency || 'MXN', maximumFractionDigits: 0 }).format(p.price)
+                            : formatPriceCompactMXN(p.price, (p.operation === "Rent" ? "Rent" : "Sale"))}
+                        </div>
+                        {p.address_text && (
+                          <div className="text-sm text-gray-600">
+                            {p.address_text}
+                          </div>
+                        )}
                       </div>
-                    )}
-                  </div>
-                </a>
-              </article>
-            ))}
+                    </a>
+                  </article>
+                ))
+              : items.map((p) => (
+                  <article key={p.id} className="rounded-xl border overflow-hidden">
+                    <a
+                      href={`/property/${p.slug}`}
+                      className="block focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
+                      <img
+                        src={p.cover || "/placeholder.svg"}
+                        alt={p.title}
+                        className="w-full h-40 object-cover"
+                      />
+                      <div className="p-4 space-y-2">
+                        <div className="flex items-center gap-2">
+                          <Badge>{p.operation}</Badge>
+                          <Badge variant="outline">{p.type}</Badge>
+                        </div>
+                        <h3 className="font-semibold text-lg">{p.title}</h3>
+                        <div className="text-blue-700 font-semibold">
+                          {formatPriceCompactMXN(
+                            p.price,
+                            p.operation === "Rent" ? "Rent" : "Sale",
+                          )}
+                        </div>
+                        {p.address_text && (
+                          <div className="text-sm text-gray-600">
+                            {p.address_text}
+                          </div>
+                        )}
+                      </div>
+                    </a>
+                  </article>
+                ))}
           </div>
         )}
 
