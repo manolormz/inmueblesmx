@@ -17,16 +17,20 @@ export default function MapView({
   initialZoom = 11,
   markers = [],
   onBoundsChange,
+  fitBbox,
 }: {
   initialCenter?: { lat: number; lng: number };
   initialZoom?: number;
   markers?: MarkerData[];
   onBoundsChange: (bbox: string) => void;
+  fitBbox?: string;
 }) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<any>(null);
   const markersRef = useRef<Record<string, any>>({});
   const [error, setError] = useState<string | null>(null);
+  const clusterModeRef = useRef<boolean>(false);
+  const layersAddedRef = useRef<boolean>(false);
 
   const token = (import.meta as any).env?.VITE_MAPBOX_TOKEN as
     | string
@@ -156,7 +160,18 @@ export default function MapView({
     token,
   ]);
 
-  // Markers tolerantes a fallos
+  // Fit external bbox request
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !fitBbox) return;
+    const parts = fitBbox.split(',').map(Number);
+    if (parts.length === 4 && parts.every(n => Number.isFinite(n))) {
+      const [w,s,e,n] = parts;
+      try { map.fitBounds([[w,s],[e,n]], { padding: 48, duration: 600 }); } catch {}
+    }
+  }, [fitBbox]);
+
+  // Markers / clustering
   useEffect(() => {
     (async () => {
       try {
@@ -164,30 +179,72 @@ export default function MapView({
         if (!map) return;
         const mapboxgl = (await import("mapbox-gl")).default as any;
 
-        const existing = markersRef.current;
-        const incomingIds = new Set(markers.map((m) => m.id));
+        const useClusters = markers.length > 200;
+        if (useClusters) {
+          // clear DOM markers
+          Object.values(markersRef.current).forEach((m) => { try { m.remove(); } catch {} });
+          markersRef.current = {};
+          clusterModeRef.current = true;
 
-        Object.keys(existing).forEach((id) => {
-          if (!incomingIds.has(id)) {
-            existing[id].remove();
-            delete existing[id];
-          }
-        });
-
-        markers.forEach((m) => {
-          if (!existing[m.id]) {
-            existing[m.id] = new mapboxgl.Marker({})
-              .setLngLat([m.lng, m.lat])
-              .setPopup(
-                new mapboxgl.Popup({ offset: 16 }).setText(m.title || ""),
-              )
-              .addTo(map);
+          const data = {
+            type: 'FeatureCollection',
+            features: markers.map(m => ({ type:'Feature', properties:{ id:m.id, title:m.title||'' }, geometry:{ type:'Point', coordinates:[m.lng,m.lat] } }))
+          } as const;
+          const src:any = map.getSource('listings');
+          if (!src) {
+            map.addSource('listings', { type:'geojson', data, cluster:true, clusterMaxZoom:14, clusterRadius:50 });
           } else {
-            existing[m.id].setLngLat([m.lng, m.lat]);
+            src.setData(data);
           }
-        });
-      } catch (e: any) {
-        setError((prev) => prev ?? e?.message ?? "Error con markers");
+          if (!layersAddedRef.current) {
+            map.addLayer({ id:'clusters', type:'circle', source:'listings', filter:['has','point_count'], paint:{ 'circle-color': ['step',['get','point_count'],'#90cdf4',100,'#63b3ed',750,'#3182ce'], 'circle-radius': ['step',['get','point_count'],20,100,28,750,36] } });
+            map.addLayer({ id:'cluster-count', type:'symbol', source:'listings', filter:['has','point_count'], layout:{ 'text-field':'{point_count_abbreviated}','text-size':12 } });
+            map.addLayer({ id:'unclustered-point', type:'circle', source:'listings', filter:['!',['has','point_count']], paint:{ 'circle-color':'#11b4da','circle-radius':6,'circle-stroke-width':1,'circle-stroke-color':'#fff' } });
+            map.on('click','clusters', (e:any)=>{
+              const features = map.queryRenderedFeatures(e.point, { layers:['clusters'] });
+              const clusterId = features[0]?.properties?.cluster_id;
+              const source:any = map.getSource('listings');
+              if (clusterId && source) {
+                source.getClusterExpansionZoom(clusterId, (err:any, zoom:number) => {
+                  if (err) return;
+                  map.easeTo({ center: features[0].geometry.coordinates, zoom });
+                });
+              }
+            });
+            map.on('click','unclustered-point', (e:any)=>{
+              const f:any = e.features && e.features[0];
+              if (!f) return;
+              new mapboxgl.Popup({ offset:16 }).setLngLat(f.geometry.coordinates as [number,number]).setText(String(f.properties?.title||'')) .addTo(map);
+            });
+            layersAddedRef.current = true;
+          }
+        } else {
+          // remove clustering layers/source if previously added
+          if (clusterModeRef.current) {
+            ['clusters','cluster-count','unclustered-point'].forEach(id=>{ try{ if(map.getLayer(id)) map.removeLayer(id); }catch{} });
+            try{ if(map.getSource('listings')) (map.getSource('listings') as any).setData({ type:'FeatureCollection', features: [] }); }catch{}
+            layersAddedRef.current = false;
+            clusterModeRef.current = false;
+          }
+          // DOM markers
+          const existing = markersRef.current;
+          const incomingIds = new Set(markers.map(m => m.id));
+          Object.keys(existing).forEach(id => {
+            if (!incomingIds.has(id)) { existing[id].remove(); delete existing[id]; }
+          });
+          markers.forEach(m => {
+            if (!existing[m.id]) {
+              existing[m.id] = new mapboxgl.Marker({})
+                .setLngLat([m.lng,m.lat])
+                .setPopup(new mapboxgl.Popup({ offset:16 }).setText(m.title || ''))
+                .addTo(map);
+            } else {
+              existing[m.id].setLngLat([m.lng,m.lat]);
+            }
+          });
+        }
+      } catch (e:any) {
+        setError((prev)=> prev ?? e?.message ?? 'Error con markers');
       }
     })();
   }, [markers]);
