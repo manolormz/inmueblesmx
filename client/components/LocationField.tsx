@@ -1,11 +1,25 @@
 import { useState, useEffect } from "react";
 
+type Raw = {
+  stateId: string;
+  stateName: string;
+  municipalityId: string;
+  municipalityName: string;
+};
+
 type Option = {
   id: string;
   label: string;
-  stateId: string | number;
-  municipalityId: string | number;
+  stateId: string;
+  municipalityId: string;
 };
+
+function normalize(s: string) {
+  return s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}
+
+// Cache en memoria para no volver a pedir el JSON
+let LOC_CACHE: Raw[] | null = null;
 
 export default function LocationField({
   value,
@@ -26,24 +40,49 @@ export default function LocationField({
       return;
     }
 
-    const controller = new AbortController();
+    let cancelled = false;
     const id = setTimeout(async () => {
       try {
         setLoading(true);
-        const res = await fetch(`/api/locations?q=${encodeURIComponent(term)}`, { signal: controller.signal });
-        if (!res.ok) return;
-        const json = await res.json();
-        setOptions((json.results || []) as Option[]);
-        setOpen(true);
+
+        if (!LOC_CACHE) {
+          const res = await fetch("/locations.mx.json"); // <- desde public/
+          if (!res.ok) throw new Error("failed to fetch locations");
+          LOC_CACHE = (await res.json()) as Raw[];
+        }
+
+        const nq = normalize(term.trim());
+        const opts =
+          (LOC_CACHE || [])
+            .filter(
+              (r) =>
+                normalize(r.stateName).includes(nq) ||
+                normalize(r.municipalityName).includes(nq)
+            )
+            .slice(0, 25)
+            .map((r) => ({
+              id: `${r.stateId}-${r.municipalityId}`,
+              label: `${r.municipalityName}, ${r.stateName}`,
+              stateId: r.stateId,
+              municipalityId: r.municipalityId,
+            }));
+
+        if (!cancelled) {
+          setOptions(opts);
+          setOpen(true);
+        }
       } catch {
-        // ignore
+        if (!cancelled) {
+          setOptions([]);
+          setOpen(false);
+        }
       } finally {
-        setLoading(false);
+        if (!cancelled) setLoading(false);
       }
     }, 250);
 
     return () => {
-      controller.abort();
+      cancelled = true;
       clearTimeout(id);
     };
   }, [term]);
@@ -69,7 +108,7 @@ export default function LocationField({
         autoComplete="off"
       />
       {loading && (
-        <div className="absolute right-2 top-2 text-gray-400 text-sm">...</div>
+        <div className="absolute right-2 top-2 text-gray-400 text-sm">…</div>
       )}
       {open && options.length > 0 && (
         <ul className="absolute z-30 bg-white border shadow-md rounded-lg mt-1 w-full max-h-60 overflow-auto">
