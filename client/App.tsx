@@ -26,8 +26,15 @@ const queryClient = new QueryClient();
 
 // Log global de errores (solo dev)
 if (import.meta.env.DEV) {
-  window.addEventListener('error', (e) => console.error('window.onerror:', (e as any).error || (e as any).message || e));
-  window.addEventListener('unhandledrejection', (e) => console.error('unhandledrejection:', (e as any).reason));
+  window.addEventListener("error", (e) =>
+    console.error(
+      "window.onerror:",
+      (e as any).error || (e as any).message || e,
+    ),
+  );
+  window.addEventListener("unhandledrejection", (e) =>
+    console.error("unhandledrejection:", (e as any).reason),
+  );
 }
 
 const App = () => (
@@ -69,11 +76,13 @@ const App = () => (
 
 console.log("✅ App mounted");
 createRoot(document.getElementById("root")!).render(
-  <ErrorBoundary fallback={
-    <div className="m-4 p-3 text-sm bg-yellow-50 border rounded-xl">
-      Hay un error global. Abre la consola para ver el detalle.
-    </div>
-  }>
+  <ErrorBoundary
+    fallback={
+      <div className="m-4 p-3 text-sm bg-yellow-50 border rounded-xl">
+        Hay un error global. Abre la consola para ver el detalle.
+      </div>
+    }
+  >
     <App />
-  </ErrorBoundary>
+  </ErrorBoundary>,
 );

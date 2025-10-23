@@ -1,46 +1,73 @@
-import { Router } from 'express';
-import { query } from '../db';
+import { Router } from "express";
+import { query } from "../db";
 
 export const listings = Router();
 
 // GET /api/listings/search
-listings.get('/search', async (req, res) => {
-  const page = Math.max(parseInt(String(req.query.page ?? '1')), 1);
-  const pageSize = Math.min(Math.max(parseInt(String(req.query.pageSize ?? '24')), 1), 100);
+listings.get("/search", async (req, res) => {
+  const page = Math.max(parseInt(String(req.query.page ?? "1")), 1);
+  const pageSize = Math.min(
+    Math.max(parseInt(String(req.query.pageSize ?? "24")), 1),
+    100,
+  );
 
   const params: any[] = [];
   const where: string[] = ["l.status = 'published'"];
 
-  if (req.query.operation) { params.push(req.query.operation); where.push(`l.operation = $${params.length}`); }
-  if (req.query.type) { params.push(req.query.type); where.push(`p.property_type = $${params.length}`); }
-  if (req.query.minPrice) { params.push(Number(req.query.minPrice)); where.push(`l.price >= $${params.length}`); }
-  if (req.query.maxPrice) { params.push(Number(req.query.maxPrice)); where.push(`l.price <= $${params.length}`); }
-  if (req.query.bedrooms) { params.push(Number(req.query.bedrooms)); where.push(`p.bedrooms >= $${params.length}`); }
+  if (req.query.operation) {
+    params.push(req.query.operation);
+    where.push(`l.operation = $${params.length}`);
+  }
+  if (req.query.type) {
+    params.push(req.query.type);
+    where.push(`p.property_type = $${params.length}`);
+  }
+  if (req.query.minPrice) {
+    params.push(Number(req.query.minPrice));
+    where.push(`l.price >= $${params.length}`);
+  }
+  if (req.query.maxPrice) {
+    params.push(Number(req.query.maxPrice));
+    where.push(`l.price <= $${params.length}`);
+  }
+  if (req.query.bedrooms) {
+    params.push(Number(req.query.bedrooms));
+    where.push(`p.bedrooms >= $${params.length}`);
+  }
 
-  if (req.query.state) { params.push(req.query.state); where.push(`p.state_slug = $${params.length}`); }
-  if (req.query.municipality) { params.push(req.query.municipality); where.push(`p.municipality_slug = $${params.length}`); }
-  if (req.query.neighborhood) { params.push(req.query.neighborhood); where.push(`p.neighborhood_slug = $${params.length}`); }
+  if (req.query.state) {
+    params.push(req.query.state);
+    where.push(`p.state_slug = $${params.length}`);
+  }
+  if (req.query.municipality) {
+    params.push(req.query.municipality);
+    where.push(`p.municipality_slug = $${params.length}`);
+  }
+  if (req.query.neighborhood) {
+    params.push(req.query.neighborhood);
+    where.push(`p.neighborhood_slug = $${params.length}`);
+  }
 
   if (req.query.text) {
     params.push(req.query.text);
     where.push(
-      `to_tsvector('spanish', unaccent(coalesce(p.title,'')||' '||coalesce(p.description_md,''))) @@ plainto_tsquery('spanish', unaccent($${params.length}))`
+      `to_tsvector('spanish', unaccent(coalesce(p.title,'')||' '||coalesce(p.description_md,''))) @@ plainto_tsquery('spanish', unaccent($${params.length}))`,
     );
   }
 
   // bbox=west,south,east,north
   if (req.query.bbox) {
-    const parts = String(req.query.bbox).split(',').map(Number);
-    if (parts.length === 4 && parts.every(n => !isNaN(n))) {
+    const parts = String(req.query.bbox).split(",").map(Number);
+    if (parts.length === 4 && parts.every((n) => !isNaN(n))) {
       const [west, south, east, north] = parts;
       params.push(west, south, east, north);
       where.push(
-        `ST_Intersects(p.geo_point, ST_MakeEnvelope($${params.length-3}, $${params.length-2}, $${params.length-1}, $${params.length}, 4326))`
+        `ST_Intersects(p.geo_point, ST_MakeEnvelope($${params.length - 3}, $${params.length - 2}, $${params.length - 1}, $${params.length}, 4326))`,
       );
     }
   }
 
-  const whereSql = where.length ? `WHERE ${where.join(' AND ')}` : '';
+  const whereSql = where.length ? `WHERE ${where.join(" AND ")}` : "";
   const offset = (page - 1) * pageSize;
 
   const sql = `
@@ -67,15 +94,15 @@ listings.get('/search', async (req, res) => {
     query<{ count: string }>(countSql, params),
   ]);
 
-  const total = parseInt(countRows[0]?.count || '0', 10);
+  const total = parseInt(countRows[0]?.count || "0", 10);
   res.json({ page, pageSize, total, results: rows });
 });
 
 // GET /api/listings/:slugOrId
-listings.get('/:slugOrId', async (req, res) => {
+listings.get("/:slugOrId", async (req, res) => {
   const v = req.params.slugOrId;
   const isUUID = /^[0-9a-fA-F-]{36}$/.test(v);
-  const by = isUUID ? 'p.id' : 'p.slug';
+  const by = isUUID ? "p.id" : "p.slug";
 
   const { rows } = await query(
     `
@@ -92,9 +119,9 @@ listings.get('/:slugOrId', async (req, res) => {
     WHERE ${by} = $1 AND l.status IN ('published','paused','sold','rented')
     LIMIT 1;
     `,
-    [v]
+    [v],
   );
 
-  if (!rows[0]) return res.status(404).json({ error: 'Listing not found' });
+  if (!rows[0]) return res.status(404).json({ error: "Listing not found" });
   res.json(rows[0]);
 });

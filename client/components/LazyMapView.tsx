@@ -1,6 +1,6 @@
-import { Suspense, lazy } from 'react';
+import { Suspense, lazy } from "react";
 
-const MapView = lazy(() => import('@/components/MapView'));
+const MapView = lazy(() => import("@/components/MapView"));
 
 type Marker = { id: string; lat: number; lng: number; title?: string };
 
@@ -16,11 +16,13 @@ export default function LazyMapView({
   initialZoom?: number;
 }) {
   return (
-    <Suspense fallback={
-      <div className="w-full h-full grid place-items-center bg-white">
-        <div className="text-sm opacity-70">Cargando mapa…</div>
-      </div>
-    }>
+    <Suspense
+      fallback={
+        <div className="w-full h-full grid place-items-center bg-white">
+          <div className="text-sm opacity-70">Cargando mapa…</div>
+        </div>
+      }
+    >
       <MapView
         onBoundsChange={onBoundsChange}
         markers={markers}

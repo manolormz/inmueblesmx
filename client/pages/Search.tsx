@@ -114,27 +114,39 @@ export default function Search() {
   const headingRef = useRef<HTMLHeadingElement>(null);
   const [modalOpen, setModalOpen] = useState(false);
 
-  const baseParams = useMemo(() => ({
-    operation: params.get("operation") || undefined,
-    type: params.get("type") || undefined,
-    minPrice: params.get("priceMin") || undefined,
-    maxPrice: params.get("priceMax") || undefined,
-    bedrooms: params.get("minBedrooms") || undefined,
-    state: params.get("state") || undefined,
-    municipality: params.get("municipality") || undefined,
-    neighborhood: params.get("neighborhood") || undefined,
-    text: params.get("q") || undefined,
-    page: String(page),
-    pageSize: String(pageSize),
-  }), [params, page, pageSize]);
+  const baseParams = useMemo(
+    () => ({
+      operation: params.get("operation") || undefined,
+      type: params.get("type") || undefined,
+      minPrice: params.get("priceMin") || undefined,
+      maxPrice: params.get("priceMax") || undefined,
+      bedrooms: params.get("minBedrooms") || undefined,
+      state: params.get("state") || undefined,
+      municipality: params.get("municipality") || undefined,
+      neighborhood: params.get("neighborhood") || undefined,
+      text: params.get("q") || undefined,
+      page: String(page),
+      pageSize: String(pageSize),
+    }),
+    [params, page, pageSize],
+  );
 
-  const { search: apiSearch, setBbox, pendingBbox, applyPending, clearPending } = useMapSearchSync(baseParams, { auto: false });
+  const {
+    search: apiSearch,
+    setBbox,
+    pendingBbox,
+    applyPending,
+    clearPending,
+  } = useMapSearchSync(baseParams, { auto: false });
 
   const mapMarkers = useMemo(() => {
     const MAX_MARKERS = 500;
     const r = apiSearch.data?.results || [];
     return r
-      .filter((it: any) => Number.isFinite(Number(it?.lat)) && Number.isFinite(Number(it?.lng)))
+      .filter(
+        (it: any) =>
+          Number.isFinite(Number(it?.lat)) && Number.isFinite(Number(it?.lng)),
+      )
       .slice(0, MAX_MARKERS)
       .map((it: any) => ({
         id: it.listing_id,
@@ -444,12 +456,27 @@ export default function Search() {
           markers={mapMarkers}
           initialCenter={{ lat: 19.4326, lng: -99.1332 }}
           initialZoom={11}
-          controls={pendingBbox && (
-            <div className="flex gap-2">
-              <Button type="button" onClick={applyPending} className="bg-white">Buscar en esta área</Button>
-              <Button type="button" variant="outline" onClick={clearPending} className="bg-white">Cancelar</Button>
-            </div>
-          )}
+          controls={
+            pendingBbox && (
+              <div className="flex gap-2">
+                <Button
+                  type="button"
+                  onClick={applyPending}
+                  className="bg-white"
+                >
+                  Buscar en esta área
+                </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={clearPending}
+                  className="bg-white"
+                >
+                  Cancelar
+                </Button>
+              </div>
+            )
+          }
         />
       </section>
 
@@ -459,7 +486,9 @@ export default function Search() {
           tabIndex={-1}
           className="text-xl font-semibold mb-4"
         >
-          {apiSearch.isFetching || query.isLoading ? "Cargando..." : `Resultados (${apiSearch.data?.total ?? total})`}
+          {apiSearch.isFetching || query.isLoading
+            ? "Cargando..."
+            : `Resultados (${apiSearch.data?.total ?? total})`}
         </h1>
 
         {query.isLoading ? (
@@ -491,7 +520,10 @@ export default function Search() {
           >
             {(apiSearch.data?.results as any[] | undefined)?.length
               ? (apiSearch.data!.results as any[]).map((p: any) => (
-                  <article key={p.listing_id} className="rounded-xl border overflow-hidden">
+                  <article
+                    key={p.listing_id}
+                    className="rounded-xl border overflow-hidden"
+                  >
                     <a
                       href={`/property/${p.property_slug || p.slug}`}
                       className="block focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -504,13 +536,24 @@ export default function Search() {
                       <div className="p-4 space-y-2">
                         <div className="flex items-center gap-2">
                           <Badge>{p.operation}</Badge>
-                          <Badge variant="outline">{p.property_type || p.type}</Badge>
+                          <Badge variant="outline">
+                            {p.property_type || p.type}
+                          </Badge>
                         </div>
-                        <h3 className="font-semibold text-lg">{p.title || p.property_slug}</h3>
+                        <h3 className="font-semibold text-lg">
+                          {p.title || p.property_slug}
+                        </h3>
                         <div className="text-blue-700 font-semibold">
-                          {typeof p.price === 'number'
-                            ? Intl.NumberFormat('es-MX', { style: 'currency', currency: p.currency || 'MXN', maximumFractionDigits: 0 }).format(p.price)
-                            : formatPriceCompactMXN(p.price, (p.operation === "Rent" ? "Rent" : "Sale"))}
+                          {typeof p.price === "number"
+                            ? Intl.NumberFormat("es-MX", {
+                                style: "currency",
+                                currency: p.currency || "MXN",
+                                maximumFractionDigits: 0,
+                              }).format(p.price)
+                            : formatPriceCompactMXN(
+                                p.price,
+                                p.operation === "Rent" ? "Rent" : "Sale",
+                              )}
                         </div>
                         {p.address_text && (
                           <div className="text-sm text-gray-600">
@@ -522,7 +565,10 @@ export default function Search() {
                   </article>
                 ))
               : items.map((p) => (
-                  <article key={p.id} className="rounded-xl border overflow-hidden">
+                  <article
+                    key={p.id}
+                    className="rounded-xl border overflow-hidden"
+                  >
                     <a
                       href={`/property/${p.slug}`}
                       className="block focus:outline-none focus:ring-2 focus:ring-blue-500"

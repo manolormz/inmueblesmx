@@ -1,5 +1,5 @@
-import { useMemo, useState } from 'react';
-import LazyMapView from '@/components/LazyMapView';
+import { useMemo, useState } from "react";
+import LazyMapView from "@/components/LazyMapView";
 
 type Marker = { id: string; lat: number; lng: number; title?: string };
 
@@ -18,8 +18,10 @@ export default function SafeMapToggle({
 }) {
   const [showMap, setShowMap] = useState(false);
 
-  const mapEnabled = ((import.meta as any).env?.VITE_ENABLE_MAP ?? '1') === '1';
-  const token = (import.meta as any).env?.VITE_MAPBOX_TOKEN as string | undefined;
+  const mapEnabled = ((import.meta as any).env?.VITE_ENABLE_MAP ?? "1") === "1";
+  const token = (import.meta as any).env?.VITE_MAPBOX_TOKEN as
+    | string
+    | undefined;
 
   const canMount = useMemo(() => mapEnabled && !!token, [mapEnabled, token]);
 
@@ -29,12 +31,22 @@ export default function SafeMapToggle({
         <div className="h-[60vh] md:h-[70vh] grid place-items-center bg-gray-50">
           <div className="text-center space-y-2 px-4">
             <div className="text-sm opacity-70">
-              { !mapEnabled
-                ? <>Mapa deshabilitado (<code>VITE_ENABLE_MAP</code> ≠ 1). Puedes activar cuando gustes.</>
-                : !token
-                  ? <>Falta <code>VITE_MAPBOX_TOKEN</code>. Agrega el token y reinicia.</>
-                  : <>Mapa listo para cargar bajo demanda. Tus formularios permanecerán visibles.</>
-              }
+              {!mapEnabled ? (
+                <>
+                  Mapa deshabilitado (<code>VITE_ENABLE_MAP</code> ≠ 1). Puedes
+                  activar cuando gustes.
+                </>
+              ) : !token ? (
+                <>
+                  Falta <code>VITE_MAPBOX_TOKEN</code>. Agrega el token y
+                  reinicia.
+                </>
+              ) : (
+                <>
+                  Mapa listo para cargar bajo demanda. Tus formularios
+                  permanecerán visibles.
+                </>
+              )}
             </div>
             <button
               disabled={!canMount}

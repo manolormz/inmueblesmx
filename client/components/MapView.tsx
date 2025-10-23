@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
-import 'mapbox-gl/dist/mapbox-gl.css';
+import { useEffect, useRef, useState } from "react";
+import "mapbox-gl/dist/mapbox-gl.css";
 
 type MarkerData = { id: string; lat: number; lng: number; title?: string };
 
@@ -28,15 +28,18 @@ export default function MapView({
   const markersRef = useRef<Record<string, any>>({});
   const [error, setError] = useState<string | null>(null);
 
-  const token = (import.meta as any).env?.VITE_MAPBOX_TOKEN as string | undefined;
-  const mapEnabled = ((import.meta as any).env?.VITE_ENABLE_MAP ?? '1') === '1';
+  const token = (import.meta as any).env?.VITE_MAPBOX_TOKEN as
+    | string
+    | undefined;
+  const mapEnabled = ((import.meta as any).env?.VITE_ENABLE_MAP ?? "1") === "1";
 
   // Kill-switch global para desactivar el mapa sin tocar código
   if (!mapEnabled) {
     return (
       <div className="w-full h-[60vh] md:h-[70vh] rounded-2xl overflow-hidden border grid place-items-center">
         <div className="text-sm opacity-70 px-4 text-center">
-          Mapa deshabilitado (<code>VITE_ENABLE_MAP</code> ≠ 1). Los formularios siguen operando.
+          Mapa deshabilitado (<code>VITE_ENABLE_MAP</code> ≠ 1). Los formularios
+          siguen operando.
         </div>
       </div>
     );
@@ -47,7 +50,8 @@ export default function MapView({
     return (
       <div className="w-full h-[60vh] md:h-[70vh] rounded-2xl overflow-hidden border grid place-items-center">
         <div className="text-sm opacity-70 px-4 text-center">
-          Mapa deshabilitado (falta <code>VITE_MAPBOX_TOKEN</code>). El resto de la página sigue funcionando.
+          Mapa deshabilitado (falta <code>VITE_MAPBOX_TOKEN</code>). El resto de
+          la página sigue funcionando.
         </div>
       </div>
     );
@@ -60,13 +64,13 @@ export default function MapView({
 
     (async () => {
       try {
-        const mapboxgl = (await import('mapbox-gl')).default as any;
+        const mapboxgl = (await import("mapbox-gl")).default as any;
         mapboxgl.accessToken = token;
 
         // 1) Soporte WebGL (en algunos iframes/editores está bloqueado)
         // @ts-ignore
-        if (typeof mapboxgl.supported === 'function' && !mapboxgl.supported()) {
-          setError('WebGL no está soportado en este contexto (iframe/driver).');
+        if (typeof mapboxgl.supported === "function" && !mapboxgl.supported()) {
+          setError("WebGL no está soportado en este contexto (iframe/driver).");
           return;
         }
 
@@ -74,7 +78,7 @@ export default function MapView({
 
         const map = new mapboxgl.Map({
           container: containerRef.current,
-          style: 'mapbox://styles/mapbox/streets-v12',
+          style: "mapbox://styles/mapbox/streets-v12",
           center: [initialCenter.lng, initialCenter.lat],
           zoom: initialZoom,
           attributionControl: true,
@@ -89,32 +93,39 @@ export default function MapView({
           } catch {}
         }, 400);
 
-        map.on('load', () => {
-          try { map.resize(); } catch {}
+        map.on("load", () => {
+          try {
+            map.resize();
+          } catch {}
           emitBounds();
         });
-        map.on('moveend', emitBounds);
-        map.on('zoomend', emitBounds);
+        map.on("moveend", emitBounds);
+        map.on("zoomend", emitBounds);
 
         // 3) Observa tamaño del contenedor y aplica resize
-        if ('ResizeObserver' in window && containerRef.current) {
+        if ("ResizeObserver" in window && containerRef.current) {
           resizeObs = new ResizeObserver(() => {
-            try { map.resize(); } catch {}
+            try {
+              map.resize();
+            } catch {}
           });
           resizeObs.observe(containerRef.current);
         }
 
         // 4) Reacciona a visibilidad de la pestaña (evita layouts rotos)
         onVis = () => {
-          try { map.resize(); } catch {}
+          try {
+            map.resize();
+          } catch {}
         };
-        document.addEventListener('visibilitychange', onVis);
+        document.addEventListener("visibilitychange", onVis);
 
-        map.on('error', (evt: any) => {
-          if (!cancelled) setError(evt?.error?.message || 'Error del mapa');
+        map.on("error", (evt: any) => {
+          if (!cancelled) setError(evt?.error?.message || "Error del mapa");
         });
       } catch (e: any) {
-        if (!cancelled) setError(e?.message || 'No se pudo inicializar el mapa');
+        if (!cancelled)
+          setError(e?.message || "No se pudo inicializar el mapa");
       }
     })();
 
@@ -126,14 +137,24 @@ export default function MapView({
       mapRef.current = null;
 
       Object.values(markersRef.current).forEach((m) => {
-        try { m.remove(); } catch {}
+        try {
+          m.remove();
+        } catch {}
       });
       markersRef.current = {};
 
-      try { resizeObs?.disconnect(); } catch {}
-      if (onVis) document.removeEventListener('visibilitychange', onVis);
+      try {
+        resizeObs?.disconnect();
+      } catch {}
+      if (onVis) document.removeEventListener("visibilitychange", onVis);
     };
-  }, [initialCenter.lat, initialCenter.lng, initialZoom, onBoundsChange, token]);
+  }, [
+    initialCenter.lat,
+    initialCenter.lng,
+    initialZoom,
+    onBoundsChange,
+    token,
+  ]);
 
   // Markers tolerantes a fallos
   useEffect(() => {
@@ -141,37 +162,42 @@ export default function MapView({
       try {
         const map = mapRef.current;
         if (!map) return;
-        const mapboxgl = (await import('mapbox-gl')).default as any;
+        const mapboxgl = (await import("mapbox-gl")).default as any;
 
         const existing = markersRef.current;
-        const incomingIds = new Set(markers.map(m => m.id));
+        const incomingIds = new Set(markers.map((m) => m.id));
 
-        Object.keys(existing).forEach(id => {
+        Object.keys(existing).forEach((id) => {
           if (!incomingIds.has(id)) {
             existing[id].remove();
             delete existing[id];
           }
         });
 
-        markers.forEach(m => {
+        markers.forEach((m) => {
           if (!existing[m.id]) {
             existing[m.id] = new mapboxgl.Marker({})
               .setLngLat([m.lng, m.lat])
-              .setPopup(new mapboxgl.Popup({ offset: 16 }).setText(m.title || ''))
+              .setPopup(
+                new mapboxgl.Popup({ offset: 16 }).setText(m.title || ""),
+              )
               .addTo(map);
           } else {
             existing[m.id].setLngLat([m.lng, m.lat]);
           }
         });
       } catch (e: any) {
-        setError((prev) => prev ?? e?.message ?? 'Error con markers');
+        setError((prev) => prev ?? e?.message ?? "Error con markers");
       }
     })();
   }, [markers]);
 
   return (
     <div className="relative">
-      <div ref={containerRef} className="w-full h-[60vh] md:h-[70vh] rounded-2xl overflow-hidden border bg-white" />
+      <div
+        ref={containerRef}
+        className="w-full h-[60vh] md:h-[70vh] rounded-2xl overflow-hidden border bg-white"
+      />
       {error && (
         <div className="absolute inset-0 grid place-items-center bg-white/85 backdrop-blur-sm">
           <div className="text-sm text-red-700 border border-red-200 bg-red-50 px-3 py-2 rounded-lg max-w-sm text-center">
