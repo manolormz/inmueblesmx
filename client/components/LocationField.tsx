@@ -15,7 +15,10 @@ type Option = {
 };
 
 function normalize(s: string) {
-  return s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  return s
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
 }
 
 async function loadLocations(): Promise<Raw[]> {
@@ -64,20 +67,19 @@ export default function LocationField({
         if (!LOC_CACHE) LOC_CACHE = await loadLocations();
 
         const nq = normalize(term.trim());
-        const opts =
-          (LOC_CACHE || [])
-            .filter(
-              (r) =>
-                normalize(r.stateName).includes(nq) ||
-                normalize(r.municipalityName).includes(nq)
-            )
-            .slice(0, 25)
-            .map((r) => ({
-              id: `${r.stateId}-${r.municipalityId}`,
-              label: `${r.municipalityName}, ${r.stateName}`,
-              stateId: r.stateId,
-              municipalityId: r.municipalityId,
-            }));
+        const opts = (LOC_CACHE || [])
+          .filter(
+            (r) =>
+              normalize(r.stateName).includes(nq) ||
+              normalize(r.municipalityName).includes(nq),
+          )
+          .slice(0, 25)
+          .map((r) => ({
+            id: `${r.stateId}-${r.municipalityId}`,
+            label: `${r.municipalityName}, ${r.stateName}`,
+            stateId: r.stateId,
+            municipalityId: r.municipalityId,
+          }));
 
         if (!cancelled) {
           setOptions(opts);

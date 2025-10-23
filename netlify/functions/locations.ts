@@ -6,7 +6,10 @@ import path from "node:path";
 let CACHE: any[] | null = null;
 
 function normalize(s: string) {
-  return s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  return s
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
 }
 
 function loadMunicipalities(): any[] {
@@ -14,9 +17,22 @@ function loadMunicipalities(): any[] {
 
   // Rutas candidatas (dev/build)
   const candidates = [
-    path.join(process.cwd(), "shared", "data", "municipalities.mx.json"),                 // repo root
-    path.join(__dirname, "..", "..", "shared", "data", "municipalities.mx.json"),        // bundled
-    path.join(process.cwd(), "dist", "shared", "data", "municipalities.mx.json"),        // dist
+    path.join(process.cwd(), "shared", "data", "municipalities.mx.json"), // repo root
+    path.join(
+      __dirname,
+      "..",
+      "..",
+      "shared",
+      "data",
+      "municipalities.mx.json",
+    ), // bundled
+    path.join(
+      process.cwd(),
+      "dist",
+      "shared",
+      "data",
+      "municipalities.mx.json",
+    ), // dist
   ];
 
   let filePath = "";

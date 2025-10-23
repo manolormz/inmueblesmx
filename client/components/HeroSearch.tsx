@@ -14,7 +14,7 @@ export function HeroSearch() {
       operation === "Rent"
         ? { placeholderMin: "3,000", placeholderMax: "100,000" }
         : { placeholderMin: "500,000", placeholderMax: "20,000,000" },
-    [operation]
+    [operation],
   );
   const [priceMin, setPriceMin] = useState<string>("");
   const [priceMax, setPriceMax] = useState<string>("");
@@ -25,7 +25,8 @@ export function HeroSearch() {
     const params = new URLSearchParams();
     params.set("operation", operation);
     if (location?.stateId) params.set("state", String(location.stateId));
-    if (location?.municipalityId) params.set("municipality", String(location.municipalityId));
+    if (location?.municipalityId)
+      params.set("municipality", String(location.municipalityId));
     if (type) params.set("type", type);
     if (priceMin) params.set("priceMin", priceMin);
     if (priceMax) params.set("priceMax", priceMax);
@@ -42,7 +43,9 @@ export function HeroSearch() {
             type="button"
             onClick={() => setOperation(op)}
             className={`px-5 py-2 rounded-lg border ${
-              operation === op ? "bg-blue-600 text-white border-blue-600" : "bg-white text-gray-700 border-gray-300"
+              operation === op
+                ? "bg-blue-600 text-white border-blue-600"
+                : "bg-white text-gray-700 border-gray-300"
             }`}
           >
             {op === "Sale" ? "Comprar" : "Rentar"}
@@ -67,7 +70,9 @@ export function HeroSearch() {
           >
             <option value="">Tipo de propiedad</option>
             {PropertyTypeOptions.map((o) => (
-              <option key={o.value} value={o.value}>{o.label_es}</option>
+              <option key={o.value} value={o.value}>
+                {o.label_es}
+              </option>
             ))}
           </select>
 

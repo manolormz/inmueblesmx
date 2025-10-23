@@ -3,7 +3,10 @@ import fs from "fs";
 import path from "path";
 
 function normalize(s: string) {
-  return s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  return s
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
 }
 
 export function handleLocationsLocal(req: Request, res: Response) {
@@ -16,7 +19,10 @@ export function handleLocationsLocal(req: Request, res: Response) {
   }
 
   try {
-    const file = path.resolve(process.cwd(), "shared/data/municipalities.mx.json");
+    const file = path.resolve(
+      process.cwd(),
+      "shared/data/municipalities.mx.json",
+    );
     const raw = fs.readFileSync(file, "utf-8");
     const data = JSON.parse(raw) as any[];
 
@@ -24,7 +30,7 @@ export function handleLocationsLocal(req: Request, res: Response) {
       .filter(
         (r: any) =>
           normalize(r.stateName).includes(normQ) ||
-          normalize(r.municipalityName).includes(normQ)
+          normalize(r.municipalityName).includes(normQ),
       )
       .slice(0, limit)
       .map((r: any) => ({
