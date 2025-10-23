@@ -434,6 +434,10 @@ export default function Search() {
         </div>
       </div>
 
+      <section className="container mx-auto px-4 mt-4">
+        <MapView initialCenter={{ lat: 19.4326, lng: -99.1332 }} initialZoom={11} onBoundsChange={setBbox} markers={mapMarkers} />
+      </section>
+
       <main className="container mx-auto px-4 py-6">
         <h1
           ref={headingRef}
