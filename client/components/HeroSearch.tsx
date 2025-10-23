@@ -69,7 +69,7 @@ export function HeroSearch() {
     }
     // Robust local fallback (grouped)
     try {
-      const seedsMod: any = await import("@shared/data/locations.fallback.mx.json");
+      const seedsMod: any = await import("@shared/data/municipalities.mx.json");
       const seeds: any[] = (seedsMod.default || seedsMod) as any[];
       const n = normalize(term);
       const withMeta: any[] = seeds.slice();
