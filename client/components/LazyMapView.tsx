@@ -1,28 +1,20 @@
-import MapView from '@/components/MapView';
+import { lazy, Suspense } from 'react';
+import StaticMapView from '@/components/MapView';
 
-type Marker = { id: string; lat: number; lng: number; title?: string };
+// Detecta si estamos dentro del sandbox de Builder.io (iframe)
+const isSandbox = typeof window !== 'undefined' && window.location !== window.parent.location;
 
-export default function LazyMapView({
-  onBoundsChange,
-  markers = [],
-  initialCenter,
-  initialZoom,
-  fitBbox,
-}: {
-  onBoundsChange: (bbox: string) => void;
-  markers?: Marker[];
-  initialCenter?: { lat: number; lng: number };
-  initialZoom?: number;
-  fitBbox?: string;
-}) {
-  // Import estático para evitar el error de dynamic import en iframe/preview
+// Import dinámico normal para producción
+const LazyLoaded = lazy(() => import('@/components/MapView'));
+
+export default function LazyMapView(props: any) {
+  if (isSandbox) {
+    // Fallback estático en sandbox para evitar errores de dynamic import
+    return <StaticMapView {...props} />;
+  }
   return (
-    <MapView
-      onBoundsChange={onBoundsChange}
-      markers={markers}
-      initialCenter={initialCenter}
-      initialZoom={initialZoom}
-      fitBbox={fitBbox}
-    />
+    <Suspense fallback={<div className="w-full h-full grid place-items-center bg-white">Cargando mapa…</div>}>
+      <LazyLoaded {...props} />
+    </Suspense>
   );
 }
