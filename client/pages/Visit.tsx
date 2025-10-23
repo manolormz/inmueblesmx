@@ -37,6 +37,11 @@ export default function VisitPage() {
         <h1 className="text-lg font-semibold">Agendar visita</h1>
         {!listingId && (<p className="text-sm text-yellow-700 bg-yellow-50 border border-yellow-200 rounded-md p-2">No se detectó listingId en la URL. Puedes pegarlo manualmente.</p>)}
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-3" aria-busy={isSubmitting}>
+          {!listingId && (
+            <FormField label="ID de propiedad" required error={errors.listingId?.message as any}>
+              <Input {...register('listingId')} required />
+            </FormField>
+          )}
           <FormField label="Nombre" required error={errors.name?.message as any}>
             <Input {...register('name')} required />
           </FormField>
