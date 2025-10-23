@@ -563,8 +563,20 @@ export default function Search() {
                       </div>
                     </a>
                     <div className="px-4 pb-4 flex gap-2">
-                      <a className="px-3 py-2 rounded-md border text-sm" href={`/lead?listingId=${p.listing_id || p.id}`}>Estoy interesado</a>
-                      <a className="px-3 py-2 rounded-md border text-sm" href={`/visita?listingId=${p.listing_id || p.id}`}>Agendar visita</a>
+                      <a
+                        className="px-3 py-2 rounded-md border text-sm"
+                        href={p.listing_id ? `/lead?listingId=${p.listing_id}` : '#'}
+                        aria-disabled={!p.listing_id}
+                        title={!p.listing_id ? 'Falta ID' : undefined}
+                        onClick={(e)=>{ if(!p.listing_id){ e.preventDefault(); return; } import('@/services/analytics').then(m=>m.track('cta_lead_click',{ id:p.listing_id })); }}
+                      >Estoy interesado</a>
+                      <a
+                        className="px-3 py-2 rounded-md border text-sm"
+                        href={p.listing_id ? `/visita?listingId=${p.listing_id}` : '#'}
+                        aria-disabled={!p.listing_id}
+                        title={!p.listing_id ? 'Falta ID' : undefined}
+                        onClick={(e)=>{ if(!p.listing_id){ e.preventDefault(); return; } import('@/services/analytics').then(m=>m.track('cta_visit_click',{ id:p.listing_id })); }}
+                      >Agendar visita</a>
                     </div>
                   </article>
                 ))
