@@ -7,6 +7,8 @@ import { formatPriceCompactMXN, getOptionLabelEs } from "@shared/formatters";
 import { getPriceOptionsMXNByOperation } from "@shared/filters";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import MapView from "@/components/MapView";
+import { useMapSearchSync } from "@/hooks/useMapSearchSync";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
