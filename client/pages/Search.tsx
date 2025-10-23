@@ -434,8 +434,14 @@ export default function Search() {
         </div>
       </div>
 
-      <section className="container mx-auto px-4 mt-4">
+      <section className="container mx-auto px-4 mt-4 relative">
         <MapView initialCenter={{ lat: 19.4326, lng: -99.1332 }} initialZoom={11} onBoundsChange={setBbox} markers={mapMarkers} />
+        {pendingBbox && (
+          <div className="absolute top-3 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+            <Button type="button" onClick={applyPending} className="bg-white">Buscar en esta área</Button>
+            <Button type="button" variant="outline" onClick={clearPending} className="bg-white">Cancelar</Button>
+          </div>
+        )}
       </section>
 
       <main className="container mx-auto px-4 py-6">
