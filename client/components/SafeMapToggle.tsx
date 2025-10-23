@@ -8,12 +8,14 @@ export default function SafeMapToggle({
   markers = [],
   initialCenter = { lat: 19.4326, lng: -99.1332 },
   initialZoom = 11,
+  fitBbox,
   controls,
 }: {
   onBoundsChange: (bbox: string) => void;
   markers?: Marker[];
   initialCenter?: { lat: number; lng: number };
   initialZoom?: number;
+  fitBbox?: string;
   controls?: React.ReactNode; // ej. “Buscar en esta área”
 }) {
   const [showMap, setShowMap] = useState(false);
@@ -68,6 +70,7 @@ export default function SafeMapToggle({
               markers={markers}
               initialCenter={initialCenter}
               initialZoom={initialZoom}
+              fitBbox={fitBbox}
             />
           </div>
 

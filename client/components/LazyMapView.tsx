@@ -9,11 +9,13 @@ export default function LazyMapView({
   markers = [],
   initialCenter,
   initialZoom,
+  fitBbox,
 }: {
   onBoundsChange: (bbox: string) => void;
   markers?: Marker[];
   initialCenter?: { lat: number; lng: number };
   initialZoom?: number;
+  fitBbox?: string;
 }) {
   return (
     <Suspense
@@ -28,6 +30,7 @@ export default function LazyMapView({
         markers={markers}
         initialCenter={initialCenter}
         initialZoom={initialZoom}
+        fitBbox={fitBbox}
       />
     </Suspense>
   );
