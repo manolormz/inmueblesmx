@@ -47,6 +47,8 @@ listings.get('/search', async (req, res) => {
     SELECT l.id as listing_id, l.operation, l.price, l.currency, l.status,
            p.id as property_id, p.slug as property_slug, p.title, p.property_type, p.bedrooms, p.bathrooms, p.built_area_m2,
            p.state_slug, p.municipality_slug, p.neighborhood_slug,
+           ST_X(p.geo_point::geometry) AS lng,
+           ST_Y(p.geo_point::geometry) AS lat,
            COALESCE(
              (SELECT url FROM property_image pi WHERE pi.property_id = p.id AND pi.is_cover = true ORDER BY sort_order ASC LIMIT 1),
              (SELECT url FROM property_image pi WHERE pi.property_id = p.id ORDER BY sort_order ASC LIMIT 1)
