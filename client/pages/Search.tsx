@@ -461,6 +461,14 @@ export default function Search() {
         </div>
       </div>
 
+      {!new URLSearchParams(window.location.search).get('mock') && apiSearch.isError && (
+        <div className="container mx-auto px-4 mt-2">
+          <div className="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded px-2 py-1">
+            Mostrando datos simulados (el servidor respondió 500).
+          </div>
+        </div>
+      )}
+
       <section className="container mx-auto px-4 mt-4 relative">
         <SafeMapToggle
           onBoundsChange={setBbox}
