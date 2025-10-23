@@ -186,8 +186,6 @@ export default function Search() {
       landMax: null,
       currency: null,
       sort: null,
-      locationSlug: null,
-      neighborhoodSlug: null,
       page: 1,
       status: keepStatus,
     } as any);
