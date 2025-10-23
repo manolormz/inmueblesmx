@@ -170,7 +170,7 @@ export const handleLocationsSearch: RequestHandler = async (req, res) => {
     cities: Loc[];
     neighborhoods: Loc[];
   } {
-    const full = path.resolve("shared/data/locations.mx.json");
+    const full = path.resolve("shared/data/municipalities.mx.json");
     let raw: any[] = [];
     try {
       const txt = fs.readFileSync(full, "utf8");
