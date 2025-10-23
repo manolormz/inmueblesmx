@@ -3,7 +3,7 @@ import { useListingsSearch } from '@/hooks/useListingsSearch';
 
 type Params = Record<string, string | number | undefined>;
 
-export function useMapSearchSync(baseParams: Params) {
+export function useMapSearchSync(baseParams: Params, { auto = true }: { auto?: boolean } = {}) {
   const url = new URL(window.location.href);
   const [bbox, setBbox] = useState<string | undefined>(() => {
     const q = url.searchParams.get('bbox') || undefined;
