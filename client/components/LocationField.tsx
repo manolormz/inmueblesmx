@@ -18,7 +18,24 @@ function normalize(s: string) {
   return s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 }
 
-// Cache en memoria para no volver a pedir el JSON
+async function loadLocations(): Promise<Raw[]> {
+  const candidates = [
+    "locations.mx.json",
+    "./locations.mx.json",
+    "/locations.mx.json",
+  ];
+  for (const u of candidates) {
+    try {
+      const res = await fetch(u, { cache: "force-cache" });
+      if (res.ok) return (await res.json()) as Raw[];
+    } catch (_) {
+      // try next
+    }
+  }
+  return [];
+}
+
+// cache global
 let LOC_CACHE: Raw[] | null = null;
 
 export default function LocationField({
@@ -44,12 +61,7 @@ export default function LocationField({
     const id = setTimeout(async () => {
       try {
         setLoading(true);
-
-        if (!LOC_CACHE) {
-          const res = await fetch("/locations.mx.json"); // <- desde public/
-          if (!res.ok) throw new Error("failed to fetch locations");
-          LOC_CACHE = (await res.json()) as Raw[];
-        }
+        if (!LOC_CACHE) LOC_CACHE = await loadLocations();
 
         const nq = normalize(term.trim());
         const opts =
