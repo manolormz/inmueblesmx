@@ -35,6 +35,8 @@ export function createServer() {
 
   // Listings API
   app.use("/api/listings", require("./api/listings").listings);
+  // Leads + Chat API
+  app.use("/api", require("./api/leads_and_chat").comms);
   app.get("/api/health", (_req, res) => res.json({ ok: true }));
 
   // CMS routes
