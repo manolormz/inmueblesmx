@@ -444,7 +444,7 @@ export default function Search() {
           tabIndex={-1}
           className="text-xl font-semibold mb-4"
         >
-          {query.isLoading ? "Cargando..." : `Resultados (${total})`}
+          {apiSearch.isFetching || query.isLoading ? "Cargando..." : `Resultados (${apiSearch.data?.total ?? total})`}
         </h1>
 
         {query.isLoading ? (
