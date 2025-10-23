@@ -17,7 +17,6 @@ function normalize(s: string) {
   return s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 }
 
-// Fallback mínimo por si no se puede cargar el JSON público
 const FALLBACK_DATA: Raw[] = [
   { stateId: "GUA", stateName: "Guanajuato", municipalityId: "LEO", municipalityName: "León" },
   { stateId: "GUA", stateName: "Guanajuato", municipalityId: "IRA", municipalityName: "Irapuato" },
@@ -30,7 +29,7 @@ const FALLBACK_DATA: Raw[] = [
 let LOC_CACHE: Raw[] | null = null;
 
 async function loadLocations(): Promise<Raw[]> {
-  const v = Date.now(); // cache-busting para evitar caché del preview
+  const v = Date.now();
   const candidates = [
     `locations.mx.json?v=${v}`,
     `./locations.mx.json?v=${v}`,
@@ -43,7 +42,7 @@ async function loadLocations(): Promise<Raw[]> {
         const json = await res.json();
         if (Array.isArray(json) && json.length > 0) return json as Raw[];
       }
-    } catch { /* try next */ }
+    } catch {}
   }
   return FALLBACK_DATA;
 }
@@ -61,15 +60,9 @@ export default function StateMunicipalityField({
   const [usedFallback, setUsedFallback] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const [stateId, setStateId] = useState<string | "">(
-    value?.stateId ?? ""
-  );
-  const [municipalityId, setMunicipalityId] = useState<string | "ALL" | "">(
-    (value?.municipalityId as any) ?? "ALL"
-  );
-  const [municipalityFilter, setMunicipalityFilter] = useState("");
+  const [stateId, setStateId] = useState<string | "">(value?.stateId ?? "");
+  const [municipalityId, setMunicipalityId] = useState<string | "ALL" | "">(value?.municipalityId ?? "ALL");
 
-  // carga dataset una sola vez
   useEffect(() => {
     let cancelled = false;
     (async () => {
@@ -90,67 +83,34 @@ export default function StateMunicipalityField({
     return () => { cancelled = true; };
   }, []);
 
-  // Estados únicos ordenados alfabéticamente
   const states = useMemo(() => {
     const src = LOC_CACHE || [];
     const map = new Map<string, string>();
-    for (const r of src) {
-      if (!map.has(r.stateId)) map.set(r.stateId, r.stateName);
-    }
-    return Array.from(map.entries())
-      .map(([id, name]) => ({ id, name }))
-      .sort((a, b) => a.name.localeCompare(b.name, "es"));
+    for (const r of src) if (!map.has(r.stateId)) map.set(r.stateId, r.stateName);
+    return Array.from(map.entries()).map(([id, name]) => ({ id, name })).sort((a, b) => a.name.localeCompare(b.name, "es"));
   }, [LOC_CACHE, dataCount]);
 
-  // Municipios del estado seleccionado (filtrables)
   const municipalities = useMemo(() => {
     if (!stateId || !LOC_CACHE) return [] as { id: string; name: string }[];
-    const list = LOC_CACHE
+    return LOC_CACHE
       .filter((r) => r.stateId === stateId)
       .map((r) => ({ id: r.municipalityId, name: r.municipalityName }))
       .sort((a, b) => a.name.localeCompare(b.name, "es"));
+  }, [stateId, LOC_CACHE]);
 
-    const nq = normalize(municipalityFilter.trim());
-    if (nq.length < 1) return list;
-    return list.filter((m) => normalize(m.name).includes(nq));
-  }, [stateId, LOC_CACHE, municipalityFilter]);
-
-  // Emitter
   useEffect(() => {
     if (!stateId) {
-      if (requiredState) {
-        onChange(null);
-        return;
-      }
-      // Sin estado, opción global
-      onChange({
-        stateId: null,
-        municipalityId: null,
-        label: "Todos los estados",
-      });
+      if (requiredState) { onChange(null); return; }
+      onChange({ stateId: null, municipalityId: null, label: "Todos los estados" });
       return;
     }
-
     const sName = states.find((s) => s.id === stateId)?.name || "";
     if (municipalityId === "ALL" || !municipalityId) {
-      onChange({
-        stateId,
-        municipalityId: null,
-        label: `Todos los municipios, ${sName}`,
-      });
+      onChange({ stateId, municipalityId: null, label: `Todos los municipios, ${sName}` });
       return;
     }
-
-    const mName =
-      LOC_CACHE?.find(
-        (r) => r.stateId === stateId && r.municipalityId === municipalityId
-      )?.municipalityName || "";
-
-    onChange({
-      stateId,
-      municipalityId: municipalityId as string,
-      label: `${mName}, ${sName}`,
-    });
+    const mName = LOC_CACHE?.find((r) => r.stateId === stateId && r.municipalityId === municipalityId)?.municipalityName || "";
+    onChange({ stateId, municipalityId, label: `${mName}, ${sName}` });
   }, [stateId, municipalityId, states, requiredState]);
 
   return (
@@ -164,52 +124,32 @@ export default function StateMunicipalityField({
           onChange={(e) => {
             setStateId(e.target.value);
             setMunicipalityId("ALL");
-            setMunicipalityFilter("");
           }}
         >
           <option value="">{requiredState ? "Selecciona un estado" : "Todos los estados"}</option>
           {states.map((s) => (
-            <option key={s.id} value={s.id}>
-              {s.name}
-            </option>
+            <option key={s.id} value={s.id}>{s.name}</option>
           ))}
         </select>
         {dataCount > 0 && (
-          <div className="mt-1 text-xs text-gray-400">
-            dataset: {dataCount}{usedFallback ? " (fallback)" : ""}
-          </div>
+          <div className="mt-1 text-xs text-gray-400">dataset: {dataCount}{usedFallback ? " (fallback)" : ""}</div>
         )}
       </div>
 
-      {/* Municipio (depende del Estado) */}
+      {/* Municipio */}
       <div className="md:col-span-3">
         <label className="block text-left text-sm text-gray-600 mb-1">Municipio</label>
-
-        <div className="flex gap-2">
-          <input
-            type="text"
-            placeholder="Filtrar municipio (opcional)"
-            className="border rounded-lg p-2 flex-1"
-            value={municipalityFilter}
-            onChange={(e) => {
-              setMunicipalityFilter(e.target.value);
-            }}
-            disabled={!stateId || loading}
-          />
-          <select
-            className="border rounded-lg p-2 w-56"
-            value={municipalityId}
-            onChange={(e) => setMunicipalityId(e.target.value as any)}
-            disabled={!stateId || loading}
-          >
-            <option value="ALL">Todos los municipios</option>
-            {municipalities.map((m) => (
-              <option key={m.id} value={m.id}>
-                {m.name}
-              </option>
-            ))}
-          </select>
-        </div>
+        <select
+          className="border rounded-lg p-2 w-full"
+          value={municipalityId}
+          onChange={(e) => setMunicipalityId(e.target.value as any)}
+          disabled={!stateId || loading}
+        >
+          <option value="ALL">Todos los municipios</option>
+          {municipalities.map((m) => (
+            <option key={m.id} value={m.id}>{m.name}</option>
+          ))}
+        </select>
       </div>
     </div>
   );
