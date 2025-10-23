@@ -114,6 +114,32 @@ export default function Search() {
   const headingRef = useRef<HTMLHeadingElement>(null);
   const [modalOpen, setModalOpen] = useState(false);
 
+  const baseParams = useMemo(() => ({
+    operation: params.get("operation") || undefined,
+    type: params.get("type") || undefined,
+    minPrice: params.get("priceMin") || undefined,
+    maxPrice: params.get("priceMax") || undefined,
+    bedrooms: params.get("minBedrooms") || undefined,
+    state: params.get("state") || undefined,
+    municipality: params.get("municipality") || undefined,
+    neighborhood: params.get("neighborhood") || undefined,
+    text: params.get("q") || undefined,
+    page: String(page),
+    pageSize: String(pageSize),
+  }), [params, page, pageSize]);
+
+  const { search: apiSearch, setBbox } = useMapSearchSync(baseParams);
+
+  const mapMarkers = useMemo(() => {
+    const r = apiSearch.data?.results || [];
+    return r.filter((it: any) => it?.lat && it?.lng).map((it: any) => ({
+      id: it.listing_id,
+      lat: Number(it.lat),
+      lng: Number(it.lng),
+      title: it.title || it.property_slug,
+    }));
+  }, [apiSearch.data]);
+
   const query = useQuery({
     queryKey: ["properties", filtersForRepo, page, pageSize],
     queryFn: () => listProperties(filtersForRepo as any, page, pageSize),
