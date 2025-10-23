@@ -8,6 +8,7 @@ import { getPriceOptionsMXNByOperation } from "@shared/filters";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import MapView from "@/components/MapView";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { useMapSearchSync } from "@/hooks/useMapSearchSync";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
