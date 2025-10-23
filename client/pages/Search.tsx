@@ -114,6 +114,7 @@ export default function Search() {
   const { params, set, page, pageSize, filtersForRepo } = useFilters();
   const headingRef = useRef<HTMLHeadingElement>(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const [fitBbox, setFitBbox] = useState<string | undefined>(undefined);
 
   const baseParams = useMemo(
     () => ({
