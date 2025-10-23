@@ -131,13 +131,17 @@ export default function Search() {
   const { search: apiSearch, setBbox, pendingBbox, applyPending, clearPending } = useMapSearchSync(baseParams, { auto: false });
 
   const mapMarkers = useMemo(() => {
+    const MAX_MARKERS = 500;
     const r = apiSearch.data?.results || [];
-    return r.filter((it: any) => it?.lat && it?.lng).map((it: any) => ({
-      id: it.listing_id,
-      lat: Number(it.lat),
-      lng: Number(it.lng),
-      title: it.title || it.property_slug,
-    }));
+    return r
+      .filter((it: any) => Number.isFinite(Number(it?.lat)) && Number.isFinite(Number(it?.lng)))
+      .slice(0, MAX_MARKERS)
+      .map((it: any) => ({
+        id: it.listing_id,
+        lat: Number(it.lat),
+        lng: Number(it.lng),
+        title: it.title || it.property_slug,
+      }));
   }, [apiSearch.data]);
 
   const query = useQuery({
