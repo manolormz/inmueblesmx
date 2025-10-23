@@ -26,14 +26,14 @@
   {
     "stateId": "AGU",
     "stateName": "Aguascalientes",
-    "municipalityId": "PAB",
-    "municipalityName": "Pabellón de Arteaga"
+    "municipalityId": "JES",
+    "municipalityName": "Jesús María"
   },
   {
     "stateId": "AGU",
     "stateName": "Aguascalientes",
-    "municipalityId": "SJR",
-    "municipalityName": "San José de Gracia"
+    "municipalityId": "PAB",
+    "municipalityName": "Pabellón de Arteaga"
   },
   {
     "stateId": "AGU",
@@ -98,1441 +98,1441 @@
   {
     "stateId": "BCS",
     "stateName": "Baja California Sur",
-    "municipalityId": "001",
-    "municipalityName": "Municipio Uno de Baja California Sur"
+    "municipalityId": "LAP",
+    "municipalityName": "La Paz"
   },
   {
     "stateId": "BCS",
     "stateName": "Baja California Sur",
-    "municipalityId": "002",
-    "municipalityName": "Municipio Dos de Baja California Sur"
+    "municipalityId": "CSL",
+    "municipalityName": "Los Cabos"
   },
   {
     "stateId": "BCS",
     "stateName": "Baja California Sur",
-    "municipalityId": "003",
-    "municipalityName": "Municipio Tres de Baja California Sur"
+    "municipalityId": "COM",
+    "municipalityName": "Comondú"
   },
   {
     "stateId": "BCS",
     "stateName": "Baja California Sur",
-    "municipalityId": "004",
-    "municipalityName": "Municipio Cuatro de Baja California Sur"
+    "municipalityId": "MUL",
+    "municipalityName": "Mulegé"
   },
   {
     "stateId": "BCS",
     "stateName": "Baja California Sur",
-    "municipalityId": "005",
-    "municipalityName": "Municipio Cinco de Baja California Sur"
+    "municipalityId": "LOR",
+    "municipalityName": "Loreto"
   },
   {
     "stateId": "BCS",
     "stateName": "Baja California Sur",
-    "municipalityId": "006",
-    "municipalityName": "Municipio Seis de Baja California Sur"
+    "municipalityId": "CON",
+    "municipalityName": "Ciudad Constitución"
   },
   {
     "stateId": "BCS",
     "stateName": "Baja California Sur",
-    "municipalityId": "007",
-    "municipalityName": "Municipio Siete de Baja California Sur"
+    "municipalityId": "ROS",
+    "municipalityName": "Santa Rosalía"
   },
   {
     "stateId": "BCS",
     "stateName": "Baja California Sur",
-    "municipalityId": "008",
-    "municipalityName": "Municipio Ocho de Baja California Sur"
+    "municipalityId": "TOD",
+    "municipalityName": "Todos Santos"
   },
   {
     "stateId": "CAM",
     "stateName": "Campeche",
-    "municipalityId": "001",
-    "municipalityName": "Municipio Uno de Campeche"
+    "municipalityId": "CAM",
+    "municipalityName": "Campeche"
   },
   {
     "stateId": "CAM",
     "stateName": "Campeche",
-    "municipalityId": "002",
-    "municipalityName": "Municipio Dos de Campeche"
+    "municipalityId": "CDE",
+    "municipalityName": "Ciudad del Carmen"
   },
   {
     "stateId": "CAM",
     "stateName": "Campeche",
-    "municipalityId": "003",
-    "municipalityName": "Municipio Tres de Campeche"
+    "municipalityId": "CAL",
+    "municipalityName": "Calkiní"
   },
   {
     "stateId": "CAM",
     "stateName": "Campeche",
-    "municipalityId": "004",
-    "municipalityName": "Municipio Cuatro de Campeche"
+    "municipalityId": "ESC",
+    "municipalityName": "Escárcega"
   },
   {
     "stateId": "CAM",
     "stateName": "Campeche",
-    "municipalityId": "005",
-    "municipalityName": "Municipio Cinco de Campeche"
+    "municipalityId": "CHP",
+    "municipalityName": "Champotón"
   },
   {
     "stateId": "CAM",
     "stateName": "Campeche",
-    "municipalityId": "006",
-    "municipalityName": "Municipio Seis de Campeche"
+    "municipalityId": "HOP",
+    "municipalityName": "Hopelchén"
   },
   {
     "stateId": "CAM",
     "stateName": "Campeche",
-    "municipalityId": "007",
-    "municipalityName": "Municipio Siete de Campeche"
+    "municipalityId": "TEN",
+    "municipalityName": "Tenabo"
   },
   {
     "stateId": "CAM",
     "stateName": "Campeche",
-    "municipalityId": "008",
-    "municipalityName": "Municipio Ocho de Campeche"
+    "municipalityId": "PAL",
+    "municipalityName": "Palizada"
   },
   {
     "stateId": "CHP",
     "stateName": "Chiapas",
-    "municipalityId": "001",
-    "municipalityName": "Municipio Uno de Chiapas"
+    "municipalityId": "TUX",
+    "municipalityName": "Tuxtla Gutiérrez"
   },
   {
     "stateId": "CHP",
     "stateName": "Chiapas",
-    "municipalityId": "002",
-    "municipalityName": "Municipio Dos de Chiapas"
+    "municipalityId": "SCL",
+    "municipalityName": "San Cristóbal de las Casas"
   },
   {
     "stateId": "CHP",
     "stateName": "Chiapas",
-    "municipalityId": "003",
-    "municipalityName": "Municipio Tres de Chiapas"
+    "municipalityId": "TAP",
+    "municipalityName": "Tapachula"
   },
   {
     "stateId": "CHP",
     "stateName": "Chiapas",
-    "municipalityId": "004",
-    "municipalityName": "Municipio Cuatro de Chiapas"
+    "municipalityId": "COM",
+    "municipalityName": "Comitán de Domínguez"
   },
   {
     "stateId": "CHP",
     "stateName": "Chiapas",
-    "municipalityId": "005",
-    "municipalityName": "Municipio Cinco de Chiapas"
+    "municipalityId": "TON",
+    "municipalityName": "Tonalá"
   },
   {
     "stateId": "CHP",
     "stateName": "Chiapas",
-    "municipalityId": "006",
-    "municipalityName": "Municipio Seis de Chiapas"
+    "municipalityId": "PCH",
+    "municipalityName": "Pichucalco"
   },
   {
     "stateId": "CHP",
     "stateName": "Chiapas",
-    "municipalityId": "007",
-    "municipalityName": "Municipio Siete de Chiapas"
+    "municipalityId": "PAL",
+    "municipalityName": "Palenque"
   },
   {
     "stateId": "CHP",
     "stateName": "Chiapas",
-    "municipalityId": "008",
-    "municipalityName": "Municipio Ocho de Chiapas"
+    "municipalityId": "CHI",
+    "municipalityName": "Chiapa de Corzo"
   },
   {
     "stateId": "CHI",
     "stateName": "Chihuahua",
-    "municipalityId": "001",
-    "municipalityName": "Municipio Uno de Chihuahua"
+    "municipalityId": "CHH",
+    "municipalityName": "Chihuahua"
   },
   {
     "stateId": "CHI",
     "stateName": "Chihuahua",
-    "municipalityId": "002",
-    "municipalityName": "Municipio Dos de Chihuahua"
+    "municipalityId": "JUA",
+    "municipalityName": "Juárez"
   },
   {
     "stateId": "CHI",
     "stateName": "Chihuahua",
-    "municipalityId": "003",
-    "municipalityName": "Municipio Tres de Chihuahua"
+    "municipalityId": "DEL",
+    "municipalityName": "Delicias"
   },
   {
     "stateId": "CHI",
     "stateName": "Chihuahua",
-    "municipalityId": "004",
-    "municipalityName": "Municipio Cuatro de Chihuahua"
+    "municipalityId": "CUA",
+    "municipalityName": "Cuauhtémoc"
   },
   {
     "stateId": "CHI",
     "stateName": "Chihuahua",
-    "municipalityId": "005",
-    "municipalityName": "Municipio Cinco de Chihuahua"
+    "municipalityId": "PAR",
+    "municipalityName": "Hidalgo del Parral"
   },
   {
     "stateId": "CHI",
     "stateName": "Chihuahua",
-    "municipalityId": "006",
-    "municipalityName": "Municipio Seis de Chihuahua"
+    "municipalityId": "NCG",
+    "municipalityName": "Nuevo Casas Grandes"
   },
   {
     "stateId": "CHI",
     "stateName": "Chihuahua",
-    "municipalityId": "007",
-    "municipalityName": "Municipio Siete de Chihuahua"
+    "municipalityId": "CAM",
+    "municipalityName": "Camargo"
   },
   {
     "stateId": "CHI",
     "stateName": "Chihuahua",
-    "municipalityId": "008",
-    "municipalityName": "Municipio Ocho de Chihuahua"
+    "municipalityId": "JIM",
+    "municipalityName": "Jiménez"
   },
   {
     "stateId": "CMX",
     "stateName": "Ciudad de México",
-    "municipalityId": "001",
-    "municipalityName": "Municipio Uno de Ciudad de México"
+    "municipalityId": "IZT",
+    "municipalityName": "Iztapalapa"
   },
   {
     "stateId": "CMX",
     "stateName": "Ciudad de México",
-    "municipalityId": "002",
-    "municipalityName": "Municipio Dos de Ciudad de México"
+    "municipalityId": "GAM",
+    "municipalityName": "Gustavo A. Madero"
   },
   {
     "stateId": "CMX",
     "stateName": "Ciudad de México",
-    "municipalityId": "003",
-    "municipalityName": "Municipio Tres de Ciudad de México"
+    "municipalityId": "AO",
+    "municipalityName": "Álvaro Obregón"
   },
   {
     "stateId": "CMX",
     "stateName": "Ciudad de México",
-    "municipalityId": "004",
-    "municipalityName": "Municipio Cuatro de Ciudad de México"
+    "municipalityId": "BJ",
+    "municipalityName": "Benito Juárez"
   },
   {
     "stateId": "CMX",
     "stateName": "Ciudad de México",
-    "municipalityId": "005",
-    "municipalityName": "Municipio Cinco de Ciudad de México"
+    "municipalityId": "MH",
+    "municipalityName": "Miguel Hidalgo"
   },
   {
     "stateId": "CMX",
     "stateName": "Ciudad de México",
-    "municipalityId": "006",
-    "municipalityName": "Municipio Seis de Ciudad de México"
+    "municipalityId": "COY",
+    "municipalityName": "Coyoacán"
   },
   {
     "stateId": "CMX",
     "stateName": "Ciudad de México",
-    "municipalityId": "007",
-    "municipalityName": "Municipio Siete de Ciudad de México"
+    "municipalityId": "TLA",
+    "municipalityName": "Tlalpan"
   },
   {
     "stateId": "CMX",
     "stateName": "Ciudad de México",
-    "municipalityId": "008",
-    "municipalityName": "Municipio Ocho de Ciudad de México"
+    "municipalityId": "AZC",
+    "municipalityName": "Azcapotzalco"
   },
   {
     "stateId": "COA",
     "stateName": "Coahuila de Zaragoza",
-    "municipalityId": "001",
-    "municipalityName": "Municipio Uno de Coahuila de Zaragoza"
+    "municipalityId": "SLT",
+    "municipalityName": "Saltillo"
   },
   {
     "stateId": "COA",
     "stateName": "Coahuila de Zaragoza",
-    "municipalityId": "002",
-    "municipalityName": "Municipio Dos de Coahuila de Zaragoza"
+    "municipalityId": "TRR",
+    "municipalityName": "Torreón"
   },
   {
     "stateId": "COA",
     "stateName": "Coahuila de Zaragoza",
-    "municipalityId": "003",
-    "municipalityName": "Municipio Tres de Coahuila de Zaragoza"
+    "municipalityId": "MON",
+    "municipalityName": "Monclova"
   },
   {
     "stateId": "COA",
     "stateName": "Coahuila de Zaragoza",
-    "municipalityId": "004",
-    "municipalityName": "Municipio Cuatro de Coahuila de Zaragoza"
+    "municipalityId": "PNR",
+    "municipalityName": "Piedras Negras"
   },
   {
     "stateId": "COA",
     "stateName": "Coahuila de Zaragoza",
-    "municipalityId": "005",
-    "municipalityName": "Municipio Cinco de Coahuila de Zaragoza"
+    "municipalityId": "ACU",
+    "municipalityName": "Acuña"
   },
   {
     "stateId": "COA",
     "stateName": "Coahuila de Zaragoza",
-    "municipalityId": "006",
-    "municipalityName": "Municipio Seis de Coahuila de Zaragoza"
+    "municipalityId": "RAM",
+    "municipalityName": "Ramos Arizpe"
   },
   {
     "stateId": "COA",
     "stateName": "Coahuila de Zaragoza",
-    "municipalityId": "007",
-    "municipalityName": "Municipio Siete de Coahuila de Zaragoza"
+    "municipalityId": "SAB",
+    "municipalityName": "Sabinas"
   },
   {
     "stateId": "COA",
     "stateName": "Coahuila de Zaragoza",
-    "municipalityId": "008",
-    "municipalityName": "Municipio Ocho de Coahuila de Zaragoza"
+    "municipalityId": "SPR",
+    "municipalityName": "San Pedro"
   },
   {
     "stateId": "COL",
     "stateName": "Colima",
-    "municipalityId": "001",
-    "municipalityName": "Municipio Uno de Colima"
+    "municipalityId": "COL",
+    "municipalityName": "Colima"
   },
   {
     "stateId": "COL",
     "stateName": "Colima",
-    "municipalityId": "002",
-    "municipalityName": "Municipio Dos de Colima"
+    "municipalityId": "MAN",
+    "municipalityName": "Manzanillo"
   },
   {
     "stateId": "COL",
     "stateName": "Colima",
-    "municipalityId": "003",
-    "municipalityName": "Municipio Tres de Colima"
+    "municipalityId": "TEC",
+    "municipalityName": "Tecomán"
   },
   {
     "stateId": "COL",
     "stateName": "Colima",
-    "municipalityId": "004",
-    "municipalityName": "Municipio Cuatro de Colima"
+    "municipalityId": "VDA",
+    "municipalityName": "Villa de Álvarez"
   },
   {
     "stateId": "COL",
     "stateName": "Colima",
-    "municipalityId": "005",
-    "municipalityName": "Municipio Cinco de Colima"
+    "municipalityId": "ARM",
+    "municipalityName": "Armería"
   },
   {
     "stateId": "COL",
     "stateName": "Colima",
-    "municipalityId": "006",
-    "municipalityName": "Municipio Seis de Colima"
+    "municipalityId": "COQ",
+    "municipalityName": "Coquimatlán"
   },
   {
     "stateId": "COL",
     "stateName": "Colima",
-    "municipalityId": "007",
-    "municipalityName": "Municipio Siete de Colima"
+    "municipalityId": "COM",
+    "municipalityName": "Comala"
   },
   {
     "stateId": "COL",
     "stateName": "Colima",
-    "municipalityId": "008",
-    "municipalityName": "Municipio Ocho de Colima"
+    "municipalityId": "CUA",
+    "municipalityName": "Cuauhtémoc"
   },
   {
     "stateId": "DUR",
     "stateName": "Durango",
-    "municipalityId": "001",
-    "municipalityName": "Municipio Uno de Durango"
+    "municipalityId": "DGO",
+    "municipalityName": "Durango"
   },
   {
     "stateId": "DUR",
     "stateName": "Durango",
-    "municipalityId": "002",
-    "municipalityName": "Municipio Dos de Durango"
+    "municipalityId": "GPA",
+    "municipalityName": "Gómez Palacio"
   },
   {
     "stateId": "DUR",
     "stateName": "Durango",
-    "municipalityId": "003",
-    "municipalityName": "Municipio Tres de Durango"
+    "municipalityId": "LER",
+    "municipalityName": "Lerdo"
   },
   {
     "stateId": "DUR",
     "stateName": "Durango",
-    "municipalityId": "004",
-    "municipalityName": "Municipio Cuatro de Durango"
+    "municipalityId": "SAP",
+    "municipalityName": "Santiago Papasquiaro"
   },
   {
     "stateId": "DUR",
     "stateName": "Durango",
-    "municipalityId": "005",
-    "municipalityName": "Municipio Cinco de Durango"
+    "municipalityId": "CAN",
+    "municipalityName": "Canatlán"
   },
   {
     "stateId": "DUR",
     "stateName": "Durango",
-    "municipalityId": "006",
-    "municipalityName": "Municipio Seis de Durango"
+    "municipalityId": "PNU",
+    "municipalityName": "Pueblo Nuevo"
   },
   {
     "stateId": "DUR",
     "stateName": "Durango",
-    "municipalityId": "007",
-    "municipalityName": "Municipio Siete de Durango"
+    "municipalityId": "NDG",
+    "municipalityName": "Nombre de Dios"
   },
   {
     "stateId": "DUR",
     "stateName": "Durango",
-    "municipalityId": "008",
-    "municipalityName": "Municipio Ocho de Durango"
+    "municipalityId": "GVI",
+    "municipalityName": "Guadalupe Victoria"
   },
   {
     "stateId": "GUA",
     "stateName": "Guanajuato",
-    "municipalityId": "001",
-    "municipalityName": "Municipio Uno de Guanajuato"
+    "municipalityId": "LEO",
+    "municipalityName": "León"
   },
   {
     "stateId": "GUA",
     "stateName": "Guanajuato",
-    "municipalityId": "002",
-    "municipalityName": "Municipio Dos de Guanajuato"
+    "municipalityId": "IRA",
+    "municipalityName": "Irapuato"
   },
   {
     "stateId": "GUA",
     "stateName": "Guanajuato",
-    "municipalityId": "003",
-    "municipalityName": "Municipio Tres de Guanajuato"
+    "municipalityId": "CEL",
+    "municipalityName": "Celaya"
   },
   {
     "stateId": "GUA",
     "stateName": "Guanajuato",
-    "municipalityId": "004",
-    "municipalityName": "Municipio Cuatro de Guanajuato"
+    "municipalityId": "GTO",
+    "municipalityName": "Guanajuato"
   },
   {
     "stateId": "GUA",
     "stateName": "Guanajuato",
-    "municipalityId": "005",
-    "municipalityName": "Municipio Cinco de Guanajuato"
+    "municipalityId": "SAL",
+    "municipalityName": "Salamanca"
   },
   {
     "stateId": "GUA",
     "stateName": "Guanajuato",
-    "municipalityId": "006",
-    "municipalityName": "Municipio Seis de Guanajuato"
+    "municipalityId": "SMA",
+    "municipalityName": "San Miguel de Allende"
   },
   {
     "stateId": "GUA",
     "stateName": "Guanajuato",
-    "municipalityId": "007",
-    "municipalityName": "Municipio Siete de Guanajuato"
+    "municipalityId": "SIL",
+    "municipalityName": "Silao de la Victoria"
   },
   {
     "stateId": "GUA",
     "stateName": "Guanajuato",
-    "municipalityId": "008",
-    "municipalityName": "Municipio Ocho de Guanajuato"
+    "municipalityId": "VAL",
+    "municipalityName": "Valle de Santiago"
   },
   {
     "stateId": "GRO",
     "stateName": "Guerrero",
-    "municipalityId": "001",
-    "municipalityName": "Municipio Uno de Guerrero"
+    "municipalityId": "ACA",
+    "municipalityName": "Acapulco de Juárez"
   },
   {
     "stateId": "GRO",
     "stateName": "Guerrero",
-    "municipalityId": "002",
-    "municipalityName": "Municipio Dos de Guerrero"
+    "municipalityId": "CHL",
+    "municipalityName": "Chilpancingo de los Bravo"
   },
   {
     "stateId": "GRO",
     "stateName": "Guerrero",
-    "municipalityId": "003",
-    "municipalityName": "Municipio Tres de Guerrero"
+    "municipalityId": "TAX",
+    "municipalityName": "Taxco de Alarcón"
   },
   {
     "stateId": "GRO",
     "stateName": "Guerrero",
-    "municipalityId": "004",
-    "municipalityName": "Municipio Cuatro de Guerrero"
+    "municipalityId": "ZIH",
+    "municipalityName": "Zihuatanejo de Azueta"
   },
   {
     "stateId": "GRO",
     "stateName": "Guerrero",
-    "municipalityId": "005",
-    "municipalityName": "Municipio Cinco de Guerrero"
+    "municipalityId": "IGU",
+    "municipalityName": "Iguala de la Independencia"
   },
   {
     "stateId": "GRO",
     "stateName": "Guerrero",
-    "municipalityId": "006",
-    "municipalityName": "Municipio Seis de Guerrero"
+    "municipalityId": "CHA",
+    "municipalityName": "Chilapa de Álvarez"
   },
   {
     "stateId": "GRO",
     "stateName": "Guerrero",
-    "municipalityId": "007",
-    "municipalityName": "Municipio Siete de Guerrero"
+    "municipalityId": "OME",
+    "municipalityName": "Ometepec"
   },
   {
     "stateId": "GRO",
     "stateName": "Guerrero",
-    "municipalityId": "008",
-    "municipalityName": "Municipio Ocho de Guerrero"
+    "municipalityId": "COY",
+    "municipalityName": "Coyuca de Benítez"
   },
   {
     "stateId": "HGO",
     "stateName": "Hidalgo",
-    "municipalityId": "001",
-    "municipalityName": "Municipio Uno de Hidalgo"
+    "municipalityId": "PAC",
+    "municipalityName": "Pachuca de Soto"
   },
   {
     "stateId": "HGO",
     "stateName": "Hidalgo",
-    "municipalityId": "002",
-    "municipalityName": "Municipio Dos de Hidalgo"
+    "municipalityId": "TUL",
+    "municipalityName": "Tulancingo de Bravo"
   },
   {
     "stateId": "HGO",
     "stateName": "Hidalgo",
-    "municipalityId": "003",
-    "municipalityName": "Municipio Tres de Hidalgo"
+    "municipalityId": "TDA",
+    "municipalityName": "Tula de Allende"
   },
   {
     "stateId": "HGO",
     "stateName": "Hidalgo",
-    "municipalityId": "004",
-    "municipalityName": "Municipio Cuatro de Hidalgo"
+    "municipalityId": "TIZ",
+    "municipalityName": "Tizayuca"
   },
   {
     "stateId": "HGO",
     "stateName": "Hidalgo",
-    "municipalityId": "005",
-    "municipalityName": "Municipio Cinco de Hidalgo"
+    "municipalityId": "MDR",
+    "municipalityName": "Mineral de la Reforma"
   },
   {
     "stateId": "HGO",
     "stateName": "Hidalgo",
-    "municipalityId": "006",
-    "municipalityName": "Municipio Seis de Hidalgo"
+    "municipalityId": "HUJ",
+    "municipalityName": "Huejutla de Reyes"
   },
   {
     "stateId": "HGO",
     "stateName": "Hidalgo",
-    "municipalityId": "007",
-    "municipalityName": "Municipio Siete de Hidalgo"
+    "municipalityId": "IXM",
+    "municipalityName": "Ixmiquilpan"
   },
   {
     "stateId": "HGO",
     "stateName": "Hidalgo",
-    "municipalityId": "008",
-    "municipalityName": "Municipio Ocho de Hidalgo"
+    "municipalityId": "TPR",
+    "municipalityName": "Tepeji del Río de Ocampo"
   },
   {
     "stateId": "JAL",
     "stateName": "Jalisco",
-    "municipalityId": "001",
-    "municipalityName": "Municipio Uno de Jalisco"
+    "municipalityId": "GDL",
+    "municipalityName": "Guadalajara"
   },
   {
     "stateId": "JAL",
     "stateName": "Jalisco",
-    "municipalityId": "002",
-    "municipalityName": "Municipio Dos de Jalisco"
+    "municipalityId": "ZAP",
+    "municipalityName": "Zapopan"
   },
   {
     "stateId": "JAL",
     "stateName": "Jalisco",
-    "municipalityId": "003",
-    "municipalityName": "Municipio Tres de Jalisco"
+    "municipalityId": "TLQ",
+    "municipalityName": "Tlaquepaque"
   },
   {
     "stateId": "JAL",
     "stateName": "Jalisco",
-    "municipalityId": "004",
-    "municipalityName": "Municipio Cuatro de Jalisco"
+    "municipalityId": "TON",
+    "municipalityName": "Tonalá"
   },
   {
     "stateId": "JAL",
     "stateName": "Jalisco",
-    "municipalityId": "005",
-    "municipalityName": "Municipio Cinco de Jalisco"
+    "municipalityId": "PVR",
+    "municipalityName": "Puerto Vallarta"
   },
   {
     "stateId": "JAL",
     "stateName": "Jalisco",
-    "municipalityId": "006",
-    "municipalityName": "Municipio Seis de Jalisco"
+    "municipalityId": "TLA",
+    "municipalityName": "Tlajomulco de Zúñiga"
   },
   {
     "stateId": "JAL",
     "stateName": "Jalisco",
-    "municipalityId": "007",
-    "municipalityName": "Municipio Siete de Jalisco"
+    "municipalityId": "TEP",
+    "municipalityName": "Tepatitlán de Morelos"
   },
   {
     "stateId": "JAL",
     "stateName": "Jalisco",
-    "municipalityId": "008",
-    "municipalityName": "Municipio Ocho de Jalisco"
+    "municipalityId": "LAG",
+    "municipalityName": "Lagos de Moreno"
   },
   {
     "stateId": "MEX",
     "stateName": "México",
-    "municipalityId": "001",
-    "municipalityName": "Municipio Uno de México"
+    "municipalityId": "TOL",
+    "municipalityName": "Toluca"
   },
   {
     "stateId": "MEX",
     "stateName": "México",
-    "municipalityId": "002",
-    "municipalityName": "Municipio Dos de México"
+    "municipalityId": "ECA",
+    "municipalityName": "Ecatepec de Morelos"
   },
   {
     "stateId": "MEX",
     "stateName": "México",
-    "municipalityId": "003",
-    "municipalityName": "Municipio Tres de México"
+    "municipalityId": "NAU",
+    "municipalityName": "Naucalpan de Juárez"
   },
   {
     "stateId": "MEX",
     "stateName": "México",
-    "municipalityId": "004",
-    "municipalityName": "Municipio Cuatro de México"
+    "municipalityId": "TLA",
+    "municipalityName": "Tlalnepantla de Baz"
   },
   {
     "stateId": "MEX",
     "stateName": "México",
-    "municipalityId": "005",
-    "municipalityName": "Municipio Cinco de México"
+    "municipalityId": "NEZ",
+    "municipalityName": "Nezahualcóyotl"
   },
   {
     "stateId": "MEX",
     "stateName": "México",
-    "municipalityId": "006",
-    "municipalityName": "Municipio Seis de México"
+    "municipalityId": "MET",
+    "municipalityName": "Metepec"
   },
   {
     "stateId": "MEX",
     "stateName": "México",
-    "municipalityId": "007",
-    "municipalityName": "Municipio Siete de México"
+    "municipalityId": "ATZ",
+    "municipalityName": "Atizapán de Zaragoza"
   },
   {
     "stateId": "MEX",
     "stateName": "México",
-    "municipalityId": "008",
-    "municipalityName": "Municipio Ocho de México"
+    "municipalityId": "CUI",
+    "municipalityName": "Cuautitlán Izcalli"
   },
   {
     "stateId": "MIC",
     "stateName": "Michoacán de Ocampo",
-    "municipalityId": "001",
-    "municipalityName": "Municipio Uno de Michoacán de Ocampo"
+    "municipalityId": "MOR",
+    "municipalityName": "Morelia"
   },
   {
     "stateId": "MIC",
     "stateName": "Michoacán de Ocampo",
-    "municipalityId": "002",
-    "municipalityName": "Municipio Dos de Michoacán de Ocampo"
+    "municipalityId": "URU",
+    "municipalityName": "Uruapan"
   },
   {
     "stateId": "MIC",
     "stateName": "Michoacán de Ocampo",
-    "municipalityId": "003",
-    "municipalityName": "Municipio Tres de Michoacán de Ocampo"
+    "municipalityId": "ZAM",
+    "municipalityName": "Zamora"
   },
   {
     "stateId": "MIC",
     "stateName": "Michoacán de Ocampo",
-    "municipalityId": "004",
-    "municipalityName": "Municipio Cuatro de Michoacán de Ocampo"
+    "municipalityId": "LZC",
+    "municipalityName": "Lázaro Cárdenas"
   },
   {
     "stateId": "MIC",
     "stateName": "Michoacán de Ocampo",
-    "municipalityId": "005",
-    "municipalityName": "Municipio Cinco de Michoacán de Ocampo"
+    "municipalityId": "PAT",
+    "municipalityName": "Pátzcuaro"
   },
   {
     "stateId": "MIC",
     "stateName": "Michoacán de Ocampo",
-    "municipalityId": "006",
-    "municipalityName": "Municipio Seis de Michoacán de Ocampo"
+    "municipalityId": "ZIT",
+    "municipalityName": "Zitácuaro"
   },
   {
     "stateId": "MIC",
     "stateName": "Michoacán de Ocampo",
-    "municipalityId": "007",
-    "municipalityName": "Municipio Siete de Michoacán de Ocampo"
+    "municipalityId": "APA",
+    "municipalityName": "Apatzingán"
   },
   {
     "stateId": "MIC",
     "stateName": "Michoacán de Ocampo",
-    "municipalityId": "008",
-    "municipalityName": "Municipio Ocho de Michoacán de Ocampo"
+    "municipalityId": "LAP",
+    "municipalityName": "La Piedad"
   },
   {
     "stateId": "MOR",
     "stateName": "Morelos",
-    "municipalityId": "001",
-    "municipalityName": "Municipio Uno de Morelos"
+    "municipalityId": "CUE",
+    "municipalityName": "Cuernavaca"
   },
   {
     "stateId": "MOR",
     "stateName": "Morelos",
-    "municipalityId": "002",
-    "municipalityName": "Municipio Dos de Morelos"
+    "municipalityId": "JIU",
+    "municipalityName": "Jiutepec"
   },
   {
     "stateId": "MOR",
     "stateName": "Morelos",
-    "municipalityId": "003",
-    "municipalityName": "Municipio Tres de Morelos"
+    "municipalityId": "TEM",
+    "municipalityName": "Temixco"
   },
   {
     "stateId": "MOR",
     "stateName": "Morelos",
-    "municipalityId": "004",
-    "municipalityName": "Municipio Cuatro de Morelos"
+    "municipalityId": "CUA",
+    "municipalityName": "Cuautla"
   },
   {
     "stateId": "MOR",
     "stateName": "Morelos",
-    "municipalityId": "005",
-    "municipalityName": "Municipio Cinco de Morelos"
+    "municipalityId": "YAU",
+    "municipalityName": "Yautepec"
   },
   {
     "stateId": "MOR",
     "stateName": "Morelos",
-    "municipalityId": "006",
-    "municipalityName": "Municipio Seis de Morelos"
+    "municipalityId": "EZI",
+    "municipalityName": "Emiliano Zapata"
   },
   {
     "stateId": "MOR",
     "stateName": "Morelos",
-    "municipalityId": "007",
-    "municipalityName": "Municipio Siete de Morelos"
+    "municipalityId": "XOC",
+    "municipalityName": "Xochitepec"
   },
   {
     "stateId": "MOR",
     "stateName": "Morelos",
-    "municipalityId": "008",
-    "municipalityName": "Municipio Ocho de Morelos"
+    "municipalityId": "JOJ",
+    "municipalityName": "Jojutla"
   },
   {
     "stateId": "NAY",
     "stateName": "Nayarit",
-    "municipalityId": "001",
-    "municipalityName": "Municipio Uno de Nayarit"
+    "municipalityId": "TEP",
+    "municipalityName": "Tepic"
   },
   {
     "stateId": "NAY",
     "stateName": "Nayarit",
-    "municipalityId": "002",
-    "municipalityName": "Municipio Dos de Nayarit"
+    "municipalityId": "BDB",
+    "municipalityName": "Bahía de Banderas"
   },
   {
     "stateId": "NAY",
     "stateName": "Nayarit",
-    "municipalityId": "003",
-    "municipalityName": "Municipio Tres de Nayarit"
+    "municipalityId": "COM",
+    "municipalityName": "Compostela"
   },
   {
     "stateId": "NAY",
     "stateName": "Nayarit",
-    "municipalityId": "004",
-    "municipalityName": "Municipio Cuatro de Nayarit"
+    "municipalityId": "XAL",
+    "municipalityName": "Xalisco"
   },
   {
     "stateId": "NAY",
     "stateName": "Nayarit",
-    "municipalityId": "005",
-    "municipalityName": "Municipio Cinco de Nayarit"
+    "municipalityId": "SIX",
+    "municipalityName": "Santiago Ixcuintla"
   },
   {
     "stateId": "NAY",
     "stateName": "Nayarit",
-    "municipalityId": "006",
-    "municipalityName": "Municipio Seis de Nayarit"
+    "municipalityId": "ACP",
+    "municipalityName": "Acaponeta"
   },
   {
     "stateId": "NAY",
     "stateName": "Nayarit",
-    "municipalityId": "007",
-    "municipalityName": "Municipio Siete de Nayarit"
+    "municipalityId": "TEC",
+    "municipalityName": "Tecuala"
   },
   {
     "stateId": "NAY",
     "stateName": "Nayarit",
-    "municipalityId": "008",
-    "municipalityName": "Municipio Ocho de Nayarit"
+    "municipalityId": "SBL",
+    "municipalityName": "San Blas"
   },
   {
     "stateId": "NLE",
     "stateName": "Nuevo León",
-    "municipalityId": "001",
-    "municipalityName": "Municipio Uno de Nuevo León"
+    "municipalityId": "MTY",
+    "municipalityName": "Monterrey"
   },
   {
     "stateId": "NLE",
     "stateName": "Nuevo León",
-    "municipalityId": "002",
-    "municipalityName": "Municipio Dos de Nuevo León"
+    "municipalityId": "SPG",
+    "municipalityName": "San Pedro Garza García"
   },
   {
     "stateId": "NLE",
     "stateName": "Nuevo León",
-    "municipalityId": "003",
-    "municipalityName": "Municipio Tres de Nuevo León"
+    "municipalityId": "SNG",
+    "municipalityName": "San Nicolás de los Garza"
   },
   {
     "stateId": "NLE",
     "stateName": "Nuevo León",
-    "municipalityId": "004",
-    "municipalityName": "Municipio Cuatro de Nuevo León"
+    "municipalityId": "GPE",
+    "municipalityName": "Guadalupe"
   },
   {
     "stateId": "NLE",
     "stateName": "Nuevo León",
-    "municipalityId": "005",
-    "municipalityName": "Municipio Cinco de Nuevo León"
+    "municipalityId": "APO",
+    "municipalityName": "Apodaca"
   },
   {
     "stateId": "NLE",
     "stateName": "Nuevo León",
-    "municipalityId": "006",
-    "municipalityName": "Municipio Seis de Nuevo León"
+    "municipalityId": "ESC",
+    "municipalityName": "General Escobedo"
   },
   {
     "stateId": "NLE",
     "stateName": "Nuevo León",
-    "municipalityId": "007",
-    "municipalityName": "Municipio Siete de Nuevo León"
+    "municipalityId": "STC",
+    "municipalityName": "Santa Catarina"
   },
   {
     "stateId": "NLE",
     "stateName": "Nuevo León",
-    "municipalityId": "008",
-    "municipalityName": "Municipio Ocho de Nuevo León"
+    "municipalityId": "JUA",
+    "municipalityName": "Juárez"
   },
   {
     "stateId": "OAX",
     "stateName": "Oaxaca",
-    "municipalityId": "001",
-    "municipalityName": "Municipio Uno de Oaxaca"
+    "municipalityId": "OAX",
+    "municipalityName": "Oaxaca de Juárez"
   },
   {
     "stateId": "OAX",
     "stateName": "Oaxaca",
-    "municipalityId": "002",
-    "municipalityName": "Municipio Dos de Oaxaca"
+    "municipalityId": "SAL",
+    "municipalityName": "Salina Cruz"
   },
   {
     "stateId": "OAX",
     "stateName": "Oaxaca",
-    "municipalityId": "003",
-    "municipalityName": "Municipio Tres de Oaxaca"
+    "municipalityId": "JTZ",
+    "municipalityName": "Juchitán de Zaragoza"
   },
   {
     "stateId": "OAX",
     "stateName": "Oaxaca",
-    "municipalityId": "004",
-    "municipalityName": "Municipio Cuatro de Oaxaca"
+    "municipalityId": "SJT",
+    "municipalityName": "San Juan Bautista Tuxtepec"
   },
   {
     "stateId": "OAX",
     "stateName": "Oaxaca",
-    "municipalityId": "005",
-    "municipalityName": "Municipio Cinco de Oaxaca"
+    "municipalityId": "HUA",
+    "municipalityName": "Huajuapan de León"
   },
   {
     "stateId": "OAX",
     "stateName": "Oaxaca",
-    "municipalityId": "006",
-    "municipalityName": "Municipio Seis de Oaxaca"
+    "municipalityId": "PE",
+    "municipalityName": "Puerto Escondido"
   },
   {
     "stateId": "OAX",
     "stateName": "Oaxaca",
-    "municipalityId": "007",
-    "municipalityName": "Municipio Siete de Oaxaca"
+    "municipalityId": "HUA2",
+    "municipalityName": "Huatulco"
   },
   {
     "stateId": "OAX",
     "stateName": "Oaxaca",
-    "municipalityId": "008",
-    "municipalityName": "Municipio Ocho de Oaxaca"
+    "municipalityId": "TEH",
+    "municipalityName": "Tehuantepec"
   },
   {
     "stateId": "PUE",
     "stateName": "Puebla",
-    "municipalityId": "001",
-    "municipalityName": "Municipio Uno de Puebla"
+    "municipalityId": "PUE",
+    "municipalityName": "Puebla"
   },
   {
     "stateId": "PUE",
     "stateName": "Puebla",
-    "municipalityId": "002",
-    "municipalityName": "Municipio Dos de Puebla"
+    "municipalityId": "SAC",
+    "municipalityName": "San Andrés Cholula"
   },
   {
     "stateId": "PUE",
     "stateName": "Puebla",
-    "municipalityId": "003",
-    "municipalityName": "Municipio Tres de Puebla"
+    "municipalityId": "SPC",
+    "municipalityName": "San Pedro Cholula"
   },
   {
     "stateId": "PUE",
     "stateName": "Puebla",
-    "municipalityId": "004",
-    "municipalityName": "Municipio Cuatro de Puebla"
+    "municipalityId": "TEH",
+    "municipalityName": "Tehuacán"
   },
   {
     "stateId": "PUE",
     "stateName": "Puebla",
-    "municipalityId": "005",
-    "municipalityName": "Municipio Cinco de Puebla"
+    "municipalityId": "ATL",
+    "municipalityName": "Atlixco"
   },
   {
     "stateId": "PUE",
     "stateName": "Puebla",
-    "municipalityId": "006",
-    "municipalityName": "Municipio Seis de Puebla"
+    "municipalityId": "HUJ",
+    "municipalityName": "Huejotzingo"
   },
   {
     "stateId": "PUE",
     "stateName": "Puebla",
-    "municipalityId": "007",
-    "municipalityName": "Municipio Siete de Puebla"
+    "municipalityId": "CUA",
+    "municipalityName": "Cuautlancingo"
   },
   {
     "stateId": "PUE",
     "stateName": "Puebla",
-    "municipalityId": "008",
-    "municipalityName": "Municipio Ocho de Puebla"
+    "municipalityId": "SMT",
+    "municipalityName": "San Martín Texmelucan"
   },
   {
     "stateId": "QUE",
     "stateName": "Querétaro",
-    "municipalityId": "001",
-    "municipalityName": "Municipio Uno de Querétaro"
+    "municipalityId": "QRO",
+    "municipalityName": "Querétaro"
   },
   {
     "stateId": "QUE",
     "stateName": "Querétaro",
-    "municipalityId": "002",
-    "municipalityName": "Municipio Dos de Querétaro"
+    "municipalityId": "SJR",
+    "municipalityName": "San Juan del Río"
   },
   {
     "stateId": "QUE",
     "stateName": "Querétaro",
-    "municipalityId": "003",
-    "municipalityName": "Municipio Tres de Querétaro"
+    "municipalityId": "COR",
+    "municipalityName": "Corregidora"
   },
   {
     "stateId": "QUE",
     "stateName": "Querétaro",
-    "municipalityId": "004",
-    "municipalityName": "Municipio Cuatro de Querétaro"
+    "municipalityId": "EMQ",
+    "municipalityName": "El Marqués"
   },
   {
     "stateId": "QUE",
     "stateName": "Querétaro",
-    "municipalityId": "005",
-    "municipalityName": "Municipio Cinco de Querétaro"
+    "municipalityId": "PES",
+    "municipalityName": "Pedro Escobedo"
   },
   {
     "stateId": "QUE",
     "stateName": "Querétaro",
-    "municipalityId": "006",
-    "municipalityName": "Municipio Seis de Querétaro"
+    "municipalityId": "TEQ",
+    "municipalityName": "Tequisquiapan"
   },
   {
     "stateId": "QUE",
     "stateName": "Querétaro",
-    "municipalityId": "007",
-    "municipalityName": "Municipio Siete de Querétaro"
+    "municipalityId": "EZM",
+    "municipalityName": "Ezequiel Montes"
   },
   {
     "stateId": "QUE",
     "stateName": "Querétaro",
-    "municipalityId": "008",
-    "municipalityName": "Municipio Ocho de Querétaro"
+    "municipalityId": "CAD",
+    "municipalityName": "Cadereyta de Montes"
   },
   {
     "stateId": "QROO",
     "stateName": "Quintana Roo",
-    "municipalityId": "001",
-    "municipalityName": "Municipio Uno de Quintana Roo"
+    "municipalityId": "BEN",
+    "municipalityName": "Benito Juárez (Cancún)"
   },
   {
     "stateId": "QROO",
     "stateName": "Quintana Roo",
-    "municipalityId": "002",
-    "municipalityName": "Municipio Dos de Quintana Roo"
+    "municipalityId": "SOL",
+    "municipalityName": "Solidaridad (Playa del Carmen)"
   },
   {
     "stateId": "QROO",
     "stateName": "Quintana Roo",
-    "municipalityId": "003",
-    "municipalityName": "Municipio Tres de Quintana Roo"
+    "municipalityId": "COZ",
+    "municipalityName": "Cozumel"
   },
   {
     "stateId": "QROO",
     "stateName": "Quintana Roo",
-    "municipalityId": "004",
-    "municipalityName": "Municipio Cuatro de Quintana Roo"
+    "municipalityId": "OPB",
+    "municipalityName": "Othón P. Blanco (Chetumal)"
   },
   {
     "stateId": "QROO",
     "stateName": "Quintana Roo",
-    "municipalityId": "005",
-    "municipalityName": "Municipio Cinco de Quintana Roo"
+    "municipalityId": "TUL",
+    "municipalityName": "Tulum"
   },
   {
     "stateId": "QROO",
     "stateName": "Quintana Roo",
-    "municipalityId": "006",
-    "municipalityName": "Municipio Seis de Quintana Roo"
+    "municipalityId": "IMU",
+    "municipalityName": "Isla Mujeres"
   },
   {
     "stateId": "QROO",
     "stateName": "Quintana Roo",
-    "municipalityId": "007",
-    "municipalityName": "Municipio Siete de Quintana Roo"
+    "municipalityId": "PMO",
+    "municipalityName": "Puerto Morelos"
   },
   {
     "stateId": "QROO",
     "stateName": "Quintana Roo",
-    "municipalityId": "008",
-    "municipalityName": "Municipio Ocho de Quintana Roo"
+    "municipalityId": "BAC",
+    "municipalityName": "Bacalar"
   },
   {
     "stateId": "SLP",
     "stateName": "San Luis Potosí",
-    "municipalityId": "001",
-    "municipalityName": "Municipio Uno de San Luis Potosí"
+    "municipalityId": "SLP",
+    "municipalityName": "San Luis Potosí"
   },
   {
     "stateId": "SLP",
     "stateName": "San Luis Potosí",
-    "municipalityId": "002",
-    "municipalityName": "Municipio Dos de San Luis Potosí"
+    "municipalityId": "SGS",
+    "municipalityName": "Soledad de Graciano Sánchez"
   },
   {
     "stateId": "SLP",
     "stateName": "San Luis Potosí",
-    "municipalityId": "003",
-    "municipalityName": "Municipio Tres de San Luis Potosí"
+    "municipalityId": "CDV",
+    "municipalityName": "Ciudad Valles"
   },
   {
     "stateId": "SLP",
     "stateName": "San Luis Potosí",
-    "municipalityId": "004",
-    "municipalityName": "Municipio Cuatro de San Luis Potosí"
+    "municipalityId": "RIO",
+    "municipalityName": "Rioverde"
   },
   {
     "stateId": "SLP",
     "stateName": "San Luis Potosí",
-    "municipalityId": "005",
-    "municipalityName": "Municipio Cinco de San Luis Potosí"
+    "municipalityId": "MAT",
+    "municipalityName": "Matehuala"
   },
   {
     "stateId": "SLP",
     "stateName": "San Luis Potosí",
-    "municipalityId": "006",
-    "municipalityName": "Municipio Seis de San Luis Potosí"
+    "municipalityId": "TAM",
+    "municipalityName": "Tamazunchale"
   },
   {
     "stateId": "SLP",
     "stateName": "San Luis Potosí",
-    "municipalityId": "007",
-    "municipalityName": "Municipio Siete de San Luis Potosí"
+    "municipalityId": "EBA",
+    "municipalityName": "Ébano"
   },
   {
     "stateId": "SLP",
     "stateName": "San Luis Potosí",
-    "municipalityId": "008",
-    "municipalityName": "Municipio Ocho de San Luis Potosí"
+    "municipalityId": "CER",
+    "municipalityName": "Cerritos"
   },
   {
     "stateId": "SIN",
     "stateName": "Sinaloa",
-    "municipalityId": "001",
-    "municipalityName": "Municipio Uno de Sinaloa"
+    "municipalityId": "CUL",
+    "municipalityName": "Culiacán"
   },
   {
     "stateId": "SIN",
     "stateName": "Sinaloa",
-    "municipalityId": "002",
-    "municipalityName": "Municipio Dos de Sinaloa"
+    "municipalityId": "AHO",
+    "municipalityName": "Ahome (Los Mochis)"
   },
   {
     "stateId": "SIN",
     "stateName": "Sinaloa",
-    "municipalityId": "003",
-    "municipalityName": "Municipio Tres de Sinaloa"
+    "municipalityId": "MAZ",
+    "municipalityName": "Mazatlán"
   },
   {
     "stateId": "SIN",
     "stateName": "Sinaloa",
-    "municipalityId": "004",
-    "municipalityName": "Municipio Cuatro de Sinaloa"
+    "municipalityId": "GSV",
+    "municipalityName": "Guasave"
   },
   {
     "stateId": "SIN",
     "stateName": "Sinaloa",
-    "municipalityId": "005",
-    "municipalityName": "Municipio Cinco de Sinaloa"
+    "municipalityId": "NAV",
+    "municipalityName": "Navolato"
   },
   {
     "stateId": "SIN",
     "stateName": "Sinaloa",
-    "municipalityId": "006",
-    "municipalityName": "Municipio Seis de Sinaloa"
+    "municipalityId": "SAL",
+    "municipalityName": "Salvador Alvarado (Guamúchil)"
   },
   {
     "stateId": "SIN",
     "stateName": "Sinaloa",
-    "municipalityId": "007",
-    "municipalityName": "Municipio Siete de Sinaloa"
+    "municipalityId": "FUE",
+    "municipalityName": "El Fuerte"
   },
   {
     "stateId": "SIN",
     "stateName": "Sinaloa",
-    "municipalityId": "008",
-    "municipalityName": "Municipio Ocho de Sinaloa"
+    "municipalityId": "ESC",
+    "municipalityName": "Escuinapa"
   },
   {
     "stateId": "SON",
     "stateName": "Sonora",
-    "municipalityId": "001",
-    "municipalityName": "Municipio Uno de Sonora"
+    "municipalityId": "HMO",
+    "municipalityName": "Hermosillo"
   },
   {
     "stateId": "SON",
     "stateName": "Sonora",
-    "municipalityId": "002",
-    "municipalityName": "Municipio Dos de Sonora"
+    "municipalityId": "CAJ",
+    "municipalityName": "Cajeme (Ciudad Obregón)"
   },
   {
     "stateId": "SON",
     "stateName": "Sonora",
-    "municipalityId": "003",
-    "municipalityName": "Municipio Tres de Sonora"
+    "municipalityId": "NOG",
+    "municipalityName": "Nogales"
   },
   {
     "stateId": "SON",
     "stateName": "Sonora",
-    "municipalityId": "004",
-    "municipalityName": "Municipio Cuatro de Sonora"
+    "municipalityId": "SLR",
+    "municipalityName": "San Luis Río Colorado"
   },
   {
     "stateId": "SON",
     "stateName": "Sonora",
-    "municipalityId": "005",
-    "municipalityName": "Municipio Cinco de Sonora"
+    "municipalityId": "NAV",
+    "municipalityName": "Navojoa"
   },
   {
     "stateId": "SON",
     "stateName": "Sonora",
-    "municipalityId": "006",
-    "municipalityName": "Municipio Seis de Sonora"
+    "municipalityId": "GUA",
+    "municipalityName": "Guaymas"
   },
   {
     "stateId": "SON",
     "stateName": "Sonora",
-    "municipalityId": "007",
-    "municipalityName": "Municipio Siete de Sonora"
+    "municipalityId": "CAB",
+    "municipalityName": "Caborca"
   },
   {
     "stateId": "SON",
     "stateName": "Sonora",
-    "municipalityId": "008",
-    "municipalityName": "Municipio Ocho de Sonora"
+    "municipalityId": "AGP",
+    "municipalityName": "Agua Prieta"
   },
   {
     "stateId": "TAB",
     "stateName": "Tabasco",
-    "municipalityId": "001",
-    "municipalityName": "Municipio Uno de Tabasco"
+    "municipalityId": "CEN",
+    "municipalityName": "Centro (Villahermosa)"
   },
   {
     "stateId": "TAB",
     "stateName": "Tabasco",
-    "municipalityId": "002",
-    "municipalityName": "Municipio Dos de Tabasco"
+    "municipalityId": "COM",
+    "municipalityName": "Comalcalco"
   },
   {
     "stateId": "TAB",
     "stateName": "Tabasco",
-    "municipalityId": "003",
-    "municipalityName": "Municipio Tres de Tabasco"
+    "municipalityId": "CAR",
+    "municipalityName": "Cárdenas"
   },
   {
     "stateId": "TAB",
     "stateName": "Tabasco",
-    "municipalityId": "004",
-    "municipalityName": "Municipio Cuatro de Tabasco"
+    "municipalityId": "MAC",
+    "municipalityName": "Macuspana"
   },
   {
     "stateId": "TAB",
     "stateName": "Tabasco",
-    "municipalityId": "005",
-    "municipalityName": "Municipio Cinco de Tabasco"
+    "municipalityId": "CUN",
+    "municipalityName": "Cunduacán"
   },
   {
     "stateId": "TAB",
     "stateName": "Tabasco",
-    "municipalityId": "006",
-    "municipalityName": "Municipio Seis de Tabasco"
+    "municipalityId": "HUI",
+    "municipalityName": "Huimanguillo"
   },
   {
     "stateId": "TAB",
     "stateName": "Tabasco",
-    "municipalityId": "007",
-    "municipalityName": "Municipio Siete de Tabasco"
+    "municipalityId": "TEA",
+    "municipalityName": "Teapa"
   },
   {
     "stateId": "TAB",
     "stateName": "Tabasco",
-    "municipalityId": "008",
-    "municipalityName": "Municipio Ocho de Tabasco"
+    "municipalityId": "PAR",
+    "municipalityName": "Paraíso"
   },
   {
     "stateId": "TAM",
     "stateName": "Tamaulipas",
-    "municipalityId": "001",
-    "municipalityName": "Municipio Uno de Tamaulipas"
+    "municipalityId": "TAM",
+    "municipalityName": "Tampico"
   },
   {
     "stateId": "TAM",
     "stateName": "Tamaulipas",
-    "municipalityId": "002",
-    "municipalityName": "Municipio Dos de Tamaulipas"
+    "municipalityId": "CM",
+    "municipalityName": "Ciudad Madero"
   },
   {
     "stateId": "TAM",
     "stateName": "Tamaulipas",
-    "municipalityId": "003",
-    "municipalityName": "Municipio Tres de Tamaulipas"
+    "municipalityId": "ALT",
+    "municipalityName": "Altamira"
   },
   {
     "stateId": "TAM",
     "stateName": "Tamaulipas",
-    "municipalityId": "004",
-    "municipalityName": "Municipio Cuatro de Tamaulipas"
+    "municipalityId": "REY",
+    "municipalityName": "Reynosa"
   },
   {
     "stateId": "TAM",
     "stateName": "Tamaulipas",
-    "municipalityId": "005",
-    "municipalityName": "Municipio Cinco de Tamaulipas"
+    "municipalityId": "MAT",
+    "municipalityName": "Matamoros"
   },
   {
     "stateId": "TAM",
     "stateName": "Tamaulipas",
-    "municipalityId": "006",
-    "municipalityName": "Municipio Seis de Tamaulipas"
+    "municipalityId": "NLD",
+    "municipalityName": "Nuevo Laredo"
   },
   {
     "stateId": "TAM",
     "stateName": "Tamaulipas",
-    "municipalityId": "007",
-    "municipalityName": "Municipio Siete de Tamaulipas"
+    "municipalityId": "VIC",
+    "municipalityName": "Victoria"
   },
   {
     "stateId": "TAM",
     "stateName": "Tamaulipas",
-    "municipalityId": "008",
-    "municipalityName": "Municipio Ocho de Tamaulipas"
+    "municipalityId": "RBV",
+    "municipalityName": "Río Bravo"
   },
   {
     "stateId": "TLA",
     "stateName": "Tlaxcala",
-    "municipalityId": "001",
-    "municipalityName": "Municipio Uno de Tlaxcala"
+    "municipalityId": "TLX",
+    "municipalityName": "Tlaxcala"
   },
   {
     "stateId": "TLA",
     "stateName": "Tlaxcala",
-    "municipalityId": "002",
-    "municipalityName": "Municipio Dos de Tlaxcala"
+    "municipalityId": "API",
+    "municipalityName": "Apizaco"
   },
   {
     "stateId": "TLA",
     "stateName": "Tlaxcala",
-    "municipalityId": "003",
-    "municipalityName": "Municipio Tres de Tlaxcala"
+    "municipalityId": "HUA",
+    "municipalityName": "Huamantla"
   },
   {
     "stateId": "TLA",
     "stateName": "Tlaxcala",
-    "municipalityId": "004",
-    "municipalityName": "Municipio Cuatro de Tlaxcala"
+    "municipalityId": "CHI",
+    "municipalityName": "Chiautempan"
   },
   {
     "stateId": "TLA",
     "stateName": "Tlaxcala",
-    "municipalityId": "005",
-    "municipalityName": "Municipio Cinco de Tlaxcala"
+    "municipalityId": "ZAC",
+    "municipalityName": "Zacatelco"
   },
   {
     "stateId": "TLA",
     "stateName": "Tlaxcala",
-    "municipalityId": "006",
-    "municipalityName": "Municipio Seis de Tlaxcala"
+    "municipalityId": "TLX2",
+    "municipalityName": "Tlaxco"
   },
   {
     "stateId": "TLA",
     "stateName": "Tlaxcala",
-    "municipalityId": "007",
-    "municipalityName": "Municipio Siete de Tlaxcala"
+    "municipalityId": "PAP",
+    "municipalityName": "Papalotla de Xicohténcatl"
   },
   {
     "stateId": "TLA",
     "stateName": "Tlaxcala",
-    "municipalityId": "008",
-    "municipalityName": "Municipio Ocho de Tlaxcala"
+    "municipalityId": "SPM",
+    "municipalityName": "San Pablo del Monte"
   },
   {
     "stateId": "VER",
-    "stateName": "Veracruz",
-    "municipalityId": "001",
-    "municipalityName": "Municipio Uno de Veracruz"
+    "stateName": "Veracruz de Ignacio de la Llave",
+    "municipalityId": "VER",
+    "municipalityName": "Veracruz"
   },
   {
     "stateId": "VER",
-    "stateName": "Veracruz",
-    "municipalityId": "002",
-    "municipalityName": "Municipio Dos de Veracruz"
+    "stateName": "Veracruz de Ignacio de la Llave",
+    "municipalityId": "XAL",
+    "municipalityName": "Xalapa"
   },
   {
     "stateId": "VER",
-    "stateName": "Veracruz",
-    "municipalityId": "003",
-    "municipalityName": "Municipio Tres de Veracruz"
+    "stateName": "Veracruz de Ignacio de la Llave",
+    "municipalityId": "COA",
+    "municipalityName": "Coatzacoalcos"
   },
   {
     "stateId": "VER",
-    "stateName": "Veracruz",
-    "municipalityId": "004",
-    "municipalityName": "Municipio Cuatro de Veracruz"
+    "stateName": "Veracruz de Ignacio de la Llave",
+    "municipalityId": "POZ",
+    "municipalityName": "Poza Rica de Hidalgo"
   },
   {
     "stateId": "VER",
-    "stateName": "Veracruz",
-    "municipalityId": "005",
-    "municipalityName": "Municipio Cinco de Veracruz"
+    "stateName": "Veracruz de Ignacio de la Llave",
+    "municipalityId": "COR",
+    "municipalityName": "Córdoba"
   },
   {
     "stateId": "VER",
-    "stateName": "Veracruz",
-    "municipalityId": "006",
-    "municipalityName": "Municipio Seis de Veracruz"
+    "stateName": "Veracruz de Ignacio de la Llave",
+    "municipalityId": "ORI",
+    "municipalityName": "Orizaba"
   },
   {
     "stateId": "VER",
-    "stateName": "Veracruz",
-    "municipalityId": "007",
-    "municipalityName": "Municipio Siete de Veracruz"
+    "stateName": "Veracruz de Ignacio de la Llave",
+    "municipalityId": "BDR",
+    "municipalityName": "Boca del Río"
   },
   {
     "stateId": "VER",
-    "stateName": "Veracruz",
-    "municipalityId": "008",
-    "municipalityName": "Municipio Ocho de Veracruz"
+    "stateName": "Veracruz de Ignacio de la Llave",
+    "municipalityId": "MIN",
+    "municipalityName": "Minatitlán"
   },
   {
     "stateId": "YUC",
     "stateName": "Yucatán",
-    "municipalityId": "001",
-    "municipalityName": "Municipio Uno de Yucatán"
+    "municipalityId": "MER",
+    "municipalityName": "Mérida"
   },
   {
     "stateId": "YUC",
     "stateName": "Yucatán",
-    "municipalityId": "002",
-    "municipalityName": "Municipio Dos de Yucatán"
+    "municipalityId": "VAL",
+    "municipalityName": "Valladolid"
   },
   {
     "stateId": "YUC",
     "stateName": "Yucatán",
-    "municipalityId": "003",
-    "municipalityName": "Municipio Tres de Yucatán"
+    "municipalityId": "TIZ",
+    "municipalityName": "Tizimín"
   },
   {
     "stateId": "YUC",
     "stateName": "Yucatán",
-    "municipalityId": "004",
-    "municipalityName": "Municipio Cuatro de Yucatán"
+    "municipalityId": "PRO",
+    "municipalityName": "Progreso"
   },
   {
     "stateId": "YUC",
     "stateName": "Yucatán",
-    "municipalityId": "005",
-    "municipalityName": "Municipio Cinco de Yucatán"
+    "municipalityId": "KAN",
+    "municipalityName": "Kanasín"
   },
   {
     "stateId": "YUC",
     "stateName": "Yucatán",
-    "municipalityId": "006",
-    "municipalityName": "Municipio Seis de Yucatán"
+    "municipalityId": "UMA",
+    "municipalityName": "Umán"
   },
   {
     "stateId": "YUC",
     "stateName": "Yucatán",
-    "municipalityId": "007",
-    "municipalityName": "Municipio Siete de Yucatán"
+    "municipalityId": "MOT",
+    "municipalityName": "Motul"
   },
   {
     "stateId": "YUC",
     "stateName": "Yucatán",
-    "municipalityId": "008",
-    "municipalityName": "Municipio Ocho de Yucatán"
+    "municipalityId": "TIC",
+    "municipalityName": "Ticul"
   },
   {
     "stateId": "ZAC",
     "stateName": "Zacatecas",
-    "municipalityId": "001",
-    "municipalityName": "Municipio Uno de Zacatecas"
+    "municipalityId": "ZAC",
+    "municipalityName": "Zacatecas"
   },
   {
     "stateId": "ZAC",
     "stateName": "Zacatecas",
-    "municipalityId": "002",
-    "municipalityName": "Municipio Dos de Zacatecas"
+    "municipalityId": "FRE",
+    "municipalityName": "Fresnillo"
   },
   {
     "stateId": "ZAC",
     "stateName": "Zacatecas",
-    "municipalityId": "003",
-    "municipalityName": "Municipio Tres de Zacatecas"
+    "municipalityId": "GPE",
+    "municipalityName": "Guadalupe"
   },
   {
     "stateId": "ZAC",
     "stateName": "Zacatecas",
-    "municipalityId": "004",
-    "municipalityName": "Municipio Cuatro de Zacatecas"
+    "municipalityId": "JER",
+    "municipalityName": "Jerez"
   },
   {
     "stateId": "ZAC",
     "stateName": "Zacatecas",
-    "municipalityId": "005",
-    "municipalityName": "Municipio Cinco de Zacatecas"
+    "municipalityId": "RIO",
+    "municipalityName": "Río Grande"
   },
   {
     "stateId": "ZAC",
     "stateName": "Zacatecas",
-    "municipalityId": "006",
-    "municipalityName": "Municipio Seis de Zacatecas"
+    "municipalityId": "SOM",
+    "municipalityName": "Sombrerete"
   },
   {
     "stateId": "ZAC",
     "stateName": "Zacatecas",
-    "municipalityId": "007",
-    "municipalityName": "Municipio Siete de Zacatecas"
+    "municipalityId": "OJO",
+    "municipalityName": "Ojocaliente"
   },
   {
     "stateId": "ZAC",
     "stateName": "Zacatecas",
-    "municipalityId": "008",
-    "municipalityName": "Municipio Ocho de Zacatecas"
+    "municipalityId": "CAL",
+    "municipalityName": "Calera"
   }
-][]
+]
