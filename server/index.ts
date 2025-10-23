@@ -37,6 +37,8 @@ export function createServer() {
   app.use("/api/listings", require("./api/listings").listings);
   // Leads + Chat API
   app.use("/api", require("./api/leads_and_chat").comms);
+  // Public stubs (visit/auth/agency)
+  app.use("/api", require("./api/public").publicApi);
   app.get("/api/health", (_req, res) => res.json({ ok: true }));
 
   // CMS routes

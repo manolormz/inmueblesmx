@@ -44,6 +44,14 @@ export function Header() {
               Vender
             </Link>
             <Link
+              to="/agencia"
+              onClick={onClickLog("nav-agencia")}
+              className="text-gray-700 hover:text-blue-600 transition"
+              role="link"
+            >
+              Soy inmobiliaria
+            </Link>
+            <Link
               to="/maintenance"
               onClick={onClickLog("nav-mantenimiento")}
               className="text-gray-700 hover:text-blue-600 transition"
@@ -57,8 +65,8 @@ export function Header() {
           <div className="flex items-center gap-3" data-loc="Navbar">
             {!currentUser ? (
               <>
-                <Link to="/auth/login" className="text-gray-700 hover:text-blue-600 transition" data-loc="NavbarLogin">Iniciar sesión</Link>
-                <Link to="/auth/register" className="text-white bg-blue-600 hover:bg-blue-700 px-3 py-2 rounded-md text-sm font-medium" data-loc="NavbarRegister">Registrarse</Link>
+                <Link to="/login" className="text-gray-700 hover:text-blue-600 transition" data-loc="NavbarLogin">Iniciar sesión</Link>
+                <Link to="/register" className="text-white bg-blue-600 hover:bg-blue-700 px-3 py-2 rounded-md text-sm font-medium" data-loc="NavbarRegister">Registrarse</Link>
               </>
             ) : (
               <div className="flex items-center gap-3">

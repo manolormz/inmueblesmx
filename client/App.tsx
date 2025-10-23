@@ -21,6 +21,11 @@ import QAButtons from "./pages/qa/Buttons";
 import Autotest from "./pages/qa/Autotest";
 import DebugTools from "./debug/DebugTools";
 import { AuthProvider } from "./auth/AuthContext";
+import Lead from "./pages/Lead";
+import Visit from "./pages/Visit";
+import Agency from "./pages/Agency";
+import LoginTop from "./pages/login";
+import RegisterTop from "./pages/register";
 
 const queryClient = new QueryClient();
 
@@ -58,6 +63,11 @@ const App = () => (
             <Route path="/maintenance" element={<Maintenance />} />
             <Route path="/auth/login" element={<Login />} />
             <Route path="/auth/register" element={<Register />} />
+            <Route path="/login" element={<LoginTop />} />
+            <Route path="/register" element={<RegisterTop />} />
+            <Route path="/lead" element={<Lead />} />
+            <Route path="/visita" element={<Visit />} />
+            <Route path="/agencia" element={<Agency />} />
             <Route path="/qa/buttons" element={<QAButtons />} />
             <Route path="/qa/autotest" element={<Autotest />} />
             <Route path="/dashboard" element={<Dashboard />} />
