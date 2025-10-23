@@ -15,28 +15,81 @@ type Option = {
 };
 
 function normalize(s: string) {
-  return s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  return s
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
 }
 
 /** Fallback mínimo por si no se puede cargar ningún JSON */
 const FALLBACK_DATA: Raw[] = [
-  { stateId: "GUA", stateName: "Guanajuato", municipalityId: "LEO", municipalityName: "León" },
-  { stateId: "GUA", stateName: "Guanajuato", municipalityId: "IRA", municipalityName: "Irapuato" },
-  { stateId: "SIN", stateName: "Sinaloa", municipalityId: "CUL", municipalityName: "Culiacán" },
-  { stateId: "SIN", stateName: "Sinaloa", municipalityId: "MAZ", municipalityName: "Mazatlán" },
-  { stateId: "SON", stateName: "Sonora", municipalityId: "HMO", municipalityName: "Hermosillo" },
-  { stateId: "SON", stateName: "Sonora", municipalityId: "NOG", municipalityName: "Nogales" },
-  { stateId: "PUE", stateName: "Puebla", municipalityId: "PUE", municipalityName: "Puebla" },
-  { stateId: "PUE", stateName: "Puebla", municipalityId: "SAC", municipalityName: "San Andrés Cholula" },
-  { stateId: "CMX", stateName: "Ciudad de México", municipalityId: "BJ", municipalityName: "Benito Juárez" },
-  { stateId: "CMX", stateName: "Ciudad de México", municipalityId: "MH", municipalityName: "Miguel Hidalgo" },
+  {
+    stateId: "GUA",
+    stateName: "Guanajuato",
+    municipalityId: "LEO",
+    municipalityName: "León",
+  },
+  {
+    stateId: "GUA",
+    stateName: "Guanajuato",
+    municipalityId: "IRA",
+    municipalityName: "Irapuato",
+  },
+  {
+    stateId: "SIN",
+    stateName: "Sinaloa",
+    municipalityId: "CUL",
+    municipalityName: "Culiacán",
+  },
+  {
+    stateId: "SIN",
+    stateName: "Sinaloa",
+    municipalityId: "MAZ",
+    municipalityName: "Mazatlán",
+  },
+  {
+    stateId: "SON",
+    stateName: "Sonora",
+    municipalityId: "HMO",
+    municipalityName: "Hermosillo",
+  },
+  {
+    stateId: "SON",
+    stateName: "Sonora",
+    municipalityId: "NOG",
+    municipalityName: "Nogales",
+  },
+  {
+    stateId: "PUE",
+    stateName: "Puebla",
+    municipalityId: "PUE",
+    municipalityName: "Puebla",
+  },
+  {
+    stateId: "PUE",
+    stateName: "Puebla",
+    municipalityId: "SAC",
+    municipalityName: "San Andrés Cholula",
+  },
+  {
+    stateId: "CMX",
+    stateName: "Ciudad de México",
+    municipalityId: "BJ",
+    municipalityName: "Benito Juárez",
+  },
+  {
+    stateId: "CMX",
+    stateName: "Ciudad de México",
+    municipalityId: "MH",
+    municipalityName: "Miguel Hidalgo",
+  },
 ];
 
 async function loadLocations(): Promise<Raw[]> {
   const candidates = [
-    "locations.mx.json",     // público relativo
+    "locations.mx.json", // público relativo
     "./locations.mx.json",
-    "/locations.mx.json",    // público raíz
+    "/locations.mx.json", // público raíz
   ];
   for (const u of candidates) {
     try {
@@ -76,27 +129,26 @@ export default function LocationField({
         setOptions([]);
         setOpen(false);
         return;
-        }
+      }
 
       setLoading(true);
       try {
         if (!LOC_CACHE) LOC_CACHE = await loadLocations();
 
         const nq = normalize(t);
-        const opts =
-          (LOC_CACHE || [])
-            .filter(
-              (r) =>
-                normalize(r.stateName).includes(nq) ||
-                normalize(r.municipalityName).includes(nq)
-            )
-            .slice(0, 25)
-            .map((r) => ({
-              id: `${r.stateId}-${r.municipalityId}`,
-              label: `${r.municipalityName}, ${r.stateName}`,
-              stateId: r.stateId,
-              municipalityId: r.municipalityId,
-            }));
+        const opts = (LOC_CACHE || [])
+          .filter(
+            (r) =>
+              normalize(r.stateName).includes(nq) ||
+              normalize(r.municipalityName).includes(nq),
+          )
+          .slice(0, 25)
+          .map((r) => ({
+            id: `${r.stateId}-${r.municipalityId}`,
+            label: `${r.municipalityName}, ${r.stateName}`,
+            stateId: r.stateId,
+            municipalityId: r.municipalityId,
+          }));
 
         if (!cancelled) {
           setOptions(opts);

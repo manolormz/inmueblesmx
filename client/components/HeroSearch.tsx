@@ -1,7 +1,9 @@
 import { useMemo, useState } from "react";
 import SearchButton from "@/components/SearchButton";
 import { PropertyTypeOptions } from "@shared/options";
-import StateMunicipalityField, { StateMunicipalityValue } from "@/components/StateMunicipalityField";
+import StateMunicipalityField, {
+  StateMunicipalityValue,
+} from "@/components/StateMunicipalityField";
 
 export function HeroSearch() {
   type OperationLocal = "Sale" | "Rent";
@@ -14,7 +16,7 @@ export function HeroSearch() {
       operation === "Rent"
         ? { placeholderMin: "3,000", placeholderMax: "100,000" }
         : { placeholderMin: "500,000", placeholderMax: "20,000,000" },
-    [operation]
+    [operation],
   );
   const [priceMin, setPriceMin] = useState<string>("");
   const [priceMax, setPriceMax] = useState<string>("");
@@ -25,7 +27,8 @@ export function HeroSearch() {
     const params = new URLSearchParams();
     params.set("operation", operation);
     if (loc?.stateId) params.set("state", String(loc.stateId));
-    if (loc?.municipalityId) params.set("municipality", String(loc.municipalityId));
+    if (loc?.municipalityId)
+      params.set("municipality", String(loc.municipalityId));
     if (type) params.set("type", type);
     if (priceMin) params.set("priceMin", priceMin);
     if (priceMax) params.set("priceMax", priceMax);

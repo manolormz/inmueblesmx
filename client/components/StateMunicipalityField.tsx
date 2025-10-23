@@ -14,16 +14,49 @@ export type StateMunicipalityValue = {
 };
 
 function normalize(s: string) {
-  return s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  return s
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
 }
 
 const FALLBACK_DATA: Raw[] = [
-  { stateId: "GUA", stateName: "Guanajuato", municipalityId: "LEO", municipalityName: "León" },
-  { stateId: "GUA", stateName: "Guanajuato", municipalityId: "IRA", municipalityName: "Irapuato" },
-  { stateId: "SIN", stateName: "Sinaloa", municipalityId: "CUL", municipalityName: "Culiacán" },
-  { stateId: "SON", stateName: "Sonora", municipalityId: "HMO", municipalityName: "Hermosillo" },
-  { stateId: "PUE", stateName: "Puebla", municipalityId: "PUE", municipalityName: "Puebla" },
-  { stateId: "CMX", stateName: "Ciudad de México", municipalityId: "BJ", municipalityName: "Benito Juárez" },
+  {
+    stateId: "GUA",
+    stateName: "Guanajuato",
+    municipalityId: "LEO",
+    municipalityName: "León",
+  },
+  {
+    stateId: "GUA",
+    stateName: "Guanajuato",
+    municipalityId: "IRA",
+    municipalityName: "Irapuato",
+  },
+  {
+    stateId: "SIN",
+    stateName: "Sinaloa",
+    municipalityId: "CUL",
+    municipalityName: "Culiacán",
+  },
+  {
+    stateId: "SON",
+    stateName: "Sonora",
+    municipalityId: "HMO",
+    municipalityName: "Hermosillo",
+  },
+  {
+    stateId: "PUE",
+    stateName: "Puebla",
+    municipalityId: "PUE",
+    municipalityName: "Puebla",
+  },
+  {
+    stateId: "CMX",
+    stateName: "Ciudad de México",
+    municipalityId: "BJ",
+    municipalityName: "Benito Juárez",
+  },
 ];
 
 let LOC_CACHE: Raw[] | null = null;
@@ -61,7 +94,9 @@ export default function StateMunicipalityField({
   const [loading, setLoading] = useState(false);
 
   const [stateId, setStateId] = useState<string | "">(value?.stateId ?? "");
-  const [municipalityId, setMunicipalityId] = useState<string | "ALL" | "">(value?.municipalityId ?? "ALL");
+  const [municipalityId, setMunicipalityId] = useState<string | "ALL" | "">(
+    value?.municipalityId ?? "ALL",
+  );
 
   useEffect(() => {
     let cancelled = false;
@@ -80,36 +115,54 @@ export default function StateMunicipalityField({
         }
       }
     })();
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   const states = useMemo(() => {
     const src = LOC_CACHE || [];
     const map = new Map<string, string>();
-    for (const r of src) if (!map.has(r.stateId)) map.set(r.stateId, r.stateName);
-    return Array.from(map.entries()).map(([id, name]) => ({ id, name })).sort((a, b) => a.name.localeCompare(b.name, "es"));
+    for (const r of src)
+      if (!map.has(r.stateId)) map.set(r.stateId, r.stateName);
+    return Array.from(map.entries())
+      .map(([id, name]) => ({ id, name }))
+      .sort((a, b) => a.name.localeCompare(b.name, "es"));
   }, [LOC_CACHE, dataCount]);
 
   const municipalities = useMemo(() => {
     if (!stateId || !LOC_CACHE) return [] as { id: string; name: string }[];
-    return LOC_CACHE
-      .filter((r) => r.stateId === stateId)
+    return LOC_CACHE.filter((r) => r.stateId === stateId)
       .map((r) => ({ id: r.municipalityId, name: r.municipalityName }))
       .sort((a, b) => a.name.localeCompare(b.name, "es"));
   }, [stateId, LOC_CACHE]);
 
   useEffect(() => {
     if (!stateId) {
-      if (requiredState) { onChange(null); return; }
-      onChange({ stateId: null, municipalityId: null, label: "Todos los estados" });
+      if (requiredState) {
+        onChange(null);
+        return;
+      }
+      onChange({
+        stateId: null,
+        municipalityId: null,
+        label: "Todos los estados",
+      });
       return;
     }
     const sName = states.find((s) => s.id === stateId)?.name || "";
     if (municipalityId === "ALL" || !municipalityId) {
-      onChange({ stateId, municipalityId: null, label: `Todos los municipios, ${sName}` });
+      onChange({
+        stateId,
+        municipalityId: null,
+        label: `Todos los municipios, ${sName}`,
+      });
       return;
     }
-    const mName = LOC_CACHE?.find((r) => r.stateId === stateId && r.municipalityId === municipalityId)?.municipalityName || "";
+    const mName =
+      LOC_CACHE?.find(
+        (r) => r.stateId === stateId && r.municipalityId === municipalityId,
+      )?.municipalityName || "";
     onChange({ stateId, municipalityId, label: `${mName}, ${sName}` });
   }, [stateId, municipalityId, states, requiredState]);
 
@@ -117,7 +170,9 @@ export default function StateMunicipalityField({
     <div className="grid grid-cols-1 md:grid-cols-5 gap-3">
       {/* Estado */}
       <div className="md:col-span-2">
-        <label className="block text-left text-sm text-gray-600 mb-1">Estado</label>
+        <label className="block text-left text-sm text-gray-600 mb-1">
+          Estado
+        </label>
         <select
           className="border rounded-lg p-2 w-full"
           value={stateId}
@@ -126,19 +181,28 @@ export default function StateMunicipalityField({
             setMunicipalityId("ALL");
           }}
         >
-          <option value="">{requiredState ? "Selecciona un estado" : "Todos los estados"}</option>
+          <option value="">
+            {requiredState ? "Selecciona un estado" : "Todos los estados"}
+          </option>
           {states.map((s) => (
-            <option key={s.id} value={s.id}>{s.name}</option>
+            <option key={s.id} value={s.id}>
+              {s.name}
+            </option>
           ))}
         </select>
         {dataCount > 0 && (
-          <div className="mt-1 text-xs text-gray-400">dataset: {dataCount}{usedFallback ? " (fallback)" : ""}</div>
+          <div className="mt-1 text-xs text-gray-400">
+            dataset: {dataCount}
+            {usedFallback ? " (fallback)" : ""}
+          </div>
         )}
       </div>
 
       {/* Municipio */}
       <div className="md:col-span-3">
-        <label className="block text-left text-sm text-gray-600 mb-1">Municipio</label>
+        <label className="block text-left text-sm text-gray-600 mb-1">
+          Municipio
+        </label>
         <select
           className="border rounded-lg p-2 w-full"
           value={municipalityId}
@@ -147,7 +211,9 @@ export default function StateMunicipalityField({
         >
           <option value="ALL">Todos los municipios</option>
           {municipalities.map((m) => (
-            <option key={m.id} value={m.id}>{m.name}</option>
+            <option key={m.id} value={m.id}>
+              {m.name}
+            </option>
           ))}
         </select>
       </div>
