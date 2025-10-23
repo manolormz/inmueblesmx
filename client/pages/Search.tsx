@@ -7,7 +7,7 @@ import { formatPriceCompactMXN, getOptionLabelEs } from "@shared/formatters";
 import { getPriceOptionsMXNByOperation } from "@shared/filters";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import MapView from "@/components/MapView";
+// import MapView from "@/components/MapView";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { useMapSearchSync } from "@/hooks/useMapSearchSync";
 import { Input } from "@/components/ui/input";
@@ -436,6 +436,7 @@ export default function Search() {
       </div>
 
       <section className="container mx-auto px-4 mt-4 relative">
+        {/**
         <ErrorBoundary fallback={
           <div className="border rounded-2xl p-4 text-sm bg-yellow-50">
             Mapa deshabilitado temporalmente. Continúa usando los filtros.
@@ -443,8 +444,9 @@ export default function Search() {
         }>
           <MapView initialCenter={{ lat: 19.4326, lng: -99.1332 }} initialZoom={11} onBoundsChange={setBbox} markers={mapMarkers} />
         </ErrorBoundary>
+        **/}
         {pendingBbox && (
-          <div className="absolute top-3 left-1/2 -translate-x-1/2 flex gap-2 z-20">
+          <div className="absolute top-3 left-1/2 -translate-x-1/2 flex gap-2 z-20 pointer-events-auto">
             <Button type="button" onClick={applyPending} className="bg-white">Buscar en esta área</Button>
             <Button type="button" variant="outline" onClick={clearPending} className="bg-white">Cancelar</Button>
           </div>
