@@ -3,14 +3,19 @@ export async function json(url: string, opts: RequestInit = {}) {
     ...opts,
     headers: { 'Content-Type': 'application/json', ...(opts.headers || {}) },
   });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return res.json();
+  let body: any = null;
+  try { body = await res.json(); } catch {}
+  if (!res.ok) {
+    const msg = (body && (body.error || body.message)) || res.statusText || `HTTP ${res.status}`;
+    throw new Error(msg);
+  }
+  return body;
 }
 
 export const Api = {
-  async lead(payload: { listing_id: string|number; name?: string; email?: string; phone_e164?: string; message?: string; }) {
+  async lead(payload: { listing_id: string|number; name?: string; email?: string; phone_e164?: string; message?: string; company?: string; }) {
     try {
-      return await json('/api/leads', { method: 'POST', body: JSON.stringify(payload) });
+      return await json('/api/leads', { method: 'POST', body: JSON.stringify({ ...payload, source: 'web' }) });
     } catch (e) {
       return { ok: true, mock: true, ...payload };
     }
