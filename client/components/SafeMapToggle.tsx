@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import LazyMapView from "@/components/LazyMapView";
+import { isSandbox } from "@/utils/env";
 
 type Marker = { id: string; lat: number; lng: number; title?: string };
 
@@ -26,6 +27,19 @@ export default function SafeMapToggle({
     | undefined;
 
   const canMount = useMemo(() => mapEnabled && !!token, [mapEnabled, token]);
+
+  if (isSandbox) {
+    return (
+      <div className="relative w-full h-[50vh] grid place-items-center bg-gray-50 border rounded-2xl">
+        <div className="text-center text-sm opacity-70">
+          Vista previa sin mapa dentro del editor.
+          <br />
+          Abre la URL pública para ver el mapa, clustering y geocoding.
+        </div>
+        {controls ? <div className="absolute top-2 left-2">{controls}</div> : null}
+      </div>
+    );
+  }
 
   return (
     <div className="relative w-full rounded-2xl border overflow-hidden">
