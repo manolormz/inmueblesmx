@@ -1,5 +1,4 @@
 import type { RequestHandler } from "express";
-import { getIndex, isMeiliConfigured } from "../search/meili";
 import fs from "fs";
 import path from "path";
 
