@@ -33,6 +33,10 @@ export function createServer() {
     require("./routes/locations.local").handleLocationsLocal,
   );
 
+  // Listings API
+  app.use("/api/listings", require("./api/listings").listings);
+  app.get("/api/health", (_req, res) => res.json({ ok: true }));
+
   // CMS routes
   app.get(
     "/api/cms/property",
