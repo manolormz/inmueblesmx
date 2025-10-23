@@ -139,17 +139,8 @@ export default function Search() {
     })();
     const locSlug = params.get("locationSlug");
     const neighSlug = params.get("neighborhoodSlug");
-    if (neighSlug || locSlug) {
-      if (neighSlug && lastLoc && lastLoc.slug === neighSlug) {
-        const cityName = lastLoc.city || "";
-        chips.push({ key: "neighborhoodSlug", label: `Ubicación: Col. ${lastLoc.name}, ${cityName}` });
-      } else if (locSlug && lastLoc && (lastLoc.slug === locSlug || lastLoc.city_slug === locSlug)) {
-        chips.push({ key: "locationSlug", label: `Ubicación: ${lastLoc.name}` });
-      } else if (locSlug) {
-        chips.push({ key: "locationSlug", label: `Ubicación: ${locSlug}` });
-      }
-    }
-    if (qValue && !(neighSlug || locSlug)) chips.push({ key: "q", label: `Texto: "${qValue}"` });
+    // Ubicación removida
+    if (qValue) chips.push({ key: "q", label: `Texto: "${qValue}"` });
     const op = opParam;
     if (params.get("operation")) chips.push({ key: "operation", label: `Operación: ${getOptionLabelEs("Operation", op as any)}` });
     const tp = params.get("type");
