@@ -1,20 +1,20 @@
 import { useMemo, useState } from "react";
 import SearchButton from "@/components/SearchButton";
-import LocationField from "@/components/LocationField";
 import { PropertyTypeOptions } from "@shared/options";
+import StateMunicipalityField, { StateMunicipalityValue } from "@/components/StateMunicipalityField";
 
 export function HeroSearch() {
   type OperationLocal = "Sale" | "Rent";
   const [operation, setOperation] = useState<OperationLocal>("Sale");
 
-  const [location, setLocation] = useState<any | null>(null);
+  const [loc, setLoc] = useState<StateMunicipalityValue | null>(null);
   const [type, setType] = useState("");
   const priceRange = useMemo(
     () =>
       operation === "Rent"
         ? { placeholderMin: "3,000", placeholderMax: "100,000" }
         : { placeholderMin: "500,000", placeholderMax: "20,000,000" },
-    [operation],
+    [operation]
   );
   const [priceMin, setPriceMin] = useState<string>("");
   const [priceMax, setPriceMax] = useState<string>("");
@@ -24,9 +24,8 @@ export function HeroSearch() {
 
     const params = new URLSearchParams();
     params.set("operation", operation);
-    if (location?.stateId) params.set("state", String(location.stateId));
-    if (location?.municipalityId)
-      params.set("municipality", String(location.municipalityId));
+    if (loc?.stateId) params.set("state", String(loc.stateId));
+    if (loc?.municipalityId) params.set("municipality", String(loc.municipalityId));
     if (type) params.set("type", type);
     if (priceMin) params.set("priceMin", priceMin);
     if (priceMax) params.set("priceMax", priceMax);
@@ -37,11 +36,11 @@ export function HeroSearch() {
   return (
     <div className="w-full flex flex-col items-center text-center gap-4">
       <div className="flex gap-3 justify-center">
-        {(["Sale", "Rent"] as OperationLocal[]).map((op) => (
+        {["Sale", "Rent"].map((op) => (
           <button
             key={op}
             type="button"
-            onClick={() => setOperation(op)}
+            onClick={() => setOperation(op as OperationLocal)}
             className={`px-5 py-2 rounded-lg border ${
               operation === op
                 ? "bg-blue-600 text-white border-blue-600"
@@ -59,7 +58,7 @@ export function HeroSearch() {
       >
         <div className="grid grid-cols-1 md:grid-cols-5 gap-3">
           <div className="md:col-span-2">
-            <LocationField value={location} onChange={setLocation} />
+            <StateMunicipalityField value={loc} onChange={setLoc} />
           </div>
 
           <select
