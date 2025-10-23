@@ -1,16 +1,1 @@
-[
-  { "id":"state-guanajuato","name":"Guanajuato","slug":"guanajuato","type":"state","search_keywords":["gto"],"popularity":85 },
-  { "id":"state-sonora","name":"Sonora","slug":"sonora","type":"state","search_keywords":[],"popularity":84 },
-  { "id":"state-sinaloa","name":"Sinaloa","slug":"sinaloa","type":"state","search_keywords":[],"popularity":83 },
-  { "id":"mun-san-luis-potosi","name":"San Luis Potosí","slug":"san-luis-potosi","type":"municipality","state":"San Luis Potosí","state_slug":"san-luis-potosi","search_keywords":["slp","san luis p."],"popularity":88 },
-  { "id":"city-san-luis-potosi","name":"San Luis Potosí","slug":"san-luis-potosi","type":"city","state":"San Luis Potosí","state_slug":"san-luis-potosi","search_keywords":["slp"],"popularity":87 },
-  { "id":"mun-culiacan","name":"Culiacán","slug":"culiacan","type":"municipality","state":"Sinaloa","state_slug":"sinaloa","search_keywords":["culiacan"],"popularity":86 },
-  { "id":"city-culiacan","name":"Culiacán","slug":"culiacan","type":"city","state":"Sinaloa","state_slug":"sinaloa","search_keywords":["culiacan"],"popularity":86 },
-  { "id":"city-guadalajara","name":"Guadalajara","slug":"guadalajara","type":"city","state":"Jalisco","state_slug":"jalisco","search_keywords":["gdl","zmg"],"popularity":95 },
-  { "id":"city-queretaro","name":"Querétaro","slug":"queretaro","type":"city","state":"Querétaro","state_slug":"queretaro","search_keywords":["qro","queretaro"],"popularity":90 },
-  { "id":"state-queretaro","name":"Querétaro","slug":"queretaro","type":"state","search_keywords":["qro"],"popularity":82 },
-  { "id":"city-mexicali","name":"Mexicali","slug":"mexicali","type":"city","state":"Baja California","state_slug":"baja-california","search_keywords":[],"popularity":80 },
-  { "id":"city-hermosillo","name":"Hermosillo","slug":"hermosillo","type":"city","state":"Sonora","state_slug":"sonora","search_keywords":[],"popularity":80 },
-  { "id":"city-leon","name":"León","slug":"leon","type":"city","state":"Guanajuato","state_slug":"guanajuato","search_keywords":[],"popularity":88 },
-  { "id":"city-zapopan","name":"Zapopan","slug":"zapopan","type":"city","state":"Jalisco","state_slug":"jalisco","search_keywords":[],"popularity":87 }
-]
+[]
