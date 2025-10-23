@@ -9,12 +9,7 @@ import {
   updateProperty,
 } from "./routes/cms.extra";
 import { handleSitemapXml, handleRobotsTxt } from "./routes/sitemap.xml";
-import {
-  ensureIndex,
-  getIndexStats,
-  isMeiliConfigured,
-  probeQueries,
-} from "./search/meili";
+// Meili removed
 
 export function createServer() {
   const app = express();
