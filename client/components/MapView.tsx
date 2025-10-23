@@ -27,12 +27,25 @@ export default function MapView({
   const mapRef = useRef<any>(null);
   const markersRef = useRef<Record<string, any>>({});
   const [error, setError] = useState<string | null>(null);
-  const token = (import.meta as any).env?.VITE_MAPBOX_TOKEN as string | undefined;
 
-  // Si no hay token, no intentamos cargar nada
+  const token = (import.meta as any).env?.VITE_MAPBOX_TOKEN as string | undefined;
+  const mapEnabled = ((import.meta as any).env?.VITE_ENABLE_MAP ?? '1') === '1';
+
+  // Kill-switch global para desactivar el mapa sin tocar código
+  if (!mapEnabled) {
+    return (
+      <div className="w-full h-[60vh] md:h-[70vh] rounded-2xl overflow-hidden border grid place-items-center">
+        <div className="text-sm opacity-70 px-4 text-center">
+          Mapa deshabilitado (<code>VITE_ENABLE_MAP</code> ≠ 1). Los formularios siguen operando.
+        </div>
+      </div>
+    );
+  }
+
+  // Si falta token, muestra placeholder pero no rompas la UI
   if (!token) {
     return (
-      <div ref={containerRef} className="w-full h-[60vh] md:h-[70vh] rounded-2xl overflow-hidden border grid place-items-center">
+      <div className="w-full h-[60vh] md:h-[70vh] rounded-2xl overflow-hidden border grid place-items-center">
         <div className="text-sm opacity-70 px-4 text-center">
           Mapa deshabilitado (falta <code>VITE_MAPBOX_TOKEN</code>). El resto de la página sigue funcionando.
         </div>
@@ -42,14 +55,22 @@ export default function MapView({
 
   useEffect(() => {
     let cancelled = false;
+    let resizeObs: ResizeObserver | null = null;
+    let onVis: (() => void) | null = null;
+
     (async () => {
       try {
-        const mapboxgl = (await import('mapbox-gl')).default;
+        const mapboxgl = (await import('mapbox-gl')).default as any;
         mapboxgl.accessToken = token;
 
-        if (!containerRef.current) return;
-        // Evita doble init
-        if (mapRef.current) return;
+        // 1) Soporte WebGL (en algunos iframes/editores está bloqueado)
+        // @ts-ignore
+        if (typeof mapboxgl.supported === 'function' && !mapboxgl.supported()) {
+          setError('WebGL no está soportado en este contexto (iframe/driver).');
+          return;
+        }
+
+        if (!containerRef.current || mapRef.current) return;
 
         const map = new mapboxgl.Map({
           container: containerRef.current,
@@ -65,17 +86,31 @@ export default function MapView({
             const b = map.getBounds();
             const bbox = `${b.getWest()},${b.getSouth()},${b.getEast()},${b.getNorth()}`;
             onBoundsChange(bbox);
-          } catch (e: any) {
-            // No rompas la UI si falla
-          }
+          } catch {}
         }, 400);
 
-        map.on('load', emitBounds);
+        map.on('load', () => {
+          try { map.resize(); } catch {}
+          emitBounds();
+        });
         map.on('moveend', emitBounds);
         map.on('zoomend', emitBounds);
 
+        // 3) Observa tamaño del contenedor y aplica resize
+        if ('ResizeObserver' in window && containerRef.current) {
+          resizeObs = new ResizeObserver(() => {
+            try { map.resize(); } catch {}
+          });
+          resizeObs.observe(containerRef.current);
+        }
+
+        // 4) Reacciona a visibilidad de la pestaña (evita layouts rotos)
+        onVis = () => {
+          try { map.resize(); } catch {}
+        };
+        document.addEventListener('visibilitychange', onVis);
+
         map.on('error', (evt: any) => {
-          // Captura errores internos de mapa para no tumbar la app
           if (!cancelled) setError(evt?.error?.message || 'Error del mapa');
         });
       } catch (e: any) {
@@ -86,30 +121,31 @@ export default function MapView({
     return () => {
       cancelled = true;
       try {
-        if (mapRef.current) {
-          mapRef.current.remove();
-        }
+        if (mapRef.current) mapRef.current.remove();
       } catch {}
       mapRef.current = null;
-      // limpia marcadores
+
       Object.values(markersRef.current).forEach((m) => {
         try { m.remove(); } catch {}
       });
       markersRef.current = {};
+
+      try { resizeObs?.disconnect(); } catch {}
+      if (onVis) document.removeEventListener('visibilitychange', onVis);
     };
   }, [initialCenter.lat, initialCenter.lng, initialZoom, onBoundsChange, token]);
 
-  // Markers (idempotente y tolerante a fallos)
+  // Markers tolerantes a fallos
   useEffect(() => {
     (async () => {
       try {
         const map = mapRef.current;
         if (!map) return;
-        const mapboxgl = (await import('mapbox-gl')).default;
+        const mapboxgl = (await import('mapbox-gl')).default as any;
 
-        // eliminar los que ya no están
         const existing = markersRef.current;
         const incomingIds = new Set(markers.map(m => m.id));
+
         Object.keys(existing).forEach(id => {
           if (!incomingIds.has(id)) {
             existing[id].remove();
@@ -117,7 +153,6 @@ export default function MapView({
           }
         });
 
-        // crear/actualizar
         markers.forEach(m => {
           if (!existing[m.id]) {
             existing[m.id] = new mapboxgl.Marker({})
@@ -136,10 +171,10 @@ export default function MapView({
 
   return (
     <div className="relative">
-      <div ref={containerRef} className="w-full h-[60vh] md:h-[70vh] rounded-2xl overflow-hidden border" />
+      <div ref={containerRef} className="w-full h-[60vh] md:h-[70vh] rounded-2xl overflow-hidden border bg-white" />
       {error && (
-        <div className="absolute inset-0 grid place-items-center bg-white/80 backdrop-blur-sm">
-          <div className="text-sm text-red-700 border border-red-200 bg-red-50 px-3 py-2 rounded-lg">
+        <div className="absolute inset-0 grid place-items-center bg-white/85 backdrop-blur-sm">
+          <div className="text-sm text-red-700 border border-red-200 bg-red-50 px-3 py-2 rounded-lg max-w-sm text-center">
             {String(error)}
           </div>
         </div>
