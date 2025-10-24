@@ -75,6 +75,14 @@ export function useLocations() {
     };
   }, []);
 
+  useEffect(() => {
+    if (sourceUrl) {
+      try {
+        console.info("[useLocations] sourceUrl:", sourceUrl);
+      } catch {}
+    }
+  }, [sourceUrl]);
+
   const states = useMemo(() => {
     const set = new Set<string>();
     for (const r of rows) set.add(r.state);
