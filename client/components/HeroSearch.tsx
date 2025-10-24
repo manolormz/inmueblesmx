@@ -66,7 +66,7 @@ export function HeroSearch() {
 
           <select
             name="type"
-            className="border rounded-lg p-2"
+            className="select"
             value={type}
             onChange={(e) => setType(e.target.value)}
           >
@@ -82,7 +82,7 @@ export function HeroSearch() {
             type="number"
             name="priceMin"
             placeholder={`Precio mínimo (${priceRange.placeholderMin})`}
-            className="border rounded-lg p-2"
+            className="input"
             value={priceMin}
             onChange={(e) => setPriceMin(e.target.value)}
             min={0}
@@ -91,7 +91,7 @@ export function HeroSearch() {
             type="number"
             name="priceMax"
             placeholder={`Precio máximo (${priceRange.placeholderMax})`}
-            className="border rounded-lg p-2"
+            className="input"
             value={priceMax}
             onChange={(e) => setPriceMax(e.target.value)}
             min={0}
