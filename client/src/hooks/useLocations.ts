@@ -1,28 +1,51 @@
 import { useEffect, useMemo, useState } from "react";
 
-type Row = {
-  state: string;
-  municipality: string;
-};
+export type Option = { value: string; label: string };
+
+type LocationsShape =
+  | string[]
+  | {
+      states?: string[];
+      municipalities?: Record<string, string[]>;
+      map?: Record<string, string[]>;
+      data?: Record<string, string[]>;
+    };
 
 const normalize = (s: string) =>
-  s
-    ?.toLowerCase()
-    ?.normalize("NFD")
-    ?.replace(/[\u0300-\u036f]/g, "")
-    ?.trim() ?? "";
+  s?.toLowerCase()?.normalize("NFD")?.replace(/[\u0300-\u036f]/g, "")?.trim() ?? "";
 
 const makeUrlCandidates = () => {
   const base = (import.meta as any).env?.BASE_URL || "/";
   const a = base.endsWith("/") ? base : base + "/";
-  const candidates = [`${a}locations.mx.json`, "/locations.mx.json"];
-  return Array.from(new Set(candidates));
+  return Array.from(new Set([`${a}locations.mx.json`, "/locations.mx.json"]));
 };
 
-async function loadLocations(): Promise<{
-  states: string[];
-  map: Map<string, string[]>;
-}> {
+function parseLocations(json: LocationsShape): { states: string[]; map: Map<string, string[]> } {
+  if (Array.isArray(json)) {
+    const states = json.filter((x) => typeof x === "string") as string[];
+    return { states, map: new Map() };
+  }
+
+  if (json && Array.isArray(json.states)) {
+    const states = json.states.slice();
+    const map = new Map<string, string[]>();
+    const src = (json.municipalities || json.map || json.data || {}) as Record<string, string[]>;
+    for (const k of Object.keys(src)) map.set(k, src[k] || []);
+    return { states, map };
+  }
+
+  if (json && (json.municipalities || json.map || json.data)) {
+    const src = (json.municipalities || json.map || json.data) as Record<string, string[]>;
+    const states = Object.keys(src);
+    const map = new Map<string, string[]>();
+    for (const k of states) map.set(k, src[k] || []);
+    return { states, map };
+  }
+
+  return { states: [], map: new Map() };
+}
+
+async function loadLocations(): Promise<{ states: string[]; map: Map<string, string[]> }> {
   const candidates = makeUrlCandidates();
   let lastErr: any = null;
 
@@ -31,25 +54,9 @@ async function loadLocations(): Promise<{
       console.info("[useLocations] trying:", url);
       const res = await fetch(url, { cache: "no-store" });
       if (!res.ok) throw new Error(`HTTP ${res.status} at ${url}`);
-      const json = await res.json();
-      const states: string[] = json.states ?? Object.keys(json) ?? [];
-      const map = new Map<string, string[]>();
-
-      if (json.municipalities && typeof json.municipalities === "object") {
-        for (const k of Object.keys(json.municipalities)) {
-          map.set(k, json.municipalities[k] || []);
-        }
-      } else if (json.map && typeof json.map === "object") {
-        for (const k of Object.keys(json.map)) {
-          map.set(k, json.map[k] || []);
-        }
-      } else if (states.length && json.data) {
-        for (const k of Object.keys(json.data)) {
-          map.set(k, json.data[k] || []);
-        }
-      }
-
-      console.info("[useLocations] loaded:", states.length, "states");
+      const raw = (await res.json()) as LocationsShape;
+      const { states, map } = parseLocations(raw);
+      console.info("[useLocations] parsed:", states.length, "states");
       return { states, map };
     } catch (e) {
       lastErr = e;
@@ -57,14 +64,22 @@ async function loadLocations(): Promise<{
     }
   }
 
+  // Optional runtime-only fallback import (avoids bundler resolution)
+  try {
+    const dynImport: any = new Function("p", "return import(p)");
+    const mod: any = await dynImport("../data/locations.mx.json");
+    const raw: LocationsShape = mod?.default ?? mod;
+    const { states, map } = parseLocations(raw);
+    console.info("[useLocations] fallback import ok:", states.length, "states");
+    return { states, map };
+  } catch (_ignore) {}
+
   throw lastErr || new Error("No se pudo cargar locations.mx.json");
 }
 
 export function useLocations() {
   const [states, setStates] = useState<string[]>([]);
-  const [municipalitiesByState, setMap] = useState<Map<string, string[]>>(
-    new Map(),
-  );
+  const [municipalitiesByState, setMap] = useState<Map<string, string[]>>(new Map());
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
@@ -93,12 +108,7 @@ export function useLocations() {
 
   useEffect(() => {
     try {
-      console.info(
-        "[useLocations] states:",
-        states.length,
-        "sample:",
-        states.slice(0, 3),
-      );
+      console.info("[useLocations] states:", states.length, "sample:", states.slice(0, 3));
     } catch {}
   }, [states]);
 
@@ -110,17 +120,8 @@ export function useLocations() {
     return [];
   };
 
-  return {
-    loading,
-    error,
-    states,
-    municipalitiesByState,
-    findMunicipalities,
-    normalize,
-  };
+  return { loading, error, states, municipalitiesByState, findMunicipalities, normalize };
 }
-
-export type Option = { value: string; label: string };
 
 export function toOptions(items: string[]): Option[] {
   return (items || []).map((s) => ({ value: s, label: s }));
