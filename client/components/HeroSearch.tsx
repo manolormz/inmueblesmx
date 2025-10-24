@@ -44,10 +44,10 @@ export function HeroSearch() {
             key={op}
             type="button"
             onClick={() => setOperation(op as OperationLocal)}
-            className={`px-5 py-2 rounded-lg border ${
+            className={`px-5 py-2 rounded-2xl border ${
               operation === op
-                ? "bg-blue-600 text-white border-blue-600"
-                : "bg-white text-gray-700 border-gray-300"
+                ? "bg-primary text-white border-primary"
+                : "bg-white text-[color:var(--color-text)] border-[color:var(--color-border)]"
             }`}
           >
             {op === "Sale" ? "Comprar" : "Rentar"}
