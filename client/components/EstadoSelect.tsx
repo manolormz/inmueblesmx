@@ -22,6 +22,7 @@ export default function EstadoSelect({
       <span className="text-sm font-medium">{label}</span>
       <select
         id={id}
+        aria-label={label}
         className="w-full rounded-2xl border p-3 shadow-sm focus:outline-none focus:ring"
         value={value}
         onChange={(e) => onChange(e.target.value)}
