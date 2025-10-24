@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { Header } from "@/components/Header";
-import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 
 function isVisible(el: Element) {
@@ -178,7 +177,6 @@ export default function QAButtons() {
           </table>
         </div>
       </main>
-      <Footer />
     </div>
   );
 }
