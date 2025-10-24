@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import staticLocations from "../data/locations.mx.json";
 
 export type Option = { value: string; label: string };
 
