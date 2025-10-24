@@ -34,6 +34,22 @@ export default function Buscar() {
   const [pageSize, setPageSize] = useState(pp);
   const [vistaState, setVista] = useState<"lista" | "mapa">(vista);
   console.info("[Buscar] mount");
+
+  useEffect(() => {
+    if ([...params.keys()].length === 0) {
+      const last = loadLastSearch();
+      if (last) {
+        const next = new URLSearchParams();
+        if (last.modo) next.set("modo", last.modo);
+        if (last.estado) next.set("estado", last.estado);
+        if (last.municipio) next.set("municipio", last.municipio);
+        if (last.tipo) next.set("tipo", last.tipo);
+        if (typeof last.min === "number") next.set("min", String(last.min));
+        if (typeof last.max === "number") next.set("max", String(last.max));
+        setParams(next, { replace: true });
+      }
+    }
+  }, []);
   const [safeNote, setSafeNote] = useState<string>("");
   const SAFE_MODE = params.get("safe") === "1";
   console.info(
