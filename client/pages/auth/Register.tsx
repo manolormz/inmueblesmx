@@ -1,6 +1,4 @@
 import { useState } from "react";
-import { Header } from "@/components/Header";
-import Footer from "@/components/Footer";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/auth/AuthContext";
@@ -37,7 +35,7 @@ export default function Register() {
 
   return (
     <div className="min-h-screen bg-white">
-      <Header />
+      
       <main className="container mx-auto px-4 py-10 max-w-md">
         <h1 className="text-2xl font-semibold mb-6">Crear cuenta</h1>
         <p className="text-sm text-gray-600 mb-4">
@@ -113,7 +111,7 @@ export default function Register() {
           </Button>
         </form>
       </main>
-      <Footer />
+      
     </div>
   );
 }
