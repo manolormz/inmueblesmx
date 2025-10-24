@@ -8,61 +8,92 @@ type Row = {
 const normalize = (s: string) =>
   s?.toLowerCase()?.normalize("NFD")?.replace(/[\u0300-\u036f]/g, "")?.trim() ?? "";
 
+const makeUrlCandidates = () => {
+  const base = (import.meta as any).env?.BASE_URL || "/";
+  const a = base.endsWith("/") ? base : base + "/";
+  const candidates = [
+    `${a}locations.mx.json`,
+    "/locations.mx.json",
+  ];
+  return Array.from(new Set(candidates));
+};
+
+async function loadLocations(): Promise<{ states: string[]; map: Map<string, string[]> }> {
+  const candidates = makeUrlCandidates();
+  let lastErr: any = null;
+
+  for (const url of candidates) {
+    try {
+      console.info("[useLocations] trying:", url);
+      const res = await fetch(url, { cache: "no-store" });
+      if (!res.ok) throw new Error(`HTTP ${res.status} at ${url}`);
+      const json = await res.json();
+      const states: string[] = json.states ?? Object.keys(json) ?? [];
+      const map = new Map<string, string[]>();
+
+      if (json.municipalities && typeof json.municipalities === "object") {
+        for (const k of Object.keys(json.municipalities)) {
+          map.set(k, json.municipalities[k] || []);
+        }
+      } else if (json.map && typeof json.map === "object") {
+        for (const k of Object.keys(json.map)) {
+          map.set(k, json.map[k] || []);
+        }
+      } else if (states.length && json.data) {
+        for (const k of Object.keys(json.data)) {
+          map.set(k, json.data[k] || []);
+        }
+      }
+
+      console.info("[useLocations] loaded:", states.length, "states");
+      return { states, map };
+    } catch (e) {
+      lastErr = e;
+      console.warn("[useLocations] failed:", e);
+    }
+  }
+
+  try {
+    const mod: any = await import(/* @vite-ignore */ "../data/locations.mx.json");
+    const states: string[] = mod.states ?? Object.keys(mod) ?? [];
+    const map = new Map<string, string[]>();
+    const src = mod.municipalities || mod.map || mod.data || {};
+    for (const k of Object.keys(src)) map.set(k, src[k] || []);
+    console.info("[useLocations] fallback import ok:", states.length, "states");
+    return { states, map };
+  } catch (_ignore) {}
+
+  throw lastErr || new Error("No se pudo cargar locations.mx.json");
+}
+
 export function useLocations() {
-  const [rows, setRows] = useState<Row[]>([]);
+  const [states, setStates] = useState<string[]>([]);
+  const [municipalitiesByState, setMap] = useState<Map<string, string[]>>(new Map());
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
-  const sourceUrl = "/locations.mx.json";
 
   useEffect(() => {
-    let alive = true;
-    (async () => {
-      try {
-        console.info("[useLocations] fetching", sourceUrl);
-        const res = await fetch(sourceUrl, { cache: "force-cache" });
-        if (!res.ok) throw new Error(`No se pudo cargar ${sourceUrl} (${res.status})`);
-        const data = await res.json();
-        const normalized: Row[] = (Array.isArray(data) ? data : [])
-          .map((r: any) => ({
-            state: String(r.state ?? r.estado ?? r.State ?? r.Estado ?? ""),
-            municipality: String(r.municipality ?? r.municipio ?? r.Municipality ?? r.Municipio ?? ""),
-          }))
-          .filter((r) => r.state && r.municipality);
-        if (!alive) return;
-        setRows(normalized);
-      } catch (err: any) {
-        if (!alive) return;
-        console.error("[useLocations] error:", err);
-        setRows([]);
+    let cancelled = false;
+    loadLocations()
+      .then(({ states, map }) => {
+        if (cancelled) return;
+        setStates(states);
+        setMap(map);
+      })
+      .catch((err) => {
+        console.error("[useLocations] error final:", err);
+        if (cancelled) return;
+        setStates([]);
+        setMap(new Map());
         setError(err);
-      } finally {
-        if (alive) setLoading(false);
-      }
-    })();
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
     return () => {
-      alive = false;
+      cancelled = true;
     };
-  }, [sourceUrl]);
-
-  const states = useMemo(() => {
-    const set = new Set<string>();
-    for (const r of rows) set.add(r.state);
-    return Array.from(set).sort((a, b) => normalize(a).localeCompare(normalize(b)));
-  }, [rows]);
-
-  const municipalitiesByState = useMemo(() => {
-    const map = new Map<string, string[]>();
-    for (const r of rows) {
-      const list = map.get(r.state) ?? [];
-      list.push(r.municipality);
-      map.set(r.state, list);
-    }
-    for (const [k, list] of map) {
-      const dedup = Array.from(new Set(list)).sort((a, b) => normalize(a).localeCompare(normalize(b)));
-      map.set(k, dedup);
-    }
-    return map;
-  }, [rows]);
+  }, []);
 
   useEffect(() => {
     try {
@@ -78,5 +109,5 @@ export function useLocations() {
     return [];
   };
 
-  return { loading, error, rows, states, municipalitiesByState, findMunicipalities, normalize, sourceUrl };
+  return { loading, error, states, municipalitiesByState, findMunicipalities, normalize };
 }
