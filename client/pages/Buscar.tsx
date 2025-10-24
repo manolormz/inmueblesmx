@@ -96,7 +96,7 @@ export default function Buscar() {
     return { modo, estado: estadoQ, municipio: municipioQ, tipo: tipoQ, min: minQ, max: maxQ, order: orderQ };
   }, [params]);
 
-  const { items, total, hasNext, loading, loadMore, simulated } = usePaginatedProperties(baseQuery, 12);
+  const { items, total, hasNext, loading: isLoading, loadMore, simulated } = usePaginatedProperties(baseQuery, 12);
 
   // filtros locales previos reemplazados por cliente remoto/progresivo
 
