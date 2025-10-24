@@ -1,19 +1,21 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import LogoKentra from "./LogoKentra";
 
 export default function LayoutShell({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen flex flex-col">
-      <header className="bg-primary text-primary-foreground">
-        <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <header className="bg-primary text-primary-foreground shadow-sm" style={{ height: 64 }}>
+        <div className="max-w-6xl mx-auto px-4 py-2 flex items-center justify-between h-full">
           <Link to="/buscar" className="flex items-center gap-2">
-            <div className="h-8 w-8 rounded-xl" style={{ background: "#E7E3D0" }} />
-            <span className="font-display text-xl tracking-wide">Kentra</span>
+            <LogoKentra variant="monogram" theme="light" width={140} />
+            <span className="sr-only">Kentra</span>
           </Link>
-          <nav className="flex items-center gap-4 text-sm">
+          <nav className="flex items-center gap-3 text-sm">
             <Link to="/buscar" className="hover:underline">Buscar</Link>
             {/* <Link to="/publicar" className="hover:underline">Publicar</Link> */}
             <button className="btn btn-secondary">Contactar</button>
+            <Link to="/auth/register" className="btn btn-primary">Registrarse</Link>
           </nav>
         </div>
       </header>
