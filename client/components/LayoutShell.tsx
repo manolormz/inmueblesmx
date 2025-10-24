@@ -3,7 +3,11 @@ import { Link } from "react-router-dom";
 import LogoKentra from "./LogoKentra";
 import Footer from "./Footer";
 
-export default function LayoutShell({ children }: { children: React.ReactNode }) {
+export default function LayoutShell({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <div className="min-h-screen flex flex-col">
       <header className="sticky top-0 z-50 bg-primary/95 backdrop-blur-sm text-primary-foreground shadow-card border-b border-secondary/50 h-16 md:h-20 flex items-center">
@@ -13,13 +17,31 @@ export default function LayoutShell({ children }: { children: React.ReactNode })
             <span className="font-display text-xl tracking-wide">Kentra</span>
           </Link>
           <nav className="flex items-center gap-6 text-sm tracking-wide font-medium">
-            <Link to="/search?operation=Sale&status=Published" className="text-white/90 hover:text-white">Comprar</Link>
-            <Link to="/search?operation=Rent&status=Published" className="text-white/90 hover:text-white">Rentar</Link>
-            <Link to="/publish" className="text-white/90 hover:text-white">Vender</Link>
-            <Link to="/agencia" className="text-white/90 hover:text-white">Soy inmobiliaria</Link>
-            <Link to="/maintenance" className="text-white/90 hover:text-white">Mantenimiento</Link>
+            <Link
+              to="/search?operation=Sale&status=Published"
+              className="text-white/90 hover:text-white"
+            >
+              Comprar
+            </Link>
+            <Link
+              to="/search?operation=Rent&status=Published"
+              className="text-white/90 hover:text-white"
+            >
+              Rentar
+            </Link>
+            <Link to="/publish" className="text-white/90 hover:text-white">
+              Vender
+            </Link>
+            <Link to="/agencia" className="text-white/90 hover:text-white">
+              Soy inmobiliaria
+            </Link>
+            <Link to="/maintenance" className="text-white/90 hover:text-white">
+              Mantenimiento
+            </Link>
             <button className="btn btn-secondary">Contactar</button>
-            <Link to="/auth/register" className="btn btn-primary">Registrarse</Link>
+            <Link to="/auth/register" className="btn btn-primary">
+              Registrarse
+            </Link>
           </nav>
         </div>
       </header>

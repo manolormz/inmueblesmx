@@ -2,7 +2,12 @@ import { useEffect, useMemo, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getPropertyBySlug, createLead } from "@shared/repo";
-import { getOptionLabelEs, formatPrice, slugifyEs, formatPriceCompactMXN } from "@shared/formatters";
+import {
+  getOptionLabelEs,
+  formatPrice,
+  slugifyEs,
+  formatPriceCompactMXN,
+} from "@shared/formatters";
 import { Header } from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Input } from "@/components/ui/input";
@@ -25,7 +30,7 @@ const LeadSchema = z.object({
 function useMeta(property?: any) {
   useEffect(() => {
     if (!property) return;
-    const title = `${property.title} · ${formatPriceCompactMXN(property.price, (property.operation === "Rent" ? "Rent" : "Sale"))}`;
+    const title = `${property.title} · ${formatPriceCompactMXN(property.price, property.operation === "Rent" ? "Rent" : "Sale")}`;
     document.title = title;
     const ensure = (sel: string, create: () => HTMLElement) => {
       let el = document.head.querySelector(sel) as HTMLElement | null;
@@ -53,7 +58,9 @@ function useMeta(property?: any) {
         return m;
       }).setAttribute("content", property.cover);
     }
-    const site = (import.meta as any)?.env?.VITE_SITE_URL?.replace(/\/$/, "") || window.location.origin;
+    const site =
+      (import.meta as any)?.env?.VITE_SITE_URL?.replace(/\/$/, "") ||
+      window.location.origin;
     const absUrl = `${site}/property/${property.slug}`;
     ensure('link[rel="canonical"]', () => {
       const l = document.createElement("link");
@@ -91,7 +98,13 @@ export default function Property() {
   const submitLead = async (values: LeadForm) => {
     if (!data?.id) return;
     toast("Enviando…");
-    await createLead({ property: data.id, name: values.name, email: values.email, phone: values.phone, message: values.message } as any);
+    await createLead({
+      property: data.id,
+      name: values.name,
+      email: values.email,
+      phone: values.phone,
+      message: values.message,
+    } as any);
     toast.success("Mensaje enviado con éxito");
     reset();
   };
@@ -100,7 +113,9 @@ export default function Property() {
   const publishMutation = useMutation({
     mutationFn: async () => {
       if (!canPublish) {
-        toast.error("Necesitas iniciar sesión como agente o empresa para publicar.");
+        toast.error(
+          "Necesitas iniciar sesión como agente o empresa para publicar.",
+        );
         return;
       }
       if (!data?.slug) return;
@@ -109,7 +124,7 @@ export default function Property() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ slug: data.slug }),
       });
-      const json = await resp.json().catch(() => ({} as any));
+      const json = await resp.json().catch(() => ({}) as any);
       if (resp.status === 401 || json?.ok === false) {
         const msg = json?.message || "Falta configuración del servidor";
         toast.error(msg);
@@ -117,7 +132,9 @@ export default function Property() {
       }
       return json;
     },
-    onMutate: () => { toast("Publicando…"); },
+    onMutate: () => {
+      toast("Publicando…");
+    },
     onSuccess: async (res: any) => {
       if (res?.ok === false) return; // demo mode handled above
       toast.success("Propiedad publicada con éxito");
@@ -150,9 +167,15 @@ export default function Property() {
       <div className="min-h-screen bg-white">
         <Header />
         <main className="container mx-auto px-4 py-10 text-center">
-          <h1 className="text-2xl font-semibold mb-2">No encontramos esta propiedad</h1>
-          <p className="text-gray-600 mb-6">Es posible que el enlace sea incorrecto o haya sido removida.</p>
-          <a href="/search" className="text-blue-600 hover:underline">Volver a buscar</a>
+          <h1 className="text-2xl font-semibold mb-2">
+            No encontramos esta propiedad
+          </h1>
+          <p className="text-gray-600 mb-6">
+            Es posible que el enlace sea incorrecto o haya sido removida.
+          </p>
+          <a href="/search" className="text-blue-600 hover:underline">
+            Volver a buscar
+          </a>
         </main>
         <Footer />
       </div>
@@ -168,11 +191,20 @@ export default function Property() {
         <section className="lg:col-span-8 space-y-6">
           {/* Gallery */}
           <div className="rounded-xl overflow-hidden border">
-            <img src={p.cover || "/placeholder.svg"} alt={p.title} className="w-full h-80 object-cover" />
+            <img
+              src={p.cover || "/placeholder.svg"}
+              alt={p.title}
+              className="w-full h-80 object-cover"
+            />
             {p.gallery && p.gallery.length > 0 && (
               <div className="grid grid-cols-4 gap-2 p-2">
                 {p.gallery.slice(0, 8).map((src, i) => (
-                  <img key={i} src={src || "/placeholder.svg"} alt={`${p.title} ${i + 1}`} className="h-20 w-full object-cover rounded" />
+                  <img
+                    key={i}
+                    src={src || "/placeholder.svg"}
+                    alt={`${p.title} ${i + 1}`}
+                    className="h-20 w-full object-cover rounded"
+                  />
                 ))}
               </div>
             )}
@@ -181,21 +213,50 @@ export default function Property() {
           {/* Details */}
           <div>
             <h1 className="text-2xl font-bold mb-2">{p.title}</h1>
-            <div className="text-blue-700 text-xl font-semibold mb-2">{formatPriceCompactMXN(p.price, (p.operation === "Rent" ? "Rent" : "Sale"))}</div>
+            <div className="text-blue-700 text-xl font-semibold mb-2">
+              {formatPriceCompactMXN(
+                p.price,
+                p.operation === "Rent" ? "Rent" : "Sale",
+              )}
+            </div>
             <div className="flex flex-wrap gap-2 mb-4">
               <Badge>{getOptionLabelEs("Operation", p.operation as any)}</Badge>
-              <Badge variant="outline">{getOptionLabelEs("PropertyType", p.type as any)}</Badge>
+              <Badge variant="outline">
+                {getOptionLabelEs("PropertyType", p.type as any)}
+              </Badge>
             </div>
 
             <div className="flex flex-wrap gap-3 text-sm text-gray-700 mb-4">
-              {p.bedrooms != null && <span className="px-2 py-1 bg-gray-100 rounded">Recámaras: {p.bedrooms}</span>}
-              {p.bathrooms != null && <span className="px-2 py-1 bg-gray-100 rounded">Baños: {p.bathrooms}</span>}
-              {p.parking != null && <span className="px-2 py-1 bg-gray-100 rounded">Estacionamiento: {p.parking}</span>}
-              {p.built_m2 != null && <span className="px-2 py-1 bg-gray-100 rounded">Construcción: {p.built_m2} m²</span>}
-              {p.land_m2 != null && <span className="px-2 py-1 bg-gray-100 rounded">Terreno: {p.land_m2} m²</span>}
+              {p.bedrooms != null && (
+                <span className="px-2 py-1 bg-gray-100 rounded">
+                  Recámaras: {p.bedrooms}
+                </span>
+              )}
+              {p.bathrooms != null && (
+                <span className="px-2 py-1 bg-gray-100 rounded">
+                  Baños: {p.bathrooms}
+                </span>
+              )}
+              {p.parking != null && (
+                <span className="px-2 py-1 bg-gray-100 rounded">
+                  Estacionamiento: {p.parking}
+                </span>
+              )}
+              {p.built_m2 != null && (
+                <span className="px-2 py-1 bg-gray-100 rounded">
+                  Construcción: {p.built_m2} m²
+                </span>
+              )}
+              {p.land_m2 != null && (
+                <span className="px-2 py-1 bg-gray-100 rounded">
+                  Terreno: {p.land_m2} m²
+                </span>
+              )}
             </div>
 
-            {p.address_text && <div className="text-gray-700 mb-4">{p.address_text}</div>}
+            {p.address_text && (
+              <div className="text-gray-700 mb-4">{p.address_text}</div>
+            )}
             {p.description && (
               <div className="prose max-w-none">
                 <h2 className="text-xl font-semibold mb-2">Descripción</h2>
@@ -219,8 +280,17 @@ export default function Property() {
           {p.status !== "Published" && isOwner && (
             <div className="rounded-xl border p-4">
               <h3 className="font-semibold mb-2">Estado</h3>
-              <p className="text-sm text-gray-600 mb-3">La propiedad está en borrador. Puedes publicarla cuando est�� lista.</p>
-              <Button type="button" onClick={() => publishMutation.mutate()} disabled={publishMutation.isPending} aria-disabled={publishMutation.isPending} data-loc="PublishButton">
+              <p className="text-sm text-gray-600 mb-3">
+                La propiedad está en borrador. Puedes publicarla cuando est��
+                lista.
+              </p>
+              <Button
+                type="button"
+                onClick={() => publishMutation.mutate()}
+                disabled={publishMutation.isPending}
+                aria-disabled={publishMutation.isPending}
+                data-loc="PublishButton"
+              >
                 {publishMutation.isPending ? "Publicando…" : "Publicar"}
               </Button>
             </div>
@@ -238,25 +308,77 @@ export default function Property() {
             >
               <div className="space-y-3">
                 <div>
-                  <label className="block text-sm font-medium mb-1" htmlFor="name">Nombre</label>
-                  <Input id="name" aria-invalid={!!errors.name} {...register("name")} />
-                  {errors.name && <p className="text-sm text-red-600 mt-1">{errors.name.message}</p>}
+                  <label
+                    className="block text-sm font-medium mb-1"
+                    htmlFor="name"
+                  >
+                    Nombre
+                  </label>
+                  <Input
+                    id="name"
+                    aria-invalid={!!errors.name}
+                    {...register("name")}
+                  />
+                  {errors.name && (
+                    <p className="text-sm text-red-600 mt-1">
+                      {errors.name.message}
+                    </p>
+                  )}
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-1" htmlFor="email">Correo</label>
-                  <Input id="email" aria-invalid={!!errors.email} {...register("email")} />
-                  {errors.email && <p className="text-sm text-red-600 mt-1">{errors.email.message}</p>}
+                  <label
+                    className="block text-sm font-medium mb-1"
+                    htmlFor="email"
+                  >
+                    Correo
+                  </label>
+                  <Input
+                    id="email"
+                    aria-invalid={!!errors.email}
+                    {...register("email")}
+                  />
+                  {errors.email && (
+                    <p className="text-sm text-red-600 mt-1">
+                      {errors.email.message}
+                    </p>
+                  )}
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-1" htmlFor="phone">Teléfono (opcional)</label>
+                  <label
+                    className="block text-sm font-medium mb-1"
+                    htmlFor="phone"
+                  >
+                    Teléfono (opcional)
+                  </label>
                   <Input id="phone" {...register("phone")} />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-1" htmlFor="message">Mensaje</label>
-                  <Textarea id="message" rows={4} aria-invalid={!!errors.message} {...register("message")} />
-                  {errors.message && <p className="text-sm text-red-600 mt-1">{errors.message.message}</p>}
+                  <label
+                    className="block text-sm font-medium mb-1"
+                    htmlFor="message"
+                  >
+                    Mensaje
+                  </label>
+                  <Textarea
+                    id="message"
+                    rows={4}
+                    aria-invalid={!!errors.message}
+                    {...register("message")}
+                  />
+                  {errors.message && (
+                    <p className="text-sm text-red-600 mt-1">
+                      {errors.message.message}
+                    </p>
+                  )}
                 </div>
-                <Button type="submit" disabled={isSubmitting} aria-disabled={isSubmitting} data-loc="LeadSubmit">{isSubmitting ? "Enviando…" : "Enviar"}</Button>
+                <Button
+                  type="submit"
+                  disabled={isSubmitting}
+                  aria-disabled={isSubmitting}
+                  data-loc="LeadSubmit"
+                >
+                  {isSubmitting ? "Enviando…" : "Enviar"}
+                </Button>
               </div>
             </form>
           </div>

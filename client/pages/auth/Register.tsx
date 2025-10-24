@@ -13,7 +13,7 @@ export default function Register() {
   const [full_name, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState<"buyer"|"agent"|"company">("buyer");
+  const [role, setRole] = useState<"buyer" | "agent" | "company">("buyer");
   const [submitting, setSubmitting] = useState(false);
 
   const nameValid = full_name.trim().length >= 2;
@@ -40,29 +40,75 @@ export default function Register() {
       <Header />
       <main className="container mx-auto px-4 py-10 max-w-md">
         <h1 className="text-2xl font-semibold mb-6">Crear cuenta</h1>
-        <p className="text-sm text-gray-600 mb-4">Este acceso es de demostración. No uses datos reales.</p>
+        <p className="text-sm text-gray-600 mb-4">
+          Este acceso es de demostración. No uses datos reales.
+        </p>
         <form onSubmit={onSubmit} aria-busy={submitting} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium mb-1" htmlFor="name">Nombre completo</label>
-            <Input id="name" value={full_name} onChange={(e) => setFullName(e.target.value)} aria-invalid={!nameValid} required />
+            <label className="block text-sm font-medium mb-1" htmlFor="name">
+              Nombre completo
+            </label>
+            <Input
+              id="name"
+              value={full_name}
+              onChange={(e) => setFullName(e.target.value)}
+              aria-invalid={!nameValid}
+              required
+            />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1" htmlFor="email">Correo</label>
-            <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} aria-invalid={!emailValid} required />
+            <label className="block text-sm font-medium mb-1" htmlFor="email">
+              Correo
+            </label>
+            <Input
+              id="email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              aria-invalid={!emailValid}
+              required
+            />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1" htmlFor="password">Contraseña</label>
-            <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} aria-invalid={!passwordValid} required minLength={6} />
+            <label
+              className="block text-sm font-medium mb-1"
+              htmlFor="password"
+            >
+              Contraseña
+            </label>
+            <Input
+              id="password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              aria-invalid={!passwordValid}
+              required
+              minLength={6}
+            />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1" htmlFor="role">Rol</label>
-            <select id="role" className="w-full border rounded h-10 px-2" value={role} onChange={(e)=>setRole(e.target.value as any)}>
+            <label className="block text-sm font-medium mb-1" htmlFor="role">
+              Rol
+            </label>
+            <select
+              id="role"
+              className="w-full border rounded h-10 px-2"
+              value={role}
+              onChange={(e) => setRole(e.target.value as any)}
+            >
               <option value="buyer">Comprador</option>
               <option value="agent">Agente</option>
               <option value="company">Empresa</option>
             </select>
           </div>
-          <Button type="submit" disabled={!nameValid || !emailValid || !passwordValid || submitting} aria-disabled={!nameValid || !emailValid || !passwordValid || submitting} data-loc="RegisterSubmit">
+          <Button
+            type="submit"
+            disabled={!nameValid || !emailValid || !passwordValid || submitting}
+            aria-disabled={
+              !nameValid || !emailValid || !passwordValid || submitting
+            }
+            data-loc="RegisterSubmit"
+          >
             {submitting ? "Creando…" : "Registrarse"}
           </Button>
         </form>

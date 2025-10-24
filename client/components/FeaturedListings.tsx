@@ -77,11 +77,7 @@ const FEATURED_LISTINGS = [
   },
 ];
 
-function ListingCard({
-  listing,
-}: {
-  listing: (typeof FEATURED_LISTINGS)[0];
-}) {
+function ListingCard({ listing }: { listing: (typeof FEATURED_LISTINGS)[0] }) {
   const [liked, setLiked] = useState(false);
 
   return (

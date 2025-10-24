@@ -9,14 +9,15 @@ import WhyChoose from "@/components/WhyChoose";
 import SubscribeBanner from "@/components/SubscribeBanner";
 
 export default function Buscar() {
-  const { loading, error, states, findMunicipalities, normalize } = useLocations();
+  const { loading, error, states, findMunicipalities, normalize } =
+    useLocations();
   const [params, setParams] = useSearchParams();
   const estado = params.get("estado") ?? "";
   const municipio = params.get("municipio") ?? "";
 
   const municipalities = useMemo(
     () => (estado ? findMunicipalities(estado) : []),
-    [estado, findMunicipalities]
+    [estado, findMunicipalities],
   );
 
   const setEstado = (v: string) => {
@@ -37,16 +38,30 @@ export default function Buscar() {
   const propiedadesDemo = useMemo(
     () => [
       { id: 1, titulo: "Casa demo", estado: "Guanajuato", municipio: "León" },
-      { id: 2, titulo: "Depto demo", estado: "Jalisco", municipio: "Guadalajara" },
-      { id: 3, titulo: "Oficina demo", estado: "Guanajuato", municipio: "Irapuato" },
+      {
+        id: 2,
+        titulo: "Depto demo",
+        estado: "Jalisco",
+        municipio: "Guadalajara",
+      },
+      {
+        id: 3,
+        titulo: "Oficina demo",
+        estado: "Guanajuato",
+        municipio: "Irapuato",
+      },
     ],
-    []
+    [],
   );
 
   const filtradas = useMemo(() => {
     return propiedadesDemo.filter((p) => {
-      const okEstado = estado ? normalize(p.estado) === normalize(estado) : true;
-      const okMpio = municipio ? normalize(p.municipio) === normalize(municipio) : true;
+      const okEstado = estado
+        ? normalize(p.estado) === normalize(estado)
+        : true;
+      const okMpio = municipio
+        ? normalize(p.municipio) === normalize(municipio)
+        : true;
       return okEstado && okMpio;
     });
   }, [propiedadesDemo, estado, municipio, normalize]);
@@ -67,21 +82,34 @@ export default function Buscar() {
             <button
               type="button"
               className={`px-4 py-2 text-sm md:text-base font-medium ${params.get("operation") === "Sale" ? "bg-primary text-white" : "bg-white text-[color:var(--color-text)]"}`}
-              onClick={() => { const n = new URLSearchParams(params); n.set("operation","Sale"); setParams(n, { replace:true }); }}
+              onClick={() => {
+                const n = new URLSearchParams(params);
+                n.set("operation", "Sale");
+                setParams(n, { replace: true });
+              }}
             >
               Comprar
             </button>
             <button
               type="button"
               className={`px-4 py-2 text-sm md:text-base font-medium ${params.get("operation") === "Rent" ? "bg-primary text-white" : "bg-white text-[color:var(--color-text)]"}`}
-              onClick={() => { const n = new URLSearchParams(params); n.set("operation","Rent"); setParams(n, { replace:true }); }}
+              onClick={() => {
+                const n = new URLSearchParams(params);
+                n.set("operation", "Rent");
+                setParams(n, { replace: true });
+              }}
             >
               Rentar
             </button>
           </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <EstadoSelect value={estado} onChange={setEstado} options={states} disabled={loading} />
+          <EstadoSelect
+            value={estado}
+            onChange={setEstado}
+            options={states}
+            disabled={loading}
+          />
           <MunicipioSelect
             value={municipio}
             onChange={setMunicipio}
@@ -90,7 +118,9 @@ export default function Buscar() {
           />
         </div>
         <div className="mt-4">
-          <button type="button" className="btn btn-primary w-full md:w-auto">Buscar</button>
+          <button type="button" className="btn btn-primary w-full md:w-auto">
+            Buscar
+          </button>
         </div>
       </div>
 
@@ -109,12 +139,11 @@ export default function Buscar() {
       </div>
 
       <div className="mt-4 flex flex-wrap gap-2">
-        {[
-          "Con jardín",
-          "Con alberca",
-          "Acepta mascotas",
-        ].map((chip) => (
-          <span key={chip} className="inline-flex items-center rounded-2xl border border-primary/20 px-3 py-1.5 text-sm text-primary hover:bg-secondary/60 cursor-pointer">
+        {["Con jardín", "Con alberca", "Acepta mascotas"].map((chip) => (
+          <span
+            key={chip}
+            className="inline-flex items-center rounded-2xl border border-primary/20 px-3 py-1.5 text-sm text-primary hover:bg-secondary/60 cursor-pointer"
+          >
             {chip}
           </span>
         ))}

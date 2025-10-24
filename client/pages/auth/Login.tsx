@@ -23,9 +23,10 @@ export default function Login() {
     try {
       await login({ email, password });
       toast.success("Sesión iniciada");
-      const ref = document.referrer && document.referrer.startsWith(location.origin)
-        ? document.referrer.replace(location.origin, "")
-        : "/";
+      const ref =
+        document.referrer && document.referrer.startsWith(location.origin)
+          ? document.referrer.replace(location.origin, "")
+          : "/";
       navigate(ref || "/", { replace: true });
     } catch (e: any) {
       toast.error(e?.message || "Error al iniciar sesión");
@@ -41,14 +42,41 @@ export default function Login() {
         <h1 className="text-2xl font-semibold mb-6">Iniciar sesión</h1>
         <form onSubmit={onSubmit} aria-busy={submitting} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium mb-1" htmlFor="email">Correo</label>
-            <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} aria-invalid={!emailValid} required />
+            <label className="block text-sm font-medium mb-1" htmlFor="email">
+              Correo
+            </label>
+            <Input
+              id="email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              aria-invalid={!emailValid}
+              required
+            />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1" htmlFor="password">Contraseña</label>
-            <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} aria-invalid={!passwordValid} required minLength={6} />
+            <label
+              className="block text-sm font-medium mb-1"
+              htmlFor="password"
+            >
+              Contraseña
+            </label>
+            <Input
+              id="password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              aria-invalid={!passwordValid}
+              required
+              minLength={6}
+            />
           </div>
-          <Button type="submit" disabled={!emailValid || !passwordValid || submitting} aria-disabled={!emailValid || !passwordValid || submitting} data-loc="LoginSubmit">
+          <Button
+            type="submit"
+            disabled={!emailValid || !passwordValid || submitting}
+            aria-disabled={!emailValid || !passwordValid || submitting}
+            data-loc="LoginSubmit"
+          >
             {submitting ? "Iniciando…" : "Iniciar sesión"}
           </Button>
         </form>
