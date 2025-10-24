@@ -79,6 +79,12 @@ export default function Buscar() {
     <div className="max-w-5xl mx-auto bg-secondary/40 rounded-2xl p-0 md:p-0 space-y-8">
       <Hero />
 
+      <SearchMenu
+        onOrden={(v) => setOrden(v)}
+        onPageSize={(n) => setPageSize(n)}
+        onToggleVista={(v) => setVista(v)}
+      />
+
       {error && (
         <div className="p-3 rounded bg-red-50 border text-red-700">
           Error cargando ubicaciones: {String(error.message)}
