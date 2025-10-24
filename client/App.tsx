@@ -57,7 +57,7 @@ const App = () => (
           <DebugOverlay />
           **/}
           <Routes>
-            <Route path="/" element={<Index />} />
+            <Route path="/" element={<Navigate to="/buscar" replace />} />
             <Route path="/publish" element={<Publish />} />
             <Route path="/search" element={<Search />} />
             <Route path="/property/:slug" element={<Property />} />
