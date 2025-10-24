@@ -4,7 +4,7 @@ export default function HeroStripe() {
   return (
     <section className="relative h-[180px] md:h-[220px] w-full overflow-hidden rounded-2xl">
       <img
-        src="https://images.unsplash.com/photo-1494526585095-c41746248156?q=80&w=1600&auto=format&fitcrop"
+        src="https://images.unsplash.com/photo-1494526585095-c41746248156?q=80&w=1600&auto=format&fit=crop"
         alt="Arquitectura moderna con naturaleza"
         className="absolute inset-0 w-full h-full object-cover"
         loading="eager"

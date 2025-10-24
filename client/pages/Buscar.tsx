@@ -18,8 +18,9 @@ export default function Buscar() {
   const estado = params.get("estado") ?? "";
   const municipio = params.get("municipio") ?? "";
   const tipo = params.get("tipo") || "";
-  const min = parseInt(params.get("min") || "") || undefined;
-  const max = parseInt(params.get("max") || "") || undefined;
+  const min = parseInt(params.get("min") || "");
+  const maxParam = params.get("max");
+  const max = maxParam ? parseInt(maxParam) : undefined;
   const modo = (params.get("modo") || "comprar").toLowerCase();
   const vista = (params.get("vista") || "lista").toLowerCase() as "lista" | "mapa";
   const pp = Math.max(1, parseInt(params.get("pp") || "12"));
@@ -77,8 +78,8 @@ export default function Buscar() {
       const okMpio = municipio ? normalize(p.municipio) === normalize(municipio) : true;
       const okTipo = tipo ? (p as any).type ? normalize((p as any).type) === normalize(tipo) : false : true;
       const price = (p as any).price as number | undefined;
-      const okMin = min != null ? (price ?? Infinity) >= min : true;
-      const okMax = max != null ? (price ?? -Infinity) <= max : true;
+      const okMin = isNaN(min) ? true : (price ?? Infinity) >= min;
+      const okMax = max === undefined ? true : (price ?? -Infinity) <= max;
       return okEstado && okMpio && okTipo && okMin && okMax;
     });
   }, [propiedadesDemo, estado, municipio, tipo, min, max, normalize]);
