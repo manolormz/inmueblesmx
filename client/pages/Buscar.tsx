@@ -3,7 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import { useLocations } from "@/hooks/useLocations";
 import EstadoSelect from "@/components/EstadoSelect";
 import MunicipioSelect from "@/components/MunicipioSelect";
-import Hero from "@/components/Hero";
+import Hero from "../src/components/Hero";
 import { FeaturedListings } from "@/components/FeaturedListings";
 import WhyChoose from "@/components/WhyChoose";
 import SubscribeBanner from "@/components/SubscribeBanner";
@@ -67,7 +67,7 @@ export default function Buscar() {
   }, [propiedadesDemo, estado, municipio, normalize]);
 
   return (
-    <div className="max-w-5xl mx-auto p-4 space-y-8 bg-secondary/40 rounded-2xl">
+    <div className="max-w-5xl mx-auto bg-secondary/40 rounded-2xl p-0 md:p-0 space-y-8">
       <Hero />
 
       {error && (
@@ -76,7 +76,8 @@ export default function Buscar() {
         </div>
       )}
 
-      <div className="card bg-white rounded-2xl shadow-card p-6">
+      <div className="-mt-8 md:-mt-10 relative z-20">
+        <div className="card bg-white rounded-2xl shadow-card p-6">
         <div className="mb-4">
           <div className="inline-flex rounded-2xl overflow-hidden border border-primary/40">
             <button
@@ -121,6 +122,7 @@ export default function Buscar() {
           <button type="button" className="btn btn-primary w-full md:w-auto">
             Buscar
           </button>
+        </div>
         </div>
       </div>
 
