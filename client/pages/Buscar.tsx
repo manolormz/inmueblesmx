@@ -1,5 +1,8 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
+import { usePaginatedProperties } from "../src/hooks/usePaginatedProperties";
+import PropertySkeleton from "../src/components/properties/PropertySkeleton";
+import PropertyCard from "../src/components/properties/PropertyCard";
 import { useLocations } from "../src/hooks/useLocations";
 import EstadoSelect from "@/components/EstadoSelect";
 import MunicipioSelect from "@/components/MunicipioSelect";
@@ -81,49 +84,21 @@ export default function Buscar() {
     setParams(next, { replace: true });
   };
 
-  const propiedadesDemo = useMemo(
-    () => [
-      { id: 1, titulo: "Casa demo", estado: "Guanajuato", municipio: "León" },
-      {
-        id: 2,
-        titulo: "Depto demo",
-        estado: "Jalisco",
-        municipio: "Guadalajara",
-      },
-      {
-        id: 3,
-        titulo: "Oficina demo",
-        estado: "Guanajuato",
-        municipio: "Irapuato",
-      },
-    ],
-    [],
-  );
+  // cliente progresivo
+  const baseQuery = useMemo(() => {
+    const modo = (params.get("modo") || "comprar").toLowerCase() === "renta" ? "renta" : "comprar";
+    const estadoQ = params.get("estado") || undefined;
+    const municipioQ = params.get("municipio") || undefined;
+    const tipoQ = params.get("tipo") || undefined;
+    const minQ = params.get("min") ? Number(params.get("min")) : undefined;
+    const maxQ = params.get("max") ? Number(params.get("max")) : undefined;
+    const orderQ = (params.get("orden") as any) || undefined;
+    return { modo, estado: estadoQ, municipio: municipioQ, tipo: tipoQ, min: minQ, max: maxQ, order: orderQ };
+  }, [params]);
 
-  const filtradas = useMemo(() => {
-    return propiedadesDemo.filter((p) => {
-      const okEstado = estado
-        ? normalize(p.estado) === normalize(estado)
-        : true;
-      const okMpio = municipio
-        ? normalize(p.municipio) === normalize(municipio)
-        : true;
-      const okTipo = tipo
-        ? (p as any).type
-          ? normalize((p as any).type) === normalize(tipo)
-          : false
-        : true;
-      const price = (p as any).price as number | undefined;
-      const okMin = isNaN(min) ? true : (price ?? Infinity) >= min;
-      const okMax = max === undefined ? true : (price ?? -Infinity) <= max;
-      return okEstado && okMpio && okTipo && okMin && okMax;
-    });
-  }, [propiedadesDemo, estado, municipio, tipo, min, max, normalize]);
+  const { items, total, hasNext, loading, loadMore, simulated } = usePaginatedProperties(baseQuery, 12);
 
-  const visible = useMemo(() => {
-    const start = (page - 1) * pageSize;
-    return filtradas.slice(start, start + pageSize);
-  }, [filtradas, page, pageSize]);
+  // filtros locales previos reemplazados por cliente remoto/progresivo
 
   return (
     <div className="max-w-5xl mx-auto bg-secondary/40 rounded-2xl p-0 md:p-0 space-y-8">
@@ -207,17 +182,43 @@ export default function Buscar() {
 
       <DebugBoundary name="Resultados">
         <div className="pt-4">
-          <h2 className="text-lg font-medium mb-2">Resultados</h2>
-          <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            {visible.map((p) => (
-              <li key={p.id} className="card p-4 hover:shadow">
-                <div className="font-semibold">{p.titulo}</div>
-                <div className="text-sm text-gray-600">
-                  {p.municipio}, {p.estado}
-                </div>
-              </li>
+          {simulated && (
+            <div className="mb-3 text-amber-700 bg-amber-100 border border-amber-200 rounded-xl px-3 py-2 text-sm">
+              Mostrando datos simulados (el servidor respondió 500).
+            </div>
+          )}
+          <div className="flex items-center justify-between mb-3">
+            <h2 className="text-lg font-medium">Resultados ({items.length}{total ? ` de ~${total}` : ""})</h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {items.map((p) => (
+              <PropertyCard key={p.id} property={{
+                id: String(p.id),
+                title: p.title,
+                price: p.price,
+                state: p.state,
+                municipality: p.municipality,
+                type: p.type,
+                image: p.image,
+                badges: p.badges,
+                createdAt: p.createdAt || null,
+              }} />
             ))}
-          </ul>
+            {loading && Array.from({ length: 6 }).map((_, i) => (
+              <PropertySkeleton key={`sk-${i}`} />
+            ))}
+          </div>
+          <div className="flex justify-center mt-6">
+            {hasNext ? (
+              <button onClick={loadMore} disabled={loading} className="btn btn-secondary">
+                {loading ? "Cargando…" : "Cargar más"}
+              </button>
+            ) : (
+              !loading && items.length > 0 && (
+                <span className="text-sm text-gray-600">Has visto todo ✨</span>
+              )
+            )}
+          </div>
         </div>
       </DebugBoundary>
 
