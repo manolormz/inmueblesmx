@@ -1,7 +1,5 @@
 import { Navigate, useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "@/auth/AuthContext";
-import { Header } from "@/components/Header";
-import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { listProperties } from "@shared/repo";
@@ -133,7 +131,7 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-white">
-      <Header />
+      
       <main className="container mx-auto px-4 py-8 grid grid-cols-1 md:grid-cols-12 gap-6">
         <aside className="md:col-span-3">
           <nav
@@ -141,25 +139,25 @@ export default function Dashboard() {
             aria-label="Panel"
           >
             <button
-              className={`block w-full text-left px-3 py-2 rounded ${tab === "propiedades" ? "bg-blue-50 text-blue-700" : ""}`}
+              className={`block w-full text-left px-3 py-2 rounded ${tab === "propiedades" ? "bg-secondary text-primary" : ""}`}
               onClick={() => setTab("propiedades")}
             >
               Mis propiedades
             </button>
             <button
-              className={`block w-full text-left px-3 py-2 rounded ${tab === "leads" ? "bg-blue-50 text-blue-700" : ""}`}
+              className={`block w-full text-left px-3 py-2 rounded ${tab === "leads" ? "bg-secondary text-primary" : ""}`}
               onClick={() => setTab("leads")}
             >
               Leads
             </button>
             <button
-              className={`block w-full text-left px-3 py-2 rounded ${tab === "favoritos" ? "bg-blue-50 text-blue-700" : ""}`}
+              className={`block w-full text-left px-3 py-2 rounded ${tab === "favoritos" ? "bg-secondary text-primary" : ""}`}
               onClick={() => setTab("favoritos")}
             >
               Favoritos
             </button>
             <button
-              className={`block w-full text-left px-3 py-2 rounded ${tab === "ajustes" ? "bg-blue-50 text-blue-700" : ""}`}
+              className={`block w-full text-left px-3 py-2 rounded ${tab === "ajustes" ? "bg-secondary text-primary" : ""}`}
               onClick={() => setTab("ajustes")}
             >
               Ajustes
@@ -176,7 +174,7 @@ export default function Dashboard() {
                   key={t}
                   role="tab"
                   aria-selected={tab === t}
-                  className={`px-3 py-2 ${tab === t ? "border-b-2 border-blue-600 font-semibold" : ""}`}
+                  className={`px-3 py-2 ${tab === t ? "border-b-2 border-primary font-semibold" : ""}`}
                   onClick={() => setTab(t)}
                 >
                   {t === "propiedades"
@@ -208,7 +206,7 @@ export default function Dashboard() {
                 <div className="text-gray-600">
                   No hay propiedades propias. Crea una en{" "}
                   <button
-                    className="text-blue-600 underline"
+                    className="text-primary underline"
                     onClick={() => navigate("/publish")}
                   >
                     Publicar
@@ -232,7 +230,7 @@ export default function Dashboard() {
                         <tr key={p.id} className="border-b">
                           <td className="py-2 pr-4">
                             <a
-                              className="text-blue-700"
+                              className="text-primary"
                               href={`/property/${p.slug}`}
                             >
                               {p.title}
@@ -319,7 +317,7 @@ export default function Dashboard() {
           {tab === "ajustes" && <SettingsSection />}
         </section>
       </main>
-      <Footer />
+      
     </div>
   );
 }
