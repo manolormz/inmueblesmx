@@ -82,7 +82,7 @@ function App() {
                       <Route path="qa/buttons" element={<QAButtons />} />
                       <Route path="qa/autotest" element={<Autotest />} />
                       <Route path="dashboard" element={<Dashboard />} />
-                      <Route path="buscar" element={<Search />} />
+                      <Route path="buscar" element={<Buscar />} />
                       <Route
                         path="dashboard/properties/:slug/edit"
                         element={<DashboardPropertyEdit />}
