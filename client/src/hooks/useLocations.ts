@@ -101,3 +101,19 @@ export function useLocations() {
 
   return { loading, error, states, municipalitiesByState, findMunicipalities, normalize };
 }
+
+export type Option = { value: string; label: string };
+
+export function toOptions(items: string[]): Option[] {
+  return (items || []).map((s) => ({ value: s, label: s }));
+}
+
+export function useLocationOptions() {
+  const { states, findMunicipalities } = useLocations();
+  const stateOptions: Option[] = toOptions(states);
+  const municipalityOptions = (estado: string): Option[] => {
+    const ms = estado ? findMunicipalities(estado) : [];
+    return toOptions(ms);
+  };
+  return { stateOptions, municipalityOptions };
+}
