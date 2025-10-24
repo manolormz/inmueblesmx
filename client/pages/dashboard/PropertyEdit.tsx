@@ -1,7 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Header } from "@/components/Header";
-import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -172,7 +170,7 @@ export default function PropertyEdit() {
   if (loading)
     return (
       <div className="min-h-screen bg-white">
-        <Header />
+        
         <main className="container mx-auto px-4 py-8">
           <div className="space-y-2">
             {Array.from({ length: 8 }).map((_, i) => (
@@ -180,13 +178,13 @@ export default function PropertyEdit() {
             ))}
           </div>
         </main>
-        <Footer />
+        
       </div>
     );
 
   return (
     <div className="min-h-screen bg-white">
-      <Header />
+      
       <main className="container mx-auto px-4 py-8">
         <h1 className="text-2xl font-semibold mb-6">Editar propiedad</h1>
         <form
@@ -438,7 +436,7 @@ export default function PropertyEdit() {
           </div>
         </form>
       </main>
-      <Footer />
+      
     </div>
   );
 }
