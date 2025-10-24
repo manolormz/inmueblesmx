@@ -8,8 +8,6 @@ import {
   slugifyEs,
   formatPriceCompactMXN,
 } from "@shared/formatters";
-import { Header } from "@/components/Header";
-import Footer from "@/components/Footer";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
@@ -149,7 +147,7 @@ export default function Property() {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-white">
-        <Header />
+        
         <main className="container mx-auto px-4 py-10">
           <div className="animate-pulse space-y-4">
             <div className="h-64 bg-gray-200 rounded" />
@@ -157,7 +155,7 @@ export default function Property() {
             <div className="h-4 bg-gray-100 rounded w-1/3" />
           </div>
         </main>
-        <Footer />
+        
       </div>
     );
   }
@@ -165,7 +163,7 @@ export default function Property() {
   if (!data) {
     return (
       <div className="min-h-screen bg-white">
-        <Header />
+        
         <main className="container mx-auto px-4 py-10 text-center">
           <h1 className="text-2xl font-semibold mb-2">
             No encontramos esta propiedad
@@ -173,11 +171,11 @@ export default function Property() {
           <p className="text-gray-600 mb-6">
             Es posible que el enlace sea incorrecto o haya sido removida.
           </p>
-          <a href="/search" className="text-blue-600 hover:underline">
+          <a href="/search" className="text-primary hover:underline">
             Volver a buscar
           </a>
         </main>
-        <Footer />
+        
       </div>
     );
   }
@@ -186,7 +184,7 @@ export default function Property() {
 
   return (
     <div className="min-h-screen bg-white">
-      <Header />
+      
       <main className="container mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
         <section className="lg:col-span-8 space-y-6">
           {/* Gallery */}
@@ -213,7 +211,7 @@ export default function Property() {
           {/* Details */}
           <div>
             <h1 className="text-2xl font-bold mb-2">{p.title}</h1>
-            <div className="text-blue-700 text-xl font-semibold mb-2">
+            <div className="text-primary text-xl font-semibold mb-2">
               {formatPriceCompactMXN(
                 p.price,
                 p.operation === "Rent" ? "Rent" : "Sale",
@@ -384,7 +382,7 @@ export default function Property() {
           </div>
         </aside>
       </main>
-      <Footer />
+      
     </div>
   );
 }
