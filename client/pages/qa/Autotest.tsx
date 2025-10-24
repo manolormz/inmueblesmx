@@ -1,7 +1,6 @@
 import { useMemo, useRef, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { Header } from "@/components/Header";
-import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 
 function sleep(ms: number) {
@@ -180,7 +179,7 @@ export default function Autotest() {
       });
     } else {
       const firstPriceRent = (firstCardRent as HTMLElement).querySelector(
-        ".text-blue-700",
+        ".text-primary",
       ) as HTMLElement | null;
       const priceTextRent = text(firstPriceRent);
       const endsRent = /MXN\/mes$/.test(priceTextRent);
@@ -268,10 +267,10 @@ export default function Autotest() {
 
     // Verificar formato M MXN en primera tarjeta
     await waitFor(
-      () => !!document.querySelector('[data-loc="SearchCard"] .text-blue-700'),
+      () => !!document.querySelector('[data-loc="SearchCard"] .text-primary'),
     );
     const firstPriceSale = document.querySelector(
-      '[data-loc="SearchCard"] .text-blue-700',
+      '[data-loc="SearchCard"] .text-primary',
     ) as HTMLElement | null;
     const priceTextSale = text(firstPriceSale);
     const reMillions = /^\$[\d.,]+(?:\.\d)?\s*M\s*MXN$/;
@@ -428,7 +427,6 @@ export default function Autotest() {
           );
         })()}
       </main>
-      <Footer />
     </div>
   );
 }
