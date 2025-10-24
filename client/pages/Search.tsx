@@ -5,8 +5,6 @@ import { listProperties } from "@shared/repo";
 import { PropertyTypeOptions, CurrencyOptions } from "@shared/options";
 import { formatPriceCompactMXN, getOptionLabelEs } from "@shared/formatters";
 import { getPriceOptionsMXNByOperation } from "@shared/filters";
-import { Header } from "@/components/Header";
-import Footer from "@/components/Footer";
 import SafeMapToggle from "@/components/SafeMapToggle";
 import GeocoderInput from "@/components/GeocoderInput";
 import SafePreview from "@/components/SafePreview";
@@ -562,7 +560,7 @@ export default function Search() {
                 <Button type="button" onClick={resetAll}>
                   Limpiar filtros
                 </Button>
-                <Link className="text-blue-600 underline" to="/">
+                <Link className="text-primary underline" to="/">
                   Volver al inicio
                 </Link>
               </div>
@@ -576,16 +574,16 @@ export default function Search() {
                 ? (selectedResults as any[]).map((p: any) => (
                     <article
                       key={p.listing_id}
-                      className="rounded-xl border overflow-hidden"
+                      className="rounded-2xl bg-white shadow-card hover:shadow-lg transition overflow-hidden"
                     >
                       <a
                         href={`/property/${p.property_slug || p.slug}`}
-                        className="block focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="block focus:outline-none focus:ring-2 focus:ring-primary/50"
                       >
                         <img
                           src={(p.cover_url || p.cover) ?? "/placeholder.svg"}
                           alt={p.title || p.property_slug}
-                          className="w-full h-40 object-cover"
+                          className="w-full aspect-[4/3] object-cover rounded-xl"
                         />
                         <div className="p-4 space-y-2">
                           <div className="flex items-center gap-2">
@@ -597,7 +595,7 @@ export default function Search() {
                           <h3 className="font-semibold text-lg">
                             {p.title || p.property_slug}
                           </h3>
-                          <div className="text-blue-700 font-semibold">
+                          <div className="text-primary font-semibold">
                             {typeof p.price === "number"
                               ? Intl.NumberFormat("es-MX", {
                                   style: "currency",
@@ -665,16 +663,16 @@ export default function Search() {
                 : items.map((p) => (
                     <article
                       key={p.id}
-                      className="rounded-xl border overflow-hidden"
+                      className="rounded-2xl bg-white shadow-card hover:shadow-lg transition overflow-hidden"
                     >
                       <a
                         href={`/property/${p.slug}`}
-                        className="block focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="block focus:outline-none focus:ring-2 focus:ring-primary/50"
                       >
                         <img
                           src={p.cover || "/placeholder.svg"}
                           alt={p.title}
-                          className="w-full h-40 object-cover"
+                          className="w-full aspect-[4/3] object-cover rounded-xl"
                         />
                         <div className="p-4 space-y-2">
                           <div className="flex items-center gap-2">
@@ -682,7 +680,7 @@ export default function Search() {
                             <Badge variant="outline">{p.type}</Badge>
                           </div>
                           <h3 className="font-semibold text-lg">{p.title}</h3>
-                          <div className="text-blue-700 font-semibold">
+                          <div className="text-primary font-semibold">
                             {formatPriceCompactMXN(
                               p.price,
                               p.operation === "Rent" ? "Rent" : "Sale",
@@ -780,7 +778,7 @@ export default function Search() {
         </main>
       </SafePreview>
 
-      <Footer />
+
 
       {/* More Filters Modal */}
       <Dialog open={modalOpen} onOpenChange={setModalOpen}>
