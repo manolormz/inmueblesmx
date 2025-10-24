@@ -53,16 +53,6 @@ async function loadLocations(): Promise<{ states: string[]; map: Map<string, str
     }
   }
 
-  try {
-    const mod: any = await import(/* @vite-ignore */ "../data/locations.mx.json");
-    const states: string[] = mod.states ?? Object.keys(mod) ?? [];
-    const map = new Map<string, string[]>();
-    const src = mod.municipalities || mod.map || mod.data || {};
-    for (const k of Object.keys(src)) map.set(k, src[k] || []);
-    console.info("[useLocations] fallback import ok:", states.length, "states");
-    return { states, map };
-  } catch (_ignore) {}
-
   throw lastErr || new Error("No se pudo cargar locations.mx.json");
 }
 
