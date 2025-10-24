@@ -75,6 +75,11 @@ export default function Buscar() {
     });
   }, [propiedadesDemo, estado, municipio, normalize]);
 
+  const visible = useMemo(() => {
+    const start = (page - 1) * pageSize;
+    return filtradas.slice(start, start + pageSize);
+  }, [filtradas, page, pageSize]);
+
   return (
     <div className="max-w-5xl mx-auto bg-secondary/40 rounded-2xl p-0 md:p-0 space-y-8">
       <Hero />
