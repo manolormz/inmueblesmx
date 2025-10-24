@@ -26,6 +26,8 @@ import Agency from "./pages/Agency";
 import LoginTop from "./pages/login";
 import RegisterTop from "./pages/register";
 
+const Home = lazy(() => import("./src/pages/Home"));
+
 const Buscar = lazy(() => import("./pages/Buscar"));
 
 const queryClient = new QueryClient();
@@ -61,7 +63,7 @@ function App() {
                 <DebugBoundary name="Routes">
                   <Suspense fallback={<div className="p-6 text-sm">Cargando Kentra…</div>}>
                     <Routes>
-                      <Route path="/" element={<Buscar />} />
+                      <Route path="/" element={<Home />} />
                       <Route path="/publish" element={<Publish />} />
                       <Route path="/search" element={<Search />} />
                       <Route path="/property/:slug" element={<Property />} />
