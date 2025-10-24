@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useLocations } from "../src/hooks/useLocations";
 import EstadoSelect from "@/components/EstadoSelect";
