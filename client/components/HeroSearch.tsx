@@ -57,7 +57,7 @@ export function HeroSearch() {
 
       <form
         onSubmit={onSubmit}
-        className="bg-white shadow-md rounded-xl p-4 flex flex-col gap-3 w-full max-w-5xl"
+        className="card p-4 md:p-6 flex flex-col gap-3 w-full max-w-5xl"
       >
         <div className="grid grid-cols-1 md:grid-cols-5 gap-3">
           <div className="md:col-span-2">
