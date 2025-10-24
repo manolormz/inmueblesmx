@@ -17,7 +17,10 @@ export default function FormField({
 }) {
   return (
     <div className="space-y-1">
-      <label htmlFor={htmlFor} className="block text-sm font-medium text-gray-700">
+      <label
+        htmlFor={htmlFor}
+        className="block text-sm font-medium text-gray-700"
+      >
         {label} {required ? <span className="text-red-500">*</span> : null}
       </label>
       {children}

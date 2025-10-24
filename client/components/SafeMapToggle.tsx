@@ -1,5 +1,5 @@
-import { useMemo, useState } from 'react';
-import LazyMapView from '@/components/LazyMapView';
+import { useMemo, useState } from "react";
+import LazyMapView from "@/components/LazyMapView";
 
 type Marker = { id: string; lat: number; lng: number; title?: string };
 
@@ -17,8 +17,10 @@ export default function SafeMapToggle({
   controls?: React.ReactNode;
 }) {
   const [showMap, setShowMap] = useState(false);
-  const mapEnabled = ((import.meta as any).env?.VITE_ENABLE_MAP ?? '0') === '1';
-  const token = (import.meta as any).env?.VITE_MAPBOX_TOKEN as string | undefined;
+  const mapEnabled = ((import.meta as any).env?.VITE_ENABLE_MAP ?? "0") === "1";
+  const token = (import.meta as any).env?.VITE_MAPBOX_TOKEN as
+    | string
+    | undefined;
   const canMount = useMemo(() => mapEnabled && !!token, [mapEnabled, token]);
 
   return (
@@ -29,14 +31,19 @@ export default function SafeMapToggle({
             <div className="text-sm opacity-70">
               {!mapEnabled ? (
                 <>
-                  Mapa deshabilitado (<code>VITE_ENABLE_MAP</code> = 0). Formularios activos.
+                  Mapa deshabilitado (<code>VITE_ENABLE_MAP</code> = 0).
+                  Formularios activos.
                 </>
               ) : !token ? (
                 <>
-                  Falta <code>VITE_MAPBOX_TOKEN</code>. Agrega el token y reinicia.
+                  Falta <code>VITE_MAPBOX_TOKEN</code>. Agrega el token y
+                  reinicia.
                 </>
               ) : (
-                <>Mapa listo para cargar bajo demanda. Tus formularios permanecerán visibles.</>
+                <>
+                  Mapa listo para cargar bajo demanda. Tus formularios
+                  permanecerán visibles.
+                </>
               )}
             </div>
             <button

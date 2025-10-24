@@ -150,15 +150,18 @@ export default function Search() {
       const base = { lat: 19.4326, lng: -99.1332 };
       const count = 800;
       r = Array.from({ length: count }).map((_, i) => ({
-        listing_id: `mock-${i+1}`,
+        listing_id: `mock-${i + 1}`,
         lat: base.lat + (Math.random() - 0.5) * 0.6,
         lng: base.lng + (Math.random() - 0.5) * 0.6,
-        title: `Propiedad mock ${i+1}`,
-        property_slug: `mock-${i+1}`,
+        title: `Propiedad mock ${i + 1}`,
+        property_slug: `mock-${i + 1}`,
       }));
     }
     return r
-      .filter((it: any) => Number.isFinite(Number(it?.lat)) && Number.isFinite(Number(it?.lng)))
+      .filter(
+        (it: any) =>
+          Number.isFinite(Number(it?.lat)) && Number.isFinite(Number(it?.lng)),
+      )
       .slice(0, MAX_MARKERS)
       .map((it: any) => ({
         id: it.listing_id,
@@ -177,10 +180,19 @@ export default function Search() {
   const total = query.data?.total ?? 0;
   const totalPages = Math.max(1, Math.ceil(total / pageSize));
 
-  const forceMock = new URLSearchParams(window.location.search).get("mock") === "1";
+  const forceMock =
+    new URLSearchParams(window.location.search).get("mock") === "1";
   const hasReal = !!apiSearch.data && !apiSearch.isError;
-  const selectedResults: any[] | undefined = forceMock ? undefined : (hasReal ? (apiSearch.data?.results as any[]) : undefined);
-  const selectedTotal = forceMock ? total : (hasReal ? (apiSearch.data?.total ?? 0) : total);
+  const selectedResults: any[] | undefined = forceMock
+    ? undefined
+    : hasReal
+      ? (apiSearch.data?.results as any[])
+      : undefined;
+  const selectedTotal = forceMock
+    ? total
+    : hasReal
+      ? (apiSearch.data?.total ?? 0)
+      : total;
 
   useEffect(() => {
     headingRef.current?.focus();
@@ -330,374 +342,442 @@ export default function Search() {
       <Header />
 
       <SafePreview>
-      {/* Sticky filter bar */}
-      <div
-        className="sticky top-16 z-40 bg-white/90 backdrop-blur border-b"
-        data-loc="SearchBar"
-      >
-        <div className="container mx-auto px-4 py-3">
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-3 items-end">
-            {/* Tipo */}
-            <div className="md:col-span-2 w-full border rounded-xl px-3 py-2">
-              <label
-                htmlFor="type"
-                className="block text-xs font-medium text-gray-700"
-              >
-                Tipo
-              </label>
-              <select
-                id="type"
-                className="w-full bg-transparent outline-none h-9"
-                value={params.get("type") || ""}
-                onChange={(e) => set({ type: e.target.value || null, page: 1 })}
-              >
-                <option value="">Todos</option>
-                {PropertyTypeOptions.map((o) => (
-                  <option key={o.value} value={o.value}>
-                    {o.label_es}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            {/* Precio */}
-            <div className="md:col-span-2 w-full border rounded-xl px-3 py-2">
-              <label
-                htmlFor="price"
-                className="block text-xs font-medium text-gray-700"
-              >
-                Precio
-              </label>
-              <select
-                id="price"
-                name="price"
-                className="w-full bg-transparent outline-none h-9"
-                value={priceKey}
-                onChange={(e) => {
-                  const key = e.target.value;
-                  const selected = priceOptions.find((o) => o.key === key);
-                  localStorage.setItem("imx_priceRangeKey", key);
-                  set({
-                    priceMin: selected?.priceMin ?? null,
-                    priceMax: selected?.priceMax ?? null,
-                    page: 1,
-                  });
-                }}
-              >
-                {priceOptions.map((o) => (
-                  <option key={o.key} value={o.key}>
-                    {o.label}
-                  </option>
-                ))}
-              </select>
-              <p className="mt-1 text-xs text-gray-500">
-                {opParam === "Sale"
-                  ? "Montos en millones MXN"
-                  : "Montos mensuales en miles MXN"}
-              </p>
-            </div>
-
-            {/* Más filtros */}
-            <div className="md:col-span-2">
-              <Button
-                type="button"
-                variant="outline"
-                className="w-full h-11"
-                onClick={() => setModalOpen(true)}
-                data-loc="SearchMoreFiltersBtn"
-              >
-                Más filtros
-              </Button>
-            </div>
-
-            {/* Ordenar */}
-            <div className="md:col-span-2">
-              <label
-                htmlFor="order"
-                className="block text-xs font-medium text-gray-700"
-              >
-                Ordenar por
-              </label>
-              <select
-                id="order"
-                name="order"
-                className="w-full border rounded-xl h-11 px-3"
-                value={params.get("sort") || "recent"}
-                onChange={(e) => set({ sort: e.target.value, page: 1 })}
-                data-loc="SearchOrder"
-              >
-                <option value="recent">Más recientes</option>
-                <option value="price_asc">Precio ascendente</option>
-                <option value="price_desc">Precio descendente</option>
-                <option value="m2_desc">Metros cuadrados</option>
-              </select>
-            </div>
-          </div>
-
-          {/* Chips */}
-          <div className="flex flex-wrap gap-2 mt-3" data-loc="SearchChips">
-            {activeChips.map((c) => (
-              <Badge
-                key={c.key}
-                variant="secondary"
-                className="px-3 py-1 flex items-center gap-2"
-              >
-                <span>{c.label}</span>
-                <button
-                  type="button"
-                  aria-label={`Quitar ${c.key}`}
-                  onClick={() => clearChip(c.key)}
-                  className="text-sm"
+        {/* Sticky filter bar */}
+        <div
+          className="sticky top-16 z-40 bg-white/90 backdrop-blur border-b"
+          data-loc="SearchBar"
+        >
+          <div className="container mx-auto px-4 py-3">
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-3 items-end">
+              {/* Tipo */}
+              <div className="md:col-span-2 w-full border rounded-xl px-3 py-2">
+                <label
+                  htmlFor="type"
+                  className="block text-xs font-medium text-gray-700"
                 >
-                  ×
-                </button>
-              </Badge>
-            ))}
-            {activeChips.length > 2 && (
-              <Button
-                type="button"
-                variant="ghost"
-                size="sm"
-                onClick={resetAll}
-                data-loc="SearchResetAll"
-              >
-                Restablecer todo
-              </Button>
-            )}
-          </div>
-        </div>
-      </div>
+                  Tipo
+                </label>
+                <select
+                  id="type"
+                  className="w-full bg-transparent outline-none h-9"
+                  value={params.get("type") || ""}
+                  onChange={(e) =>
+                    set({ type: e.target.value || null, page: 1 })
+                  }
+                >
+                  <option value="">Todos</option>
+                  {PropertyTypeOptions.map((o) => (
+                    <option key={o.value} value={o.value}>
+                      {o.label_es}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-      {!new URLSearchParams(window.location.search).get('mock') && apiSearch.isError && (
-        <div className="container mx-auto px-4 mt-2">
-          <div className="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded px-2 py-1">
-            Mostrando datos simulados (el servidor respondió 500).
-          </div>
-        </div>
-      )}
+              {/* Precio */}
+              <div className="md:col-span-2 w-full border rounded-xl px-3 py-2">
+                <label
+                  htmlFor="price"
+                  className="block text-xs font-medium text-gray-700"
+                >
+                  Precio
+                </label>
+                <select
+                  id="price"
+                  name="price"
+                  className="w-full bg-transparent outline-none h-9"
+                  value={priceKey}
+                  onChange={(e) => {
+                    const key = e.target.value;
+                    const selected = priceOptions.find((o) => o.key === key);
+                    localStorage.setItem("imx_priceRangeKey", key);
+                    set({
+                      priceMin: selected?.priceMin ?? null,
+                      priceMax: selected?.priceMax ?? null,
+                      page: 1,
+                    });
+                  }}
+                >
+                  {priceOptions.map((o) => (
+                    <option key={o.key} value={o.key}>
+                      {o.label}
+                    </option>
+                  ))}
+                </select>
+                <p className="mt-1 text-xs text-gray-500">
+                  {opParam === "Sale"
+                    ? "Montos en millones MXN"
+                    : "Montos mensuales en miles MXN"}
+                </p>
+              </div>
 
-      <section className="container mx-auto px-4 mt-4 relative">
-        <SafeMapToggle
-          onBoundsChange={setBbox}
-          markers={mapMarkers}
-          initialCenter={{ lat: 19.4326, lng: -99.1332 }}
-          initialZoom={11}
-          controls={
-            <div className="flex gap-2 items-center">
-              <GeocoderInput onPick={(f)=>{
-                const bbox = (f.bbox && f.bbox.length===4) ? `${f.bbox[0]},${f.bbox[1]},${f.bbox[2]},${f.bbox[3]}` : `${f.center[0]-0.02},${f.center[1]-0.02},${f.center[0]+0.02},${f.center[1]+0.02}`;
-                set({ q: f.place_name, page: 1 });
-                setBbox(bbox);
-                setFitBbox(bbox);
-              }} />
-              {pendingBbox && (
-                <>
-                  <Button type="button" onClick={applyPending} className="bg-white">Buscar en esta área</Button>
-                  <Button type="button" variant="outline" onClick={clearPending} className="bg-white">Cancelar</Button>
-                </>
+              {/* Más filtros */}
+              <div className="md:col-span-2">
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="w-full h-11"
+                  onClick={() => setModalOpen(true)}
+                  data-loc="SearchMoreFiltersBtn"
+                >
+                  Más filtros
+                </Button>
+              </div>
+
+              {/* Ordenar */}
+              <div className="md:col-span-2">
+                <label
+                  htmlFor="order"
+                  className="block text-xs font-medium text-gray-700"
+                >
+                  Ordenar por
+                </label>
+                <select
+                  id="order"
+                  name="order"
+                  className="w-full border rounded-xl h-11 px-3"
+                  value={params.get("sort") || "recent"}
+                  onChange={(e) => set({ sort: e.target.value, page: 1 })}
+                  data-loc="SearchOrder"
+                >
+                  <option value="recent">Más recientes</option>
+                  <option value="price_asc">Precio ascendente</option>
+                  <option value="price_desc">Precio descendente</option>
+                  <option value="m2_desc">Metros cuadrados</option>
+                </select>
+              </div>
+            </div>
+
+            {/* Chips */}
+            <div className="flex flex-wrap gap-2 mt-3" data-loc="SearchChips">
+              {activeChips.map((c) => (
+                <Badge
+                  key={c.key}
+                  variant="secondary"
+                  className="px-3 py-1 flex items-center gap-2"
+                >
+                  <span>{c.label}</span>
+                  <button
+                    type="button"
+                    aria-label={`Quitar ${c.key}`}
+                    onClick={() => clearChip(c.key)}
+                    className="text-sm"
+                  >
+                    ×
+                  </button>
+                </Badge>
+              ))}
+              {activeChips.length > 2 && (
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="sm"
+                  onClick={resetAll}
+                  data-loc="SearchResetAll"
+                >
+                  Restablecer todo
+                </Button>
               )}
             </div>
-          }
-        />
-      </section>
+          </div>
+        </div>
 
-      <main className="container mx-auto px-4 py-6">
-        <h1
-          ref={headingRef}
-          tabIndex={-1}
-          className="text-xl font-semibold mb-4"
-        >
-          {apiSearch.isFetching || query.isLoading
-            ? "Cargando..."
-            : `Resultados (${selectedTotal})`}
-        </h1>
-
-        {query.isLoading ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {Array.from({ length: 6 }).map((_, i) => (
-              <div key={i} className="animate-pulse rounded-xl border p-4">
-                <div className="h-40 bg-gray-200 rounded mb-3" />
-                <div className="h-4 bg-gray-200 rounded w-3/4 mb-2" />
-                <div className="h-4 bg-gray-100 rounded w-1/2" />
+        {!new URLSearchParams(window.location.search).get("mock") &&
+          apiSearch.isError && (
+            <div className="container mx-auto px-4 mt-2">
+              <div className="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded px-2 py-1">
+                Mostrando datos simulados (el servidor respondió 500).
               </div>
-            ))}
-          </div>
-        ) : items.length === 0 ? (
-          <div className="text-center text-gray-600 py-16 space-y-3">
-            <div>No encontramos resultados con tus filtros…</div>
-            <div className="flex items-center justify-center gap-2">
-              <Button type="button" onClick={resetAll}>
-                Limpiar filtros
-              </Button>
-              <Link className="text-blue-600 underline" to="/">
-                Volver al inicio
-              </Link>
             </div>
-          </div>
-        ) : (
-          <div
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
-            data-loc="SearchCard"
+          )}
+
+        <section className="container mx-auto px-4 mt-4 relative">
+          <SafeMapToggle
+            onBoundsChange={setBbox}
+            markers={mapMarkers}
+            initialCenter={{ lat: 19.4326, lng: -99.1332 }}
+            initialZoom={11}
+            controls={
+              <div className="flex gap-2 items-center">
+                <GeocoderInput
+                  onPick={(f) => {
+                    const bbox =
+                      f.bbox && f.bbox.length === 4
+                        ? `${f.bbox[0]},${f.bbox[1]},${f.bbox[2]},${f.bbox[3]}`
+                        : `${f.center[0] - 0.02},${f.center[1] - 0.02},${f.center[0] + 0.02},${f.center[1] + 0.02}`;
+                    set({ q: f.place_name, page: 1 });
+                    setBbox(bbox);
+                    setFitBbox(bbox);
+                  }}
+                />
+                {pendingBbox && (
+                  <>
+                    <Button
+                      type="button"
+                      onClick={applyPending}
+                      className="bg-white"
+                    >
+                      Buscar en esta área
+                    </Button>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={clearPending}
+                      className="bg-white"
+                    >
+                      Cancelar
+                    </Button>
+                  </>
+                )}
+              </div>
+            }
+          />
+        </section>
+
+        <main className="container mx-auto px-4 py-6">
+          <h1
+            ref={headingRef}
+            tabIndex={-1}
+            className="text-xl font-semibold mb-4"
           >
-            {(selectedResults as any[] | undefined)?.length
-              ? (selectedResults as any[]).map((p: any) => (
-                  <article
-                    key={p.listing_id}
-                    className="rounded-xl border overflow-hidden"
-                  >
-                    <a
-                      href={`/property/${p.property_slug || p.slug}`}
-                      className="block focus:outline-none focus:ring-2 focus:ring-blue-500"
+            {apiSearch.isFetching || query.isLoading
+              ? "Cargando..."
+              : `Resultados (${selectedTotal})`}
+          </h1>
+
+          {query.isLoading ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {Array.from({ length: 6 }).map((_, i) => (
+                <div key={i} className="animate-pulse rounded-xl border p-4">
+                  <div className="h-40 bg-gray-200 rounded mb-3" />
+                  <div className="h-4 bg-gray-200 rounded w-3/4 mb-2" />
+                  <div className="h-4 bg-gray-100 rounded w-1/2" />
+                </div>
+              ))}
+            </div>
+          ) : items.length === 0 ? (
+            <div className="text-center text-gray-600 py-16 space-y-3">
+              <div>No encontramos resultados con tus filtros…</div>
+              <div className="flex items-center justify-center gap-2">
+                <Button type="button" onClick={resetAll}>
+                  Limpiar filtros
+                </Button>
+                <Link className="text-blue-600 underline" to="/">
+                  Volver al inicio
+                </Link>
+              </div>
+            </div>
+          ) : (
+            <div
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
+              data-loc="SearchCard"
+            >
+              {(selectedResults as any[] | undefined)?.length
+                ? (selectedResults as any[]).map((p: any) => (
+                    <article
+                      key={p.listing_id}
+                      className="rounded-xl border overflow-hidden"
                     >
-                      <img
-                        src={(p.cover_url || p.cover) ?? "/placeholder.svg"}
-                        alt={p.title || p.property_slug}
-                        className="w-full h-40 object-cover"
-                      />
-                      <div className="p-4 space-y-2">
-                        <div className="flex items-center gap-2">
-                          <Badge>{p.operation}</Badge>
-                          <Badge variant="outline">
-                            {p.property_type || p.type}
-                          </Badge>
-                        </div>
-                        <h3 className="font-semibold text-lg">
-                          {p.title || p.property_slug}
-                        </h3>
-                        <div className="text-blue-700 font-semibold">
-                          {typeof p.price === "number"
-                            ? Intl.NumberFormat("es-MX", {
-                                style: "currency",
-                                currency: p.currency || "MXN",
-                                maximumFractionDigits: 0,
-                              }).format(p.price)
-                            : formatPriceCompactMXN(
-                                p.price,
-                                p.operation === "Rent" ? "Rent" : "Sale",
-                              )}
-                        </div>
-                        {p.address_text && (
-                          <div className="text-sm text-gray-600">
-                            {p.address_text}
+                      <a
+                        href={`/property/${p.property_slug || p.slug}`}
+                        className="block focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      >
+                        <img
+                          src={(p.cover_url || p.cover) ?? "/placeholder.svg"}
+                          alt={p.title || p.property_slug}
+                          className="w-full h-40 object-cover"
+                        />
+                        <div className="p-4 space-y-2">
+                          <div className="flex items-center gap-2">
+                            <Badge>{p.operation}</Badge>
+                            <Badge variant="outline">
+                              {p.property_type || p.type}
+                            </Badge>
                           </div>
-                        )}
-                      </div>
-                    </a>
-                    <div className="px-4 pb-4 flex gap-2">
-                      <a
-                        className="px-3 py-2 rounded-md border text-sm"
-                        href={p.listing_id ? `/lead?listingId=${p.listing_id}` : '#'}
-                        aria-disabled={!p.listing_id}
-                        title={!p.listing_id ? 'Falta ID' : undefined}
-                        onClick={(e)=>{ if(!p.listing_id){ e.preventDefault(); return; } import('@/services/analytics').then(m=>m.track('cta_lead_click',{ id:p.listing_id })); }}
-                      >Estoy interesado</a>
-                      <a
-                        className="px-3 py-2 rounded-md border text-sm"
-                        href={p.listing_id ? `/visita?listingId=${p.listing_id}` : '#'}
-                        aria-disabled={!p.listing_id}
-                        title={!p.listing_id ? 'Falta ID' : undefined}
-                        onClick={(e)=>{ if(!p.listing_id){ e.preventDefault(); return; } import('@/services/analytics').then(m=>m.track('cta_visit_click',{ id:p.listing_id })); }}
-                      >Agendar visita</a>
-                    </div>
-                  </article>
-                ))
-              : items.map((p) => (
-                  <article
-                    key={p.id}
-                    className="rounded-xl border overflow-hidden"
-                  >
-                    <a
-                      href={`/property/${p.slug}`}
-                      className="block focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    >
-                      <img
-                        src={p.cover || "/placeholder.svg"}
-                        alt={p.title}
-                        className="w-full h-40 object-cover"
-                      />
-                      <div className="p-4 space-y-2">
-                        <div className="flex items-center gap-2">
-                          <Badge>{p.operation}</Badge>
-                          <Badge variant="outline">{p.type}</Badge>
-                        </div>
-                        <h3 className="font-semibold text-lg">{p.title}</h3>
-                        <div className="text-blue-700 font-semibold">
-                          {formatPriceCompactMXN(
-                            p.price,
-                            p.operation === "Rent" ? "Rent" : "Sale",
+                          <h3 className="font-semibold text-lg">
+                            {p.title || p.property_slug}
+                          </h3>
+                          <div className="text-blue-700 font-semibold">
+                            {typeof p.price === "number"
+                              ? Intl.NumberFormat("es-MX", {
+                                  style: "currency",
+                                  currency: p.currency || "MXN",
+                                  maximumFractionDigits: 0,
+                                }).format(p.price)
+                              : formatPriceCompactMXN(
+                                  p.price,
+                                  p.operation === "Rent" ? "Rent" : "Sale",
+                                )}
+                          </div>
+                          {p.address_text && (
+                            <div className="text-sm text-gray-600">
+                              {p.address_text}
+                            </div>
                           )}
                         </div>
-                        {p.address_text && (
-                          <div className="text-sm text-gray-600">
-                            {p.address_text}
-                          </div>
-                        )}
+                      </a>
+                      <div className="px-4 pb-4 flex gap-2">
+                        <a
+                          className="px-3 py-2 rounded-md border text-sm"
+                          href={
+                            p.listing_id
+                              ? `/lead?listingId=${p.listing_id}`
+                              : "#"
+                          }
+                          aria-disabled={!p.listing_id}
+                          title={!p.listing_id ? "Falta ID" : undefined}
+                          onClick={(e) => {
+                            if (!p.listing_id) {
+                              e.preventDefault();
+                              return;
+                            }
+                            import("@/services/analytics").then((m) =>
+                              m.track("cta_lead_click", { id: p.listing_id }),
+                            );
+                          }}
+                        >
+                          Estoy interesado
+                        </a>
+                        <a
+                          className="px-3 py-2 rounded-md border text-sm"
+                          href={
+                            p.listing_id
+                              ? `/visita?listingId=${p.listing_id}`
+                              : "#"
+                          }
+                          aria-disabled={!p.listing_id}
+                          title={!p.listing_id ? "Falta ID" : undefined}
+                          onClick={(e) => {
+                            if (!p.listing_id) {
+                              e.preventDefault();
+                              return;
+                            }
+                            import("@/services/analytics").then((m) =>
+                              m.track("cta_visit_click", { id: p.listing_id }),
+                            );
+                          }}
+                        >
+                          Agendar visita
+                        </a>
                       </div>
-                    </a>
-                    <div className="px-4 pb-4 flex gap-2">
+                    </article>
+                  ))
+                : items.map((p) => (
+                    <article
+                      key={p.id}
+                      className="rounded-xl border overflow-hidden"
+                    >
                       <a
-                        className="px-3 py-2 rounded-md border text-sm"
-                        href={p.id ? `/lead?listingId=${p.id}` : '#'}
-                        aria-disabled={!p.id}
-                        title={!p.id ? 'Falta ID' : undefined}
-                        onClick={(e)=>{ if(!p.id){ e.preventDefault(); return; } import('@/services/analytics').then(m=>m.track('cta_lead_click',{ id:p.id })); }}
-                      >Estoy interesado</a>
-                      <a
-                        className="px-3 py-2 rounded-md border text-sm"
-                        href={p.id ? `/visita?listingId=${p.id}` : '#'}
-                        aria-disabled={!p.id}
-                        title={!p.id ? 'Falta ID' : undefined}
-                        onClick={(e)=>{ if(!p.id){ e.preventDefault(); return; } import('@/services/analytics').then(m=>m.track('cta_visit_click',{ id:p.id })); }}
-                      >Agendar visita</a>
-                    </div>
-                  </article>
-                ))}
-          </div>
-        )}
+                        href={`/property/${p.slug}`}
+                        className="block focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      >
+                        <img
+                          src={p.cover || "/placeholder.svg"}
+                          alt={p.title}
+                          className="w-full h-40 object-cover"
+                        />
+                        <div className="p-4 space-y-2">
+                          <div className="flex items-center gap-2">
+                            <Badge>{p.operation}</Badge>
+                            <Badge variant="outline">{p.type}</Badge>
+                          </div>
+                          <h3 className="font-semibold text-lg">{p.title}</h3>
+                          <div className="text-blue-700 font-semibold">
+                            {formatPriceCompactMXN(
+                              p.price,
+                              p.operation === "Rent" ? "Rent" : "Sale",
+                            )}
+                          </div>
+                          {p.address_text && (
+                            <div className="text-sm text-gray-600">
+                              {p.address_text}
+                            </div>
+                          )}
+                        </div>
+                      </a>
+                      <div className="px-4 pb-4 flex gap-2">
+                        <a
+                          className="px-3 py-2 rounded-md border text-sm"
+                          href={p.id ? `/lead?listingId=${p.id}` : "#"}
+                          aria-disabled={!p.id}
+                          title={!p.id ? "Falta ID" : undefined}
+                          onClick={(e) => {
+                            if (!p.id) {
+                              e.preventDefault();
+                              return;
+                            }
+                            import("@/services/analytics").then((m) =>
+                              m.track("cta_lead_click", { id: p.id }),
+                            );
+                          }}
+                        >
+                          Estoy interesado
+                        </a>
+                        <a
+                          className="px-3 py-2 rounded-md border text-sm"
+                          href={p.id ? `/visita?listingId=${p.id}` : "#"}
+                          aria-disabled={!p.id}
+                          title={!p.id ? "Falta ID" : undefined}
+                          onClick={(e) => {
+                            if (!p.id) {
+                              e.preventDefault();
+                              return;
+                            }
+                            import("@/services/analytics").then((m) =>
+                              m.track("cta_visit_click", { id: p.id }),
+                            );
+                          }}
+                        >
+                          Agendar visita
+                        </a>
+                      </div>
+                    </article>
+                  ))}
+            </div>
+          )}
 
-        {/* Pagination */}
-        <nav
-          className="flex items-center justify-center gap-2 mt-6"
-          aria-label="Paginación"
-          data-loc="SearchPagination"
-        >
-          <Button
-            type="button"
-            variant="outline"
-            disabled={page <= 1}
-            aria-disabled={page <= 1}
-            onClick={() => goPage(page - 1)}
+          {/* Pagination */}
+          <nav
+            className="flex items-center justify-center gap-2 mt-6"
+            aria-label="Paginación"
+            data-loc="SearchPagination"
           >
-            Anterior
-          </Button>
-          {Array.from({ length: totalPages })
-            .slice(0, 7)
-            .map((_, idx) => {
-              const p = idx + 1;
-              return (
-                <Button
-                  key={p}
-                  type="button"
-                  variant={p === page ? "default" : "outline"}
-                  onClick={() => goPage(p)}
-                  aria-current={p === page ? "page" : undefined}
-                >
-                  {p}
-                </Button>
-              );
-            })}
-          <Button
-            type="button"
-            variant="outline"
-            disabled={page >= totalPages}
-            aria-disabled={page >= totalPages}
-            onClick={() => goPage(page + 1)}
-          >
-            Siguiente
-          </Button>
-        </nav>
-      </main>
-
+            <Button
+              type="button"
+              variant="outline"
+              disabled={page <= 1}
+              aria-disabled={page <= 1}
+              onClick={() => goPage(page - 1)}
+            >
+              Anterior
+            </Button>
+            {Array.from({ length: totalPages })
+              .slice(0, 7)
+              .map((_, idx) => {
+                const p = idx + 1;
+                return (
+                  <Button
+                    key={p}
+                    type="button"
+                    variant={p === page ? "default" : "outline"}
+                    onClick={() => goPage(p)}
+                    aria-current={p === page ? "page" : undefined}
+                  >
+                    {p}
+                  </Button>
+                );
+              })}
+            <Button
+              type="button"
+              variant="outline"
+              disabled={page >= totalPages}
+              aria-disabled={page >= totalPages}
+              onClick={() => goPage(page + 1)}
+            >
+              Siguiente
+            </Button>
+          </nav>
+        </main>
       </SafePreview>
 
       <Footer />

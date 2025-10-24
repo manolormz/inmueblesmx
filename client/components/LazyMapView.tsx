@@ -1,6 +1,6 @@
-import { Suspense, lazy } from 'react';
+import { Suspense, lazy } from "react";
 
-const MapView = lazy(() => import('@/components/MapView'));
+const MapView = lazy(() => import("@/components/MapView"));
 
 type Marker = { id: string; lat: number; lng: number; title?: string };
 

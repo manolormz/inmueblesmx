@@ -17,11 +17,21 @@ export default function ActionBar({
   return (
     <div className="flex items-center justify-end gap-2 pt-2">
       {secondaryText && (
-        <Button type="button" variant="outline" onClick={onSecondary} disabled={busy}>
+        <Button
+          type="button"
+          variant="outline"
+          onClick={onSecondary}
+          disabled={busy}
+        >
           {secondaryText}
         </Button>
       )}
-      <Button type="submit" onClick={onPrimary} disabled={busy} aria-busy={busy}>
+      <Button
+        type="submit"
+        onClick={onPrimary}
+        disabled={busy}
+        aria-busy={busy}
+      >
         {busy ? "Procesando…" : primaryText}
       </Button>
     </div>

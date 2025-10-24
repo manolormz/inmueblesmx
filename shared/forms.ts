@@ -1,9 +1,9 @@
-import { z } from 'zod';
+import { z } from "zod";
 
 export const LeadInput = z.object({
-  listingId: z.string().min(1, 'Falta el ID de la propiedad'),
-  name: z.string().min(2, 'Nombre muy corto'),
-  email: z.string().email('Email inválido'),
+  listingId: z.string().min(1, "Falta el ID de la propiedad"),
+  name: z.string().min(2, "Nombre muy corto"),
+  email: z.string().email("Email inválido"),
   phone: z.string().optional(),
   message: z.string().optional(),
   company: z.string().optional(), // honeypot
@@ -22,7 +22,7 @@ export type VisitInputT = z.infer<typeof VisitInput>;
 
 export const AgencyInput = z.object({
   name: z.string().min(2),
-  slug: z.string().regex(/^[a-z0-9-]+$/, 'Usa minúsculas y guiones'),
+  slug: z.string().regex(/^[a-z0-9-]+$/, "Usa minúsculas y guiones"),
   phone: z.string().optional(),
   website: z.string().url().optional(),
   company: z.string().optional(), // honeypot

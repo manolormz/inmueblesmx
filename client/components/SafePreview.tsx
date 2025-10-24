@@ -1,3 +1,7 @@
-export default function SafePreview({ children }: { children: React.ReactNode }) {
+export default function SafePreview({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return <>{children}</>;
 }

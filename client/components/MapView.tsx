@@ -1,5 +1,5 @@
-import { useEffect, useRef } from 'react';
-import 'mapbox-gl/dist/mapbox-gl.css';
+import { useEffect, useRef } from "react";
+import "mapbox-gl/dist/mapbox-gl.css";
 
 type Marker = { id: string; lat: number; lng: number; title?: string };
 
@@ -16,17 +16,19 @@ export default function MapView({
 }) {
   const ref = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<any>(null);
-  const enabled = ((import.meta as any).env?.VITE_ENABLE_MAP ?? '0') === '1';
-  const token = (import.meta as any).env?.VITE_MAPBOX_TOKEN as string | undefined;
+  const enabled = ((import.meta as any).env?.VITE_ENABLE_MAP ?? "0") === "1";
+  const token = (import.meta as any).env?.VITE_MAPBOX_TOKEN as
+    | string
+    | undefined;
 
   useEffect(() => {
     if (!enabled || !token || !ref.current) return;
     (async () => {
-      const mapboxgl = (await import('mapbox-gl')).default;
+      const mapboxgl = (await import("mapbox-gl")).default;
       mapboxgl.accessToken = token;
       const m = new mapboxgl.Map({
         container: ref.current,
-        style: 'mapbox://styles/mapbox/streets-v12',
+        style: "mapbox://styles/mapbox/streets-v12",
         center: [initialCenter.lng, initialCenter.lat],
         zoom: initialZoom,
       });
@@ -38,8 +40,8 @@ export default function MapView({
         const bbox = `${b.getWest()},${b.getSouth()},${b.getEast()},${b.getNorth()}`;
         onBoundsChange(bbox);
       };
-      m.on('moveend', emit);
-      m.on('load', () => {
+      m.on("moveend", emit);
+      m.on("load", () => {
         try {
           m.resize();
         } catch {}
@@ -50,13 +52,20 @@ export default function MapView({
         m.remove();
       };
     })();
-  }, [enabled, token, initialCenter.lat, initialCenter.lng, initialZoom, onBoundsChange]);
+  }, [
+    enabled,
+    token,
+    initialCenter.lat,
+    initialCenter.lng,
+    initialZoom,
+    onBoundsChange,
+  ]);
 
   useEffect(() => {
     (async () => {
       const m = mapRef.current;
       if (!m || !enabled || !token) return;
-      const mapboxgl = (await import('mapbox-gl')).default;
+      const mapboxgl = (await import("mapbox-gl")).default;
       markers.slice(0, 200).forEach((pt) => {
         new mapboxgl.Marker().setLngLat([pt.lng, pt.lat]).addTo(m);
       });
