@@ -107,6 +107,22 @@ export default function Buscar() {
           ))}
         </ul>
       </div>
+
+      <div className="mt-4 flex flex-wrap gap-2">
+        {[
+          "Con jardín",
+          "Con alberca",
+          "Acepta mascotas",
+        ].map((chip) => (
+          <span key={chip} className="inline-flex items-center rounded-2xl border border-primary/20 px-3 py-1.5 text-sm text-primary hover:bg-secondary/60 cursor-pointer">
+            {chip}
+          </span>
+        ))}
+      </div>
+
+      <FeaturedListings />
+      <WhyChoose />
+      <SubscribeBanner />
     </div>
   );
 }
