@@ -18,7 +18,7 @@ export default function LayoutShell({
           </Link>
           <nav className="flex items-center gap-6 font-display tracking-wide text-sm">
             <Link
-              to="/search?operation=Sale&status=Published"
+              to="/buscar"
               className="text-white/90 hover:text-white"
             >
               Comprar
