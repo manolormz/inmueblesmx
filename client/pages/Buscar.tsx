@@ -204,17 +204,17 @@ export default function Buscar() {
                 createdAt: p.createdAt || null,
               }} />
             ))}
-            {loading && Array.from({ length: 6 }).map((_, i) => (
+            {isLoading && Array.from({ length: 6 }).map((_, i) => (
               <PropertySkeleton key={`sk-${i}`} />
             ))}
           </div>
           <div className="flex justify-center mt-6">
             {hasNext ? (
-              <button onClick={loadMore} disabled={loading} className="btn btn-secondary">
-                {loading ? "Cargando…" : "Cargar más"}
+              <button onClick={loadMore} disabled={isLoading} className="btn btn-secondary">
+                {isLoading ? "Cargando…" : "Cargar más"}
               </button>
             ) : (
-              !loading && items.length > 0 && (
+              !isLoading && items.length > 0 && (
                 <span className="text-sm text-gray-600">Has visto todo ✨</span>
               )
             )}
