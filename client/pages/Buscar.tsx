@@ -5,6 +5,7 @@ import { useLocations } from "@/hooks/useLocations";
 import EstadoSelect from "@/components/EstadoSelect";
 import MunicipioSelect from "@/components/MunicipioSelect";
 import Hero from "../src/components/Hero";
+import SearchMenu from "../src/components/search/SearchMenu";
 import { FeaturedListings } from "@/components/FeaturedListings";
 import WhyChoose from "@/components/WhyChoose";
 import SubscribeBanner from "@/components/SubscribeBanner";
