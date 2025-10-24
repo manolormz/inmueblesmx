@@ -1,8 +1,8 @@
 import React, { useMemo, useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { useLocations } from "../hooks/useLocations";
-import EstadoSelect from "../components/EstadoSelect";
-import MunicipioSelect from "../components/MunicipioSelect";
+import { useLocationOptionsSorted } from "../hooks/useLocations";
+import { saveLastSearch, loadLastSearch } from "../utils/searchState";
+import MunicipioAutocomplete from "../components/location/MunicipioAutocomplete";
 import HeroStripe from "../components/HeroStripe";
 
 type Tipo =
@@ -43,7 +43,7 @@ const SALE_RANGES: Array<[number, number | null, string]> = [
 
 function QuickSearchCard() {
   const nav = useNavigate();
-  const { states, findMunicipalities } = useLocations();
+  const { stateOptions, municipalityOptions } = useLocationOptionsSorted("popular");
   const [params] = useSearchParams();
 
   const initialMode =
@@ -57,10 +57,16 @@ function QuickSearchCard() {
   const [tipo, setTipo] = useState<Tipo | "">("");
   const [precioIdx, setPrecioIdx] = useState<string>("");
 
-  const municipios = useMemo(
-    () => (estado ? findMunicipalities(estado) : []),
-    [estado, findMunicipalities],
-  );
+  useEffect(() => {
+    const last = loadLastSearch();
+    if (last) {
+      if (last.modo) setModo(last.modo === "renta" ? "rentar" : "comprar");
+      if (last.estado) setEstado(last.estado);
+      if (last.municipio) setMunicipio(last.municipio);
+      if (last.tipo) setTipo(last.tipo as any);
+      if (typeof last.min === "number") setPrecioIdx("");
+    }
+  }, []);
 
   const RANGES = modo === "rentar" ? RENT_RANGES : SALE_RANGES;
 
@@ -80,24 +86,15 @@ function QuickSearchCard() {
       q.set("min", String(min));
       if (max != null) q.set("max", String(max));
     }
+    const data = {
+      modo: (modo === "rentar" ? "renta" : "comprar") as "comprar" | "renta",
+      estado,
+      municipio,
+      tipo: (tipo || undefined) as string | undefined,
+    };
+    saveLastSearch(data);
     nav(`/buscar?${q.toString()}`);
   };
-
-  if (!states || states.length === 0) {
-    return (
-      <section className="relative -mt-10 md:-mt-14 z-20">
-        <div className="card bg-white rounded-2xl shadow-card p-6 md:p-8">
-          <h2 className="font-display text-2xl md:text-3xl text-primary">
-            Empieza tu búsqueda
-          </h2>
-          <p className="mt-2 text-sm text-gray-700">
-            Cargando catálogos de ubicación…
-          </p>
-          <div className="mt-4 h-10 w-full bg-secondary/50 rounded-xl animate-pulse" />
-        </div>
-      </section>
-    );
-  }
 
   return (
     <section className="relative -mt-10 md:-mt-14 z-20">
@@ -140,21 +137,31 @@ function QuickSearchCard() {
           className="mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
         >
           <div>
-            <EstadoSelect
+            <label className="label">Estado</label>
+            <select
+              className="select"
               value={estado}
-              onChange={(v) => {
-                setEstado(v);
+              onChange={(e) => {
+                setEstado(e.target.value);
                 setMunicipio("");
               }}
-              options={states}
-            />
+            >
+              <option value="">Selecciona un estado…</option>
+              {stateOptions.map((o: any) => (
+                <option key={o.value} value={o.value}>
+                  {o.label}
+                </option>
+              ))}
+            </select>
           </div>
 
           <div>
-            <MunicipioSelect
+            <label className="label">Municipio</label>
+            <MunicipioAutocomplete
               value={municipio}
               onChange={setMunicipio}
-              options={municipios}
+              options={municipalityOptions(estado)}
+              placeholder={estado ? "Escribe para buscar…" : "Selecciona primero un estado"}
               disabled={!estado}
             />
           </div>
