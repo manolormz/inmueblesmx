@@ -17,6 +17,9 @@ export default function Buscar() {
   const [params, setParams] = useSearchParams();
   const estado = params.get("estado") ?? "";
   const municipio = params.get("municipio") ?? "";
+  const tipo = params.get("tipo") || "";
+  const min = parseInt(params.get("min") || "") || undefined;
+  const max = parseInt(params.get("max") || "") || undefined;
   const modo = (params.get("modo") || "comprar").toLowerCase();
   const vista = (params.get("vista") || "lista").toLowerCase() as "lista" | "mapa";
   const pp = Math.max(1, parseInt(params.get("pp") || "12"));
@@ -70,15 +73,15 @@ export default function Buscar() {
 
   const filtradas = useMemo(() => {
     return propiedadesDemo.filter((p) => {
-      const okEstado = estado
-        ? normalize(p.estado) === normalize(estado)
-        : true;
-      const okMpio = municipio
-        ? normalize(p.municipio) === normalize(municipio)
-        : true;
-      return okEstado && okMpio;
+      const okEstado = estado ? normalize(p.estado) === normalize(estado) : true;
+      const okMpio = municipio ? normalize(p.municipio) === normalize(municipio) : true;
+      const okTipo = tipo ? (p as any).type ? normalize((p as any).type) === normalize(tipo) : false : true;
+      const price = (p as any).price as number | undefined;
+      const okMin = min != null ? (price ?? Infinity) >= min : true;
+      const okMax = max != null ? (price ?? -Infinity) <= max : true;
+      return okEstado && okMpio && okTipo && okMin && okMax;
     });
-  }, [propiedadesDemo, estado, municipio, normalize]);
+  }, [propiedadesDemo, estado, municipio, tipo, min, max, normalize]);
 
   const visible = useMemo(() => {
     const start = (page - 1) * pageSize;
