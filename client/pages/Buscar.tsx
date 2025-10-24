@@ -3,6 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import { useLocations } from "../src/hooks/useLocations";
 import EstadoSelect from "@/components/EstadoSelect";
 import MunicipioSelect from "@/components/MunicipioSelect";
+import { loadLastSearch } from "../src/utils/searchState";
 import Hero from "../src/components/Hero";
 import SearchMenu from "../components/search/SearchMenu";
 import DebugBoundary from "../components/DebugBoundary";
