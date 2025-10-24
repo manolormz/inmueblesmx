@@ -1,6 +1,6 @@
 import React, { useMemo, useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { useLocations } from "@/hooks/useLocations";
+import { useLocations } from "../hooks/useLocations";
 import EstadoSelect from "../components/EstadoSelect";
 import MunicipioSelect from "../components/MunicipioSelect";
 import HeroStripe from "../components/HeroStripe";
