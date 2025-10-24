@@ -56,7 +56,7 @@ export function CTA() {
         </div>
 
         {/* Newsletter Signup */}
-        <div className="bg-gradient-to-r from-blue-600 to-blue-700 rounded-2xl p-8 sm:p-12 text-center">
+        <div className="bg-gradient-to-r from-primary to-primaryhover rounded-2xl p-8 sm:p-12 text-center">
           <h3 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             Recibe notificaciones de nuevas propiedades
           </h3>
