@@ -90,7 +90,7 @@ function ListingCard({
         <img
           src={listing.image}
           alt={listing.title}
-          className="w-full h-64 object-cover"
+          className="w-full aspect-[4/3] object-cover rounded-xl"
         />
         {listing.featured && (
           <div className="absolute top-3 left-3 bg-primary text-primary-foreground px-3 py-1 rounded-xl text-xs uppercase tracking-wide">
