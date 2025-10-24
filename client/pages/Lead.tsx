@@ -5,7 +5,7 @@ import ActionBar from '@/components/ui/ActionBar';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Api } from '@/services/api';
-import { useToast } from '@/components/ui/toast';
+import { useToast } from '@/hooks/use-toast';
 import { useZodForm } from '@/hooks/useZodForm';
 import { LeadInput } from '@shared/forms';
 import { track } from '@/services/analytics';
