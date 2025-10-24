@@ -1,7 +1,7 @@
 import { useMemo, useRef, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
+import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 
 function sleep(ms: number) {
