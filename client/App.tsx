@@ -1,13 +1,12 @@
 import "./global.css";
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import React, { Suspense, lazy } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import LayoutShell from "./components/LayoutShell";
 import DebugBoundary from "./components/DebugBoundary";
-import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Publish from "./pages/Publish";
 import Search from "./pages/Search";
@@ -26,11 +25,11 @@ import Visit from "./pages/Visit";
 import Agency from "./pages/Agency";
 import LoginTop from "./pages/login";
 import RegisterTop from "./pages/register";
-import Buscar from "./pages/Buscar";
+
+const Buscar = lazy(() => import("./pages/Buscar"));
 
 const queryClient = new QueryClient();
 
-// Log global de errores (solo dev)
 if (import.meta.env.DEV) {
   window.addEventListener("error", (e) =>
     console.error(
@@ -43,51 +42,56 @@ if (import.meta.env.DEV) {
   );
 }
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <AuthProvider>
-          <DebugBoundary name="App">
-          <LayoutShell>
-            {/* Debug overlay auto-mounts if ?debug=1 */}
-            <DebugTools />
-            {/**
-          import DebugOverlay from '@/components/DebugOverlay';
-          <DebugOverlay />
-          **/}
-            <Routes>
-              <Route path="/" element={<Buscar />} />
-              <Route path="/publish" element={<Publish />} />
-              <Route path="/search" element={<Search />} />
-              <Route path="/property/:slug" element={<Property />} />
-              <Route path="/maintenance" element={<Maintenance />} />
-              <Route path="/auth/login" element={<Login />} />
-              <Route path="/auth/register" element={<Register />} />
-              <Route path="/login" element={<LoginTop />} />
-              <Route path="/register" element={<RegisterTop />} />
-              <Route path="/lead" element={<Lead />} />
-              <Route path="/visita" element={<Visit />} />
-              <Route path="/agencia" element={<Agency />} />
-              <Route path="/qa/buttons" element={<QAButtons />} />
-              <Route path="/qa/autotest" element={<Autotest />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/buscar" element={<Buscar />} />
-              <Route
-                path="/dashboard/properties/:slug/edit"
-                element={<DashboardPropertyEdit />}
-              />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<Navigate to="/" replace />} />
-            </Routes>
-          </LayoutShell>
-          </DebugBoundary>
-        </AuthProvider>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+function App() {
+  if (typeof document !== "undefined") {
+    const ping = document.getElementById("kentra-ping");
+    if (ping) ping.remove();
+  }
+  return (
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <AuthProvider>
+            <DebugBoundary name="App">
+              <LayoutShell>
+                {/* Debug overlay auto-mounts if ?debug=1 */}
+                <DebugTools />
+                <DebugBoundary name="Routes">
+                  <Suspense fallback={<div className="p-6 text-sm">Cargando Kentra…</div>}>
+                    <Routes>
+                      <Route path="/" element={<Buscar />} />
+                      <Route path="/publish" element={<Publish />} />
+                      <Route path="/search" element={<Search />} />
+                      <Route path="/property/:slug" element={<Property />} />
+                      <Route path="/maintenance" element={<Maintenance />} />
+                      <Route path="/auth/login" element={<Login />} />
+                      <Route path="/auth/register" element={<Register />} />
+                      <Route path="/login" element={<LoginTop />} />
+                      <Route path="/register" element={<RegisterTop />} />
+                      <Route path="/lead" element={<Lead />} />
+                      <Route path="/visita" element={<Visit />} />
+                      <Route path="/agencia" element={<Agency />} />
+                      <Route path="/qa/buttons" element={<QAButtons />} />
+                      <Route path="/qa/autotest" element={<Autotest />} />
+                      <Route path="/dashboard" element={<Dashboard />} />
+                      <Route path="/buscar" element={<Buscar />} />
+                      <Route
+                        path="/dashboard/properties/:slug/edit"
+                        element={<DashboardPropertyEdit />}
+                      />
+                      <Route path="*" element={<Navigate to="/" replace />} />
+                    </Routes>
+                  </Suspense>
+                </DebugBoundary>
+              </LayoutShell>
+            </DebugBoundary>
+          </AuthProvider>
+        </BrowserRouter>
+      </TooltipProvider>
+    </QueryClientProvider>
+  );
+}
 
 export default App;
