@@ -177,6 +177,11 @@ export default function Search() {
   const total = query.data?.total ?? 0;
   const totalPages = Math.max(1, Math.ceil(total / pageSize));
 
+  const forceMock = new URLSearchParams(window.location.search).get("mock") === "1";
+  const hasReal = !!apiSearch.data && !apiSearch.isError;
+  const selectedResults: any[] | undefined = forceMock ? undefined : (hasReal ? (apiSearch.data?.results as any[]) : undefined);
+  const selectedTotal = forceMock ? total : (hasReal ? (apiSearch.data?.total ?? 0) : total);
+
   useEffect(() => {
     headingRef.current?.focus();
     try {
@@ -505,7 +510,7 @@ export default function Search() {
         >
           {apiSearch.isFetching || query.isLoading
             ? "Cargando..."
-            : `Resultados (${apiSearch.data?.total ?? total})`}
+            : `Resultados (${selectedTotal})`}
         </h1>
 
         {query.isLoading ? (
@@ -535,8 +540,8 @@ export default function Search() {
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
             data-loc="SearchCard"
           >
-            {(apiSearch.data?.results as any[] | undefined)?.length
-              ? (apiSearch.data!.results as any[]).map((p: any) => (
+            {(selectedResults as any[] | undefined)?.length
+              ? (selectedResults as any[]).map((p: any) => (
                   <article
                     key={p.listing_id}
                     className="rounded-xl border overflow-hidden"
