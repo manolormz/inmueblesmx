@@ -60,7 +60,7 @@ export function CTA() {
           <h3 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             Recibe notificaciones de nuevas propiedades
           </h3>
-          <p className="text-blue-100 mb-6 max-w-2xl mx-auto">
+          <p className="text-white/80 mb-6 max-w-2xl mx-auto">
             Suscríbete a nuestro boletín y sé el primero en conocer las mejores
             oportunidades inmobiliarias
           </p>
