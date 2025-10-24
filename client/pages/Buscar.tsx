@@ -3,6 +3,10 @@ import { useSearchParams } from "react-router-dom";
 import { useLocations } from "@/hooks/useLocations";
 import EstadoSelect from "@/components/EstadoSelect";
 import MunicipioSelect from "@/components/MunicipioSelect";
+import Hero from "@/components/Hero";
+import { FeaturedListings } from "@/components/FeaturedListings";
+import WhyChoose from "@/components/WhyChoose";
+import SubscribeBanner from "@/components/SubscribeBanner";
 
 export default function Buscar() {
   const { loading, error, states, findMunicipalities, normalize } = useLocations();
