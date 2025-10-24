@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Navigate } from "react-router-dom";
-import { Header } from "@/components/Header";
 import { Button } from "@/components/ui/button";
 
 function isVisible(el: Element) {
@@ -75,7 +74,6 @@ export default function QAButtons() {
 
   return (
     <div className="min-h-screen bg-white">
-      <Header />
       <main className="container mx-auto px-4 py-8">
         <div className="flex items-center justify-between mb-4">
           <h1 className="text-2xl font-semibold">QA · Botones</h1>
