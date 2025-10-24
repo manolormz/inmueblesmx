@@ -1,6 +1,5 @@
-import { useMemo, useState } from "react";
-import LazyMapView from "@/components/LazyMapView";
-import { isSandbox } from "@/utils/env";
+import { useMemo, useState } from 'react';
+import LazyMapView from '@/components/LazyMapView';
 
 type Marker = { id: string; lat: number; lng: number; title?: string };
 
@@ -9,59 +8,35 @@ export default function SafeMapToggle({
   markers = [],
   initialCenter = { lat: 19.4326, lng: -99.1332 },
   initialZoom = 11,
-  fitBbox,
   controls,
 }: {
   onBoundsChange: (bbox: string) => void;
   markers?: Marker[];
   initialCenter?: { lat: number; lng: number };
   initialZoom?: number;
-  fitBbox?: string;
-  controls?: React.ReactNode; // ej. “Buscar en esta área”
+  controls?: React.ReactNode;
 }) {
   const [showMap, setShowMap] = useState(false);
-
-  const mapEnabled = ((import.meta as any).env?.VITE_ENABLE_MAP ?? "1") === "1";
-  const token = (import.meta as any).env?.VITE_MAPBOX_TOKEN as
-    | string
-    | undefined;
-
+  const mapEnabled = ((import.meta as any).env?.VITE_ENABLE_MAP ?? '0') === '1';
+  const token = (import.meta as any).env?.VITE_MAPBOX_TOKEN as string | undefined;
   const canMount = useMemo(() => mapEnabled && !!token, [mapEnabled, token]);
-
-  if (isSandbox) {
-    return (
-      <div className="relative w-full h-[50vh] grid place-items-center bg-gray-50 border rounded-2xl">
-        <div className="text-center text-sm opacity-70">
-          Vista previa sin mapa dentro del editor.
-          <br />
-          Abre la URL pública para ver el mapa, clustering y geocoding.
-        </div>
-        {controls ? <div className="absolute top-2 left-2">{controls}</div> : null}
-      </div>
-    );
-  }
 
   return (
     <div className="relative w-full rounded-2xl border overflow-hidden">
       {!showMap && (
-        <div className="h-[60vh] md:h-[70vh] grid place-items-center bg-gray-50">
+        <div className="h-[50vh] grid place-items-center bg-gray-50">
           <div className="text-center space-y-2 px-4">
             <div className="text-sm opacity-70">
               {!mapEnabled ? (
                 <>
-                  Mapa deshabilitado (<code>VITE_ENABLE_MAP</code> ≠ 1). Puedes
-                  activar cuando gustes.
+                  Mapa deshabilitado (<code>VITE_ENABLE_MAP</code> = 0). Formularios activos.
                 </>
               ) : !token ? (
                 <>
-                  Falta <code>VITE_MAPBOX_TOKEN</code>. Agrega el token y
-                  reinicia.
+                  Falta <code>VITE_MAPBOX_TOKEN</code>. Agrega el token y reinicia.
                 </>
               ) : (
-                <>
-                  Mapa listo para cargar bajo demanda. Tus formularios
-                  permanecerán visibles.
-                </>
+                <>Mapa listo para cargar bajo demanda. Tus formularios permanecerán visibles.</>
               )}
             </div>
             <button
@@ -74,21 +49,16 @@ export default function SafeMapToggle({
           </div>
         </div>
       )}
-
       {showMap && (
         <div className="relative z-0">
-          {/* Caja del mapa: nunca ocupa más que este contenedor */}
-          <div className="h-[60vh] md:h-[70vh]">
+          <div className="h-[50vh]">
             <LazyMapView
               onBoundsChange={onBoundsChange}
               markers={markers}
               initialCenter={initialCenter}
               initialZoom={initialZoom}
-              fitBbox={fitBbox}
             />
           </div>
-
-          {/* Controles opcionales, posicionados DENTRO del contenedor */}
           {controls && (
             <div className="absolute top-3 left-1/2 -translate-x-1/2 z-20 pointer-events-auto">
               {controls}
