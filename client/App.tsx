@@ -5,6 +5,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import LayoutShell from "./components/LayoutShell";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Publish from "./pages/Publish";
@@ -48,6 +49,7 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <AuthProvider>
+          <LayoutShell>
           {/* Debug overlay auto-mounts if ?debug=1 */}
           <DebugTools />
           {/**
@@ -78,6 +80,7 @@ const App = () => (
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<Navigate to="/buscar" replace />} />
           </Routes>
+          </LayoutShell>
         </AuthProvider>
       </BrowserRouter>
     </TooltipProvider>
