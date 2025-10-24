@@ -85,7 +85,7 @@ function ListingCard({
   const [liked, setLiked] = useState(false);
 
   return (
-    <div className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition border border-gray-200">
+    <div className="card overflow-hidden hover:shadow transition border-0 rounded-2xl">
       <div className="relative">
         <img
           src={listing.image}
@@ -93,7 +93,7 @@ function ListingCard({
           className="w-full h-64 object-cover"
         />
         {listing.featured && (
-          <div className="absolute top-3 left-3 bg-blue-600 text-white px-3 py-1 rounded-full text-xs font-semibold">
+          <div className="absolute top-3 left-3 bg-primary text-primary-foreground px-3 py-1 rounded-xl text-xs font-semibold uppercase">
             Destacado
           </div>
         )}
@@ -119,7 +119,7 @@ function ListingCard({
           {listing.location}
         </div>
 
-        <div className="text-2xl font-bold text-blue-600 mb-4">
+        <div className="text-2xl font-bold text-primary mb-4">
           {listing.price}
         </div>
 
@@ -157,10 +157,10 @@ function ListingCard({
 
 export function FeaturedListings() {
   return (
-    <section className="py-16 bg-gray-50">
+    <section className="py-16 bg-secondary/40">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3">
+          <h2 className="text-3xl sm:text-4xl font-bold text-text mb-3 font-display">
             Propiedades destacadas
           </h2>
           <p className="text-gray-600 text-lg">
@@ -175,12 +175,9 @@ export function FeaturedListings() {
         </div>
 
         <div className="text-center mt-12">
-          <Button
-            size="lg"
-            className="bg-blue-600 hover:bg-blue-700 px-8"
-          >
+          <button className="btn btn-primary px-8">
             Ver todas las propiedades
-          </Button>
+          </button>
         </div>
       </div>
     </section>
