@@ -58,6 +58,22 @@ export default function Buscar() {
       )}
 
       <div className="card p-4 md:p-6">
+        <div className="flex items-center gap-2 mb-4">
+          <button
+            type="button"
+            className={`btn ${params.get("operation") === "Sale" ? "btn-primary" : "btn-secondary"}`}
+            onClick={() => { const n = new URLSearchParams(params); n.set("operation","Sale"); setParams(n, { replace:true }); }}
+          >
+            Comprar
+          </button>
+          <button
+            type="button"
+            className={`btn ${params.get("operation") === "Rent" ? "btn-primary" : "btn-secondary"}`}
+            onClick={() => { const n = new URLSearchParams(params); n.set("operation","Rent"); setParams(n, { replace:true }); }}
+          >
+            Rentar
+          </button>
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <EstadoSelect value={estado} onChange={setEstado} options={states} disabled={loading} />
           <MunicipioSelect
@@ -66,6 +82,9 @@ export default function Buscar() {
             options={municipalities}
             disabled={!estado || loading}
           />
+        </div>
+        <div className="mt-4">
+          <button type="button" className="btn btn-primary w-full md:w-auto">Buscar</button>
         </div>
       </div>
 
