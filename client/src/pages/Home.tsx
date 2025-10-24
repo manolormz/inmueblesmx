@@ -70,6 +70,18 @@ function QuickSearchCard() {
     nav(`/buscar?${q.toString()}`);
   };
 
+  if (!states || states.length === 0) {
+    return (
+      <section className="relative -mt-10 md:-mt-14 z-20">
+        <div className="card bg-white rounded-2xl shadow-card p-6 md:p-8">
+          <h2 className="font-display text-2xl md:text-3xl text-primary">Empieza tu búsqueda</h2>
+          <p className="mt-2 text-sm text-gray-700">Cargando catálogos de ubicación…</p>
+          <div className="mt-4 h-10 w-full bg-secondary/50 rounded-xl animate-pulse" />
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="relative -mt-10 md:-mt-14 z-20">
       <div className="card bg-white rounded-2xl shadow-card p-6 md:p-8">
