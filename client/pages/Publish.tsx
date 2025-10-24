@@ -3,8 +3,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { Header } from "@/components/Header";
-import Footer from "@/components/Footer";
 import {
   Select,
   SelectContent,
@@ -138,7 +136,7 @@ export default function Publish() {
 
   return (
     <div className="min-h-screen bg-white">
-      <Header />
+      
       <main className="container mx-auto px-4 py-8">
         <h1 className="text-2xl font-semibold mb-6">Publicar propiedad</h1>
         <form
@@ -363,7 +361,7 @@ export default function Publish() {
           El estado se guardará como Draft automáticamente.
         </p>
       </main>
-      <Footer />
+      
     </div>
   );
 }
