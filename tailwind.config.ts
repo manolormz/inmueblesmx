@@ -16,10 +16,11 @@ export default {
       colors: {
         // Kentra branding tokens
         primary: { DEFAULT: "#575D43", foreground: "#FFFFFF" },
-        primaryhover: "#4C523B",
+        primaryhover: "#4A513B",
         secondary: { DEFAULT: "#E7E3D0", foreground: "#1C1C1A" },
-        background: "#F9F9F6",
-        text: "#1C1C1A",
+        background: "#F8F7F3",
+        text: "#1F1F1B",
+        accent: "#7A8B55",
         border: "#E5E7EB",
         muted: { DEFAULT: "#F3F4F6", foreground: "#4B5563" },
         // keep existing tokens
