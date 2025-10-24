@@ -85,7 +85,7 @@ function ListingCard({
   const [liked, setLiked] = useState(false);
 
   return (
-    <div className="card overflow-hidden hover:shadow transition border-0 rounded-2xl">
+    <div className="card overflow-hidden hover:shadow-lg transition border-0 rounded-2xl">
       <div className="relative">
         <img
           src={listing.image}
