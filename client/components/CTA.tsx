@@ -19,7 +19,7 @@ export function CTA() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
             <div className="text-center">
               <div className="inline-flex items-center justify-center w-16 h-16 bg-secondary rounded-full mb-4">
-                <TrendingUp className="w-8 h-8 text-blue-600" />
+                <TrendingUp className="w-8 h-8 text-primary" />
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-2">
                 Mejores precios
@@ -31,7 +31,7 @@ export function CTA() {
 
             <div className="text-center">
               <div className="inline-flex items-center justify-center w-16 h-16 bg-secondary rounded-full mb-4">
-                <Users className="w-8 h-8 text-blue-600" />
+                <Users className="w-8 h-8 text-primary" />
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-2">
                 Expertos locales
@@ -43,7 +43,7 @@ export function CTA() {
 
             <div className="text-center">
               <div className="inline-flex items-center justify-center w-16 h-16 bg-secondary rounded-full mb-4">
-                <CheckCircle className="w-8 h-8 text-blue-600" />
+                <CheckCircle className="w-8 h-8 text-primary" />
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-2">
                 Proceso seguro
@@ -71,7 +71,7 @@ export function CTA() {
               placeholder="Tu correo electrónico"
               className="flex-1 px-4 py-3 rounded-lg outline-none"
             />
-            <Button className="bg-white text-blue-600 hover:bg-gray-100 font-semibold px-6">
+            <Button className="bg-white text-primary hover:bg-gray-100 font-semibold px-6">
               Suscribirse
             </Button>
           </div>
