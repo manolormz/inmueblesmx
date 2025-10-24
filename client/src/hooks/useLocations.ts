@@ -13,7 +13,11 @@ type LocationsShape =
     };
 
 const normalize = (s: string) =>
-  s?.toLowerCase()?.normalize("NFD")?.replace(/[\u0300-\u036f]/g, "")?.trim() ?? "";
+  s
+    ?.toLowerCase()
+    ?.normalize("NFD")
+    ?.replace(/[\u0300-\u036f]/g, "")
+    ?.trim() ?? "";
 
 const makeUrlCandidates = () => {
   const base = (import.meta as any).env?.BASE_URL || "/";
@@ -21,39 +25,63 @@ const makeUrlCandidates = () => {
   return Array.from(new Set([`${a}locations.mx.json`, "/locations.mx.json"]));
 };
 
-function parseLocations(json: LocationsShape): { states: string[]; map: Map<string, string[]> } {
+function parseLocations(json: LocationsShape): {
+  states: string[];
+  map: Map<string, string[]>;
+} {
   if (Array.isArray(json)) {
     if (json.length === 0) return { states: [], map: new Map() };
     if (typeof json[0] === "string") {
-      const states = (json as string[]).filter((x) => typeof x === "string") as string[];
+      const states = (json as string[]).filter(
+        (x) => typeof x === "string",
+      ) as string[];
       return { states, map: new Map() };
     }
     const map = new Map<string, string[]>();
     const set = new Set<string>();
     for (const anyRow of json as any[]) {
       const s = String(anyRow.stateName || anyRow.state || anyRow.Estado || "");
-      const m = String(anyRow.municipalityName || anyRow.municipality || anyRow.Municipio || "");
+      const m = String(
+        anyRow.municipalityName ||
+          anyRow.municipality ||
+          anyRow.Municipio ||
+          "",
+      );
       if (!s || !m) continue;
       set.add(s);
       const list = map.get(s) ?? [];
       list.push(m);
       map.set(s, list);
     }
-    const states = Array.from(set).sort((a, b) => normalize(a).localeCompare(normalize(b)));
-    for (const [k, list] of map) map.set(k, Array.from(new Set(list)).sort((a, b) => normalize(a).localeCompare(normalize(b))));
+    const states = Array.from(set).sort((a, b) =>
+      normalize(a).localeCompare(normalize(b)),
+    );
+    for (const [k, list] of map)
+      map.set(
+        k,
+        Array.from(new Set(list)).sort((a, b) =>
+          normalize(a).localeCompare(normalize(b)),
+        ),
+      );
     return { states, map };
   }
 
   if (json && Array.isArray(json.states)) {
     const states = json.states.slice();
     const map = new Map<string, string[]>();
-    const src = (json.municipalities || json.map || json.data || {}) as Record<string, string[]>;
+    const src = (json.municipalities || json.map || json.data || {}) as Record<
+      string,
+      string[]
+    >;
     for (const k of Object.keys(src)) map.set(k, src[k] || []);
     return { states, map };
   }
 
   if (json && (json.municipalities || json.map || json.data)) {
-    const src = (json.municipalities || json.map || json.data) as Record<string, string[]>;
+    const src = (json.municipalities || json.map || json.data) as Record<
+      string,
+      string[]
+    >;
     const states = Object.keys(src);
     const map = new Map<string, string[]>();
     for (const k of states) map.set(k, src[k] || []);
@@ -63,12 +91,19 @@ function parseLocations(json: LocationsShape): { states: string[]; map: Map<stri
   return { states: [], map: new Map() };
 }
 
-async function loadFromStatic(): Promise<{ states: string[]; map: Map<string, string[]> }> {
-  const raw: LocationsShape = (staticLocations as any)?.default ?? (staticLocations as any);
+async function loadFromStatic(): Promise<{
+  states: string[];
+  map: Map<string, string[]>;
+}> {
+  const raw: LocationsShape =
+    (staticLocations as any)?.default ?? (staticLocations as any);
   return parseLocations(raw);
 }
 
-async function loadFromFetch(): Promise<{ states: string[]; map: Map<string, string[]> }> {
+async function loadFromFetch(): Promise<{
+  states: string[];
+  map: Map<string, string[]>;
+}> {
   const candidates = makeUrlCandidates();
   let lastErr: any = null;
   for (const url of candidates) {
@@ -88,7 +123,9 @@ async function loadFromFetch(): Promise<{ states: string[]; map: Map<string, str
 
 export function useLocations() {
   const [states, setStates] = useState<string[]>([]);
-  const [municipalitiesByState, setMap] = useState<Map<string, string[]>>(new Map());
+  const [municipalitiesByState, setMap] = useState<Map<string, string[]>>(
+    new Map(),
+  );
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
@@ -128,7 +165,12 @@ export function useLocations() {
 
   useEffect(() => {
     try {
-      console.info("[useLocations] states:", states.length, "sample:", states.slice(0, 3));
+      console.info(
+        "[useLocations] states:",
+        states.length,
+        "sample:",
+        states.slice(0, 3),
+      );
     } catch {}
   }, [states]);
 
@@ -140,7 +182,14 @@ export function useLocations() {
     return [];
   };
 
-  return { loading, error, states, municipalitiesByState, findMunicipalities, normalize };
+  return {
+    loading,
+    error,
+    states,
+    municipalitiesByState,
+    findMunicipalities,
+    normalize,
+  };
 }
 
 export function toOptions(items: string[]): Option[] {
@@ -164,7 +213,9 @@ export function useLocationOptions() {
   return { stateOptions, municipalityOptions };
 }
 
-export function useLocationOptionsSorted(sortBy: "alpha" | "popular" = "alpha") {
+export function useLocationOptionsSorted(
+  sortBy: "alpha" | "popular" = "alpha",
+) {
   const { states, findMunicipalities } = useLocations();
   const props = useProperties ? useProperties() : { items: [] as any[] };
   const items = props?.items || [];
@@ -182,19 +233,30 @@ export function useLocationOptionsSorted(sortBy: "alpha" | "popular" = "alpha") 
   const stateOptions = useMemo(() => {
     const arr = [...states];
     if (sortBy === "popular") {
-      arr.sort((a, b) => (countsByState.get(b) || 0) - (countsByState.get(a) || 0) || a.localeCompare(b, "es"));
+      arr.sort(
+        (a, b) =>
+          (countsByState.get(b) || 0) - (countsByState.get(a) || 0) ||
+          a.localeCompare(b, "es"),
+      );
     } else {
       arr.sort((a, b) => a.localeCompare(b, "es"));
     }
     return arr.map((s) => {
       const c = countsByState.get(s);
-      return { value: s, label: c ? `${s} (${c})` : s, raw: s, count: c || 0 } as any;
+      return {
+        value: s,
+        label: c ? `${s} (${c})` : s,
+        raw: s,
+        count: c || 0,
+      } as any;
     });
   }, [states, countsByState, sortBy]);
 
   const municipalityOptions = (estado: string, query?: string) => {
     const list = estado ? findMunicipalities(estado) : [];
-    const filtered = query ? list.filter((m) => m.toLowerCase().includes(query.toLowerCase())) : list;
+    const filtered = query
+      ? list.filter((m) => m.toLowerCase().includes(query.toLowerCase()))
+      : list;
     return filtered.map((m) => ({ value: m, label: m, raw: m }));
   };
 

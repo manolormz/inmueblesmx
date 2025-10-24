@@ -60,7 +60,9 @@ function App() {
               {/* Debug overlay auto-mounts if ?debug=1 */}
               <DebugTools />
               <DebugBoundary name="Routes">
-                <Suspense fallback={<div className="p-6 text-sm">Cargando Kentra…</div>}>
+                <Suspense
+                  fallback={<div className="p-6 text-sm">Cargando Kentra…</div>}
+                >
                   <Routes>
                     <Route element={<LayoutShell />}>
                       <Route index element={<Home />} />
@@ -81,7 +83,10 @@ function App() {
                       <Route path="qa/autotest" element={<Autotest />} />
                       <Route path="dashboard" element={<Dashboard />} />
                       <Route path="buscar" element={<Buscar />} />
-                      <Route path="dashboard/properties/:slug/edit" element={<DashboardPropertyEdit />} />
+                      <Route
+                        path="dashboard/properties/:slug/edit"
+                        element={<DashboardPropertyEdit />}
+                      />
                       <Route path="*" element={<NotFound />} />
                     </Route>
                   </Routes>

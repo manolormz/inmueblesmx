@@ -43,7 +43,8 @@ const SALE_RANGES: Array<[number, number | null, string]> = [
 
 function QuickSearchCard() {
   const nav = useNavigate();
-  const { stateOptions, municipalityOptions } = useLocationOptionsSorted("popular");
+  const { stateOptions, municipalityOptions } =
+    useLocationOptionsSorted("popular");
   const [params] = useSearchParams();
 
   const initialMode =
@@ -161,7 +162,9 @@ function QuickSearchCard() {
               value={municipio}
               onChange={setMunicipio}
               options={municipalityOptions(estado)}
-              placeholder={estado ? "Escribe para buscar…" : "Selecciona primero un estado"}
+              placeholder={
+                estado ? "Escribe para buscar…" : "Selecciona primero un estado"
+              }
               disabled={!estado}
             />
           </div>
