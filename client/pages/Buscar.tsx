@@ -6,6 +6,8 @@ import EstadoSelect from "@/components/EstadoSelect";
 import MunicipioSelect from "@/components/MunicipioSelect";
 import Hero from "../src/components/Hero";
 import SearchMenu from "../components/search/SearchMenu";
+import DebugBoundary from "../components/DebugBoundary";
+import FallbackPage from "../components/FallbackPage";
 import { FeaturedListings } from "@/components/FeaturedListings";
 import WhyChoose from "@/components/WhyChoose";
 import SubscribeBanner from "@/components/SubscribeBanner";
@@ -23,6 +25,10 @@ export default function Buscar() {
   const [orden, setOrden] = useState<"relevance" | "price_asc" | "price_desc" | "area_asc" | "area_desc">("relevance");
   const [pageSize, setPageSize] = useState(pp);
   const [vistaState, setVista] = useState<"lista" | "mapa">(vista);
+  console.info("[Buscar] mount");
+  const [safeNote, setSafeNote] = useState<string>("");
+  const SAFE_MODE = params.get("safe") === "1";
+  console.info("[Buscar] orden:", orden, "pageSize:", pageSize, "vista:", vistaState);
 
   const municipalities = useMemo(
     () => (estado ? findMunicipalities(estado) : []),
@@ -84,11 +90,17 @@ export default function Buscar() {
     <div className="max-w-5xl mx-auto bg-secondary/40 rounded-2xl p-0 md:p-0 space-y-8">
       <Hero />
 
-      <SearchMenu
-        onOrden={(v) => setOrden(v)}
-        onPageSize={(n) => setPageSize(n)}
-        onToggleVista={(v) => setVista(v)}
-      />
+      <DebugBoundary name="SearchMenu">
+        {SAFE_MODE ? (
+          <FallbackPage title="Kentra · Safe mode" note="SearchMenu desactivado por ?safe=1" />
+        ) : (
+          <SearchMenu
+            onOrden={(v) => setOrden(v)}
+            onPageSize={(n) => setPageSize(n)}
+            onToggleVista={(v) => setVista(v)}
+          />
+        )}
+      </DebugBoundary>
 
       {error && (
         <div className="p-3 rounded bg-red-50 border text-red-700">
@@ -96,6 +108,7 @@ export default function Buscar() {
         </div>
       )}
 
+      <DebugBoundary name="Filtros">
       <div className="-mt-8 md:-mt-10 relative z-20">
         <div className="card bg-white rounded-2xl shadow-card p-6">
         <div className="mb-4">
@@ -145,7 +158,9 @@ export default function Buscar() {
         </div>
         </div>
       </div>
+      </DebugBoundary>
 
+      <DebugBoundary name="Resultados">
       <div className="pt-4">
         <h2 className="text-lg font-medium mb-2">Resultados</h2>
         <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -159,6 +174,7 @@ export default function Buscar() {
           ))}
         </ul>
       </div>
+      </DebugBoundary>
 
       <div className="mt-4 flex flex-wrap gap-2">
         {["Con jardín", "Con alberca", "Acepta mascotas"].map((chip) => (
