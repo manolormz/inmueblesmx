@@ -50,36 +50,36 @@ const App = () => (
       <BrowserRouter>
         <AuthProvider>
           <LayoutShell>
-          {/* Debug overlay auto-mounts if ?debug=1 */}
-          <DebugTools />
-          {/**
+            {/* Debug overlay auto-mounts if ?debug=1 */}
+            <DebugTools />
+            {/**
           import DebugOverlay from '@/components/DebugOverlay';
           <DebugOverlay />
           **/}
-          <Routes>
-            <Route path="/" element={<Navigate to="/buscar" replace />} />
-            <Route path="/publish" element={<Publish />} />
-            <Route path="/search" element={<Search />} />
-            <Route path="/property/:slug" element={<Property />} />
-            <Route path="/maintenance" element={<Maintenance />} />
-            <Route path="/auth/login" element={<Login />} />
-            <Route path="/auth/register" element={<Register />} />
-            <Route path="/login" element={<LoginTop />} />
-            <Route path="/register" element={<RegisterTop />} />
-            <Route path="/lead" element={<Lead />} />
-            <Route path="/visita" element={<Visit />} />
-            <Route path="/agencia" element={<Agency />} />
-            <Route path="/qa/buttons" element={<QAButtons />} />
-            <Route path="/qa/autotest" element={<Autotest />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/buscar" element={<Buscar />} />
-            <Route
-              path="/dashboard/properties/:slug/edit"
-              element={<DashboardPropertyEdit />}
-            />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<Navigate to="/buscar" replace />} />
-          </Routes>
+            <Routes>
+              <Route path="/" element={<Navigate to="/buscar" replace />} />
+              <Route path="/publish" element={<Publish />} />
+              <Route path="/search" element={<Search />} />
+              <Route path="/property/:slug" element={<Property />} />
+              <Route path="/maintenance" element={<Maintenance />} />
+              <Route path="/auth/login" element={<Login />} />
+              <Route path="/auth/register" element={<Register />} />
+              <Route path="/login" element={<LoginTop />} />
+              <Route path="/register" element={<RegisterTop />} />
+              <Route path="/lead" element={<Lead />} />
+              <Route path="/visita" element={<Visit />} />
+              <Route path="/agencia" element={<Agency />} />
+              <Route path="/qa/buttons" element={<QAButtons />} />
+              <Route path="/qa/autotest" element={<Autotest />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/buscar" element={<Buscar />} />
+              <Route
+                path="/dashboard/properties/:slug/edit"
+                element={<DashboardPropertyEdit />}
+              />
+              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="*" element={<Navigate to="/buscar" replace />} />
+            </Routes>
           </LayoutShell>
         </AuthProvider>
       </BrowserRouter>
