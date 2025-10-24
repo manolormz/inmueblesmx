@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import LayoutShell from "./components/LayoutShell";
+import DebugBoundary from "./components/DebugBoundary";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Publish from "./pages/Publish";
@@ -49,6 +50,7 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <AuthProvider>
+          <DebugBoundary name="App">
           <LayoutShell>
             {/* Debug overlay auto-mounts if ?debug=1 */}
             <DebugTools />
@@ -81,6 +83,7 @@ const App = () => (
             <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </LayoutShell>
+          </DebugBoundary>
         </AuthProvider>
       </BrowserRouter>
     </TooltipProvider>
