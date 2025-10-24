@@ -16,7 +16,7 @@ export default function LayoutShell({
             <LogoKentra variant="monogram" theme="light" width={150} />
             <span className="font-display text-xl tracking-wide">Kentra</span>
           </Link>
-          <nav className="flex items-center gap-6 text-sm tracking-wide font-medium">
+          <nav className="flex items-center gap-6 font-display tracking-wide text-sm">
             <Link
               to="/search?operation=Sale&status=Published"
               className="text-white/90 hover:text-white"
