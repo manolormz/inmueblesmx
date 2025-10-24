@@ -1,6 +1,32 @@
 /** @import must precede all other statements */
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap");
 
+:root{
+  --color-primary:#575D43;
+  --color-primary-hover:#4C523B;
+  --color-primary-foreground:#ffffff;
+  --color-secondary:#E7E3D0;
+  --color-secondary-foreground:#1C1C1A;
+  --color-background:#F9F9F6;
+  --color-text:#1C1C1A;
+  --color-border:#E5E7EB;
+  --radius-xl:1rem;
+  --radius-2xl:1.25rem;
+}
+
+html, body { background: var(--color-background); color: var(--color-text); }
+body { font-family: Inter, ui-sans-serif, system-ui; }
+
+/* Utilidades mínimas */
+.btn { @apply inline-flex items-center justify-center rounded-2xl px-4 py-2 font-medium transition; }
+.btn-primary { background: var(--color-primary); color: var(--color-primary-foreground); }
+.btn-primary:hover { background: var(--color-primary-hover); }
+.btn-secondary { background: var(--color-secondary); color: var(--color-secondary-foreground); }
+.input, .select, .textarea { @apply w-full rounded-2xl border border-[color:var(--color-border)] p-3 shadow-sm focus:outline-none focus:ring focus:ring-primary/30 bg-white; }
+.card { @apply rounded-2xl border border-[color:var(--color-border)] bg-white shadow-card; }
+.label { @apply text-sm font-medium; }
+.help { @apply text-xs text-gray-500; }
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
