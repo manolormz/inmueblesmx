@@ -23,7 +23,7 @@ export default function EstadoSelect({
       <select
         id={id}
         aria-label={label}
-        className="w-full rounded-2xl border p-3 shadow-sm focus:outline-none focus:ring"
+        className="select"
         value={value}
         onChange={(e) => onChange(e.target.value)}
         disabled={disabled}
