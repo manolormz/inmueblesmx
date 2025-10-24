@@ -2,14 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import LogoKentra from "./LogoKentra";
 import Footer from "./Footer";
+import { Outlet } from "react-router-dom";
 
-export default function LayoutShell({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function LayoutShell() {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col" data-app="kentra">
       <header className="sticky top-0 z-50 bg-primary/95 backdrop-blur-sm text-primary-foreground shadow-card border-b border-secondary/50 h-16 md:h-20 flex items-center">
         <div className="max-w-6xl mx-auto px-4 py-0 flex items-center justify-between w-full">
           <Link to="/buscar" className="flex items-center gap-3">
