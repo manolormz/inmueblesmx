@@ -4,7 +4,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Publish from "./pages/Publish";
@@ -24,6 +24,7 @@ import Visit from "./pages/Visit";
 import Agency from "./pages/Agency";
 import LoginTop from "./pages/login";
 import RegisterTop from "./pages/register";
+import Buscar from "./pages/Buscar";
 
 const queryClient = new QueryClient();
 
@@ -69,12 +70,13 @@ const App = () => (
             <Route path="/qa/buttons" element={<QAButtons />} />
             <Route path="/qa/autotest" element={<Autotest />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/buscar" element={<Buscar />} />
             <Route
               path="/dashboard/properties/:slug/edit"
               element={<DashboardPropertyEdit />}
             />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
+            <Route path="*" element={<Navigate to="/buscar" replace />} />
           </Routes>
         </AuthProvider>
       </BrowserRouter>
