@@ -67,7 +67,7 @@ export default function Buscar() {
   }, [propiedadesDemo, estado, municipio, normalize]);
 
   return (
-    <div className="max-w-5xl mx-auto p-4 space-y-6 bg-secondary/40 rounded-2xl">
+    <div className="max-w-5xl mx-auto p-4 space-y-8 bg-secondary/40 rounded-2xl">
       <Hero />
 
       {error && (
@@ -76,7 +76,7 @@ export default function Buscar() {
         </div>
       )}
 
-      <div className="card p-4 md:p-6">
+      <div className="card bg-white rounded-2xl shadow-card p-6">
         <div className="mb-4">
           <div className="inline-flex rounded-2xl overflow-hidden border border-primary/40">
             <button
