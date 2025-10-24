@@ -26,7 +26,7 @@ export function Header() {
           >
             <Link
               to={{
-                pathname: "/search",
+                pathname: "/buscar",
                 search: "?operation=Sale&status=Published",
               }}
               onClick={onClickLog("nav-comprar")}
@@ -38,7 +38,7 @@ export function Header() {
             </Link>
             <Link
               to={{
-                pathname: "/search",
+                pathname: "/buscar",
                 search: "?operation=Rent&status=Published",
               }}
               onClick={onClickLog("nav-rentar")}
@@ -78,14 +78,14 @@ export function Header() {
             {!currentUser ? (
               <>
                 <Link
-                  to="/login"
+                  to="/auth/login"
                   className="text-gray-700 hover:text-primary transition"
                   data-loc="NavbarLogin"
                 >
                   Iniciar sesión
                 </Link>
                 <Link
-                  to="/register"
+                  to="/auth/register"
                   className="btn btn-primary"
                   data-loc="NavbarRegister"
                 >

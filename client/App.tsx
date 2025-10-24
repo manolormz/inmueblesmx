@@ -5,8 +5,9 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import React, { Suspense, lazy } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import LayoutShell from "./components/LayoutShell";
+import LayoutShell from "@/src/components/LayoutShell";
 import DebugBoundary from "./components/DebugBoundary";
+import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Publish from "./pages/Publish";
 import Search from "./pages/Search";
@@ -65,7 +66,7 @@ function App() {
                 >
                   <Routes>
                     <Route element={<LayoutShell />}>
-                      <Route index element={<Home />} />
+                      <Route index element={<Index />} />
                       <Route path="publish" element={<Publish />} />
                       <Route path="search" element={<Search />} />
                       <Route path="property/:slug" element={<Property />} />
@@ -82,7 +83,7 @@ function App() {
                       <Route path="qa/buttons" element={<QAButtons />} />
                       <Route path="qa/autotest" element={<Autotest />} />
                       <Route path="dashboard" element={<Dashboard />} />
-                      <Route path="buscar" element={<Buscar />} />
+                      <Route path="buscar" element={<Search />} />
                       <Route
                         path="dashboard/properties/:slug/edit"
                         element={<DashboardPropertyEdit />}
