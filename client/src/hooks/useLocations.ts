@@ -147,6 +147,13 @@ export function toOptions(items: string[]): Option[] {
   return (items || []).map((s) => ({ value: s, label: s }));
 }
 
+// Optional: stub for useProperties if not present in project
+let useProperties: undefined | (() => { items: any[] });
+try {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  useProperties = require("../hooks/useProperties").useProperties;
+} catch {}
+
 export function useLocationOptions() {
   const { states, findMunicipalities } = useLocations();
   const stateOptions: Option[] = toOptions(states);
@@ -155,4 +162,41 @@ export function useLocationOptions() {
     return toOptions(ms);
   };
   return { stateOptions, municipalityOptions };
+}
+
+export function useLocationOptionsSorted(sortBy: "alpha" | "popular" = "alpha") {
+  const { states, findMunicipalities } = useLocations();
+  const props = useProperties ? useProperties() : { items: [] as any[] };
+  const items = props?.items || [];
+
+  const countsByState = useMemo(() => {
+    const m = new Map<string, number>();
+    for (const p of items) {
+      const st = (p.state ?? (p as any).estado ?? "").toString().trim();
+      if (!st) continue;
+      m.set(st, (m.get(st) || 0) + 1);
+    }
+    return m;
+  }, [items]);
+
+  const stateOptions = useMemo(() => {
+    const arr = [...states];
+    if (sortBy === "popular") {
+      arr.sort((a, b) => (countsByState.get(b) || 0) - (countsByState.get(a) || 0) || a.localeCompare(b, "es"));
+    } else {
+      arr.sort((a, b) => a.localeCompare(b, "es"));
+    }
+    return arr.map((s) => {
+      const c = countsByState.get(s);
+      return { value: s, label: c ? `${s} (${c})` : s, raw: s, count: c || 0 } as any;
+    });
+  }, [states, countsByState, sortBy]);
+
+  const municipalityOptions = (estado: string, query?: string) => {
+    const list = estado ? findMunicipalities(estado) : [];
+    const filtered = query ? list.filter((m) => m.toLowerCase().includes(query.toLowerCase())) : list;
+    return filtered.map((m) => ({ value: m, label: m, raw: m }));
+  };
+
+  return { stateOptions, municipalityOptions, countsByState };
 }
