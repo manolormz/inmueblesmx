@@ -146,7 +146,7 @@ listings.get("/:slugOrId", async (req, res) => {
     const { rows } = await query(
       `
     SELECT l.id as listing_id, l.operation, l.price, l.currency, l.status, l.published_at,
-           p.,
+           p.*,
            ST_X(p.geo_point::geometry) AS lng,
            ST_Y(p.geo_point::geometry) AS lat,
            COALESCE((
