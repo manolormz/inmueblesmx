@@ -149,7 +149,7 @@ export default function Buscar() {
       <div className="pt-4">
         <h2 className="text-lg font-medium mb-2">Resultados</h2>
         <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          {filtradas.map((p) => (
+          {visible.map((p) => (
             <li key={p.id} className="card p-4 hover:shadow">
               <div className="font-semibold">{p.titulo}</div>
               <div className="text-sm text-gray-600">
