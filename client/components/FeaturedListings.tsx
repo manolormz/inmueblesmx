@@ -93,7 +93,7 @@ function ListingCard({
           className="w-full h-64 object-cover"
         />
         {listing.featured && (
-          <div className="absolute top-3 left-3 bg-primary text-primary-foreground px-3 py-1 rounded-xl text-xs font-semibold uppercase">
+          <div className="absolute top-3 left-3 bg-primary text-primary-foreground px-3 py-1 rounded-xl text-xs uppercase tracking-wide">
             Destacado
           </div>
         )}
