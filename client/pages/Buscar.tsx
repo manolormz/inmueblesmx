@@ -16,6 +16,13 @@ export default function Buscar() {
   const [params, setParams] = useSearchParams();
   const estado = params.get("estado") ?? "";
   const municipio = params.get("municipio") ?? "";
+  const modo = (params.get("modo") || "comprar").toLowerCase();
+  const vista = (params.get("vista") || "lista").toLowerCase() as "lista" | "mapa";
+  const pp = Math.max(1, parseInt(params.get("pp") || "12"));
+  const page = Math.max(1, parseInt(params.get("page") || "1"));
+  const [orden, setOrden] = useState<"relevance" | "price_asc" | "price_desc" | "area_asc" | "area_desc">("relevance");
+  const [pageSize, setPageSize] = useState(pp);
+  const [vistaState, setVista] = useState<"lista" | "mapa">(vista);
 
   const municipalities = useMemo(
     () => (estado ? findMunicipalities(estado) : []),
