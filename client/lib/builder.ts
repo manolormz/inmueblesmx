@@ -6,7 +6,9 @@ export const initBuilder = () => {
     );
     return;
   }
-  import("@builder.io/sdk")
+  const mod = "@builder.io/sdk";
+  // @ts-ignore - optional dep, ignored by bundler
+  import(/* @vite-ignore */ mod)
     .then(({ builder }) => {
       builder.init(key);
       console.info("[Builder] Init OK");
