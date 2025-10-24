@@ -1,5 +1,5 @@
 import React, { useMemo, useState, useEffect } from "react";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useLocationOptionsSorted } from "../hooks/useLocations";
 import { saveLastSearch, loadLastSearch } from "../utils/searchState";
