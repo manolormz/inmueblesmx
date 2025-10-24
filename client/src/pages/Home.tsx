@@ -6,8 +6,15 @@ import MunicipioSelect from "../components/MunicipioSelect";
 import HeroStripe from "../components/HeroStripe";
 
 type Tipo =
-  | "casa" | "departamento" | "oficina" | "terreno"
-  | "local" | "bodega" | "loft" | "ph" | "otro";
+  | "casa"
+  | "departamento"
+  | "oficina"
+  | "terreno"
+  | "local"
+  | "bodega"
+  | "loft"
+  | "ph"
+  | "otro";
 
 const RENT_RANGES: Array<[number, number | null, string]> = [
   [0, 7500, "Hasta $7,500"],
@@ -39,7 +46,10 @@ function QuickSearchCard() {
   const { states, findMunicipalities } = useLocations();
   const [params] = useSearchParams();
 
-  const initialMode = (params.get("modo") || "comprar").toLowerCase() === "renta" ? "rentar" : "comprar";
+  const initialMode =
+    (params.get("modo") || "comprar").toLowerCase() === "renta"
+      ? "rentar"
+      : "comprar";
   const [modo, setModo] = useState<"comprar" | "rentar">(initialMode);
 
   const [estado, setEstado] = useState("");
@@ -47,7 +57,10 @@ function QuickSearchCard() {
   const [tipo, setTipo] = useState<Tipo | "">("");
   const [precioIdx, setPrecioIdx] = useState<string>("");
 
-  const municipios = useMemo(() => (estado ? findMunicipalities(estado) : []), [estado, findMunicipalities]);
+  const municipios = useMemo(
+    () => (estado ? findMunicipalities(estado) : []),
+    [estado, findMunicipalities],
+  );
 
   const RANGES = modo === "rentar" ? RENT_RANGES : SALE_RANGES;
 
@@ -74,8 +87,12 @@ function QuickSearchCard() {
     return (
       <section className="relative -mt-10 md:-mt-14 z-20">
         <div className="card bg-white rounded-2xl shadow-card p-6 md:p-8">
-          <h2 className="font-display text-2xl md:text-3xl text-primary">Empieza tu búsqueda</h2>
-          <p className="mt-2 text-sm text-gray-700">Cargando catálogos de ubicación…</p>
+          <h2 className="font-display text-2xl md:text-3xl text-primary">
+            Empieza tu búsqueda
+          </h2>
+          <p className="mt-2 text-sm text-gray-700">
+            Cargando catálogos de ubicación…
+          </p>
           <div className="mt-4 h-10 w-full bg-secondary/50 rounded-xl animate-pulse" />
         </div>
       </section>
@@ -86,7 +103,11 @@ function QuickSearchCard() {
     <section className="relative -mt-10 md:-mt-14 z-20">
       <div className="card bg-white rounded-2xl shadow-card p-6 md:p-8">
         <div className="flex justify-center mb-4">
-          <div className="inline-flex rounded-2xl overflow-hidden border border-primary/40" role="tablist" aria-label="Modo">
+          <div
+            className="inline-flex rounded-2xl overflow-hidden border border-primary/40"
+            role="tablist"
+            aria-label="Modo"
+          >
             <button
               role="tab"
               aria-selected={modo === "comprar"}
@@ -106,18 +127,36 @@ function QuickSearchCard() {
           </div>
         </div>
 
-        <h2 className="font-display text-2xl md:text-3xl text-primary">Empieza tu búsqueda</h2>
+        <h2 className="font-display text-2xl md:text-3xl text-primary">
+          Empieza tu búsqueda
+        </h2>
         <p className="mt-1 text-sm md:text-base text-gray-700">
-          Selecciona ubicación y un rango de precio; podrás refinar más filtros en la vista de búsqueda.
+          Selecciona ubicación y un rango de precio; podrás refinar más filtros
+          en la vista de búsqueda.
         </p>
 
-        <form onSubmit={onSubmit} className="mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <form
+          onSubmit={onSubmit}
+          className="mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
+        >
           <div>
-            <EstadoSelect value={estado} onChange={(v) => { setEstado(v); setMunicipio(""); }} options={states} />
+            <EstadoSelect
+              value={estado}
+              onChange={(v) => {
+                setEstado(v);
+                setMunicipio("");
+              }}
+              options={states}
+            />
           </div>
 
           <div>
-            <MunicipioSelect value={municipio} onChange={setMunicipio} options={municipios} disabled={!estado} />
+            <MunicipioSelect
+              value={municipio}
+              onChange={setMunicipio}
+              options={municipios}
+              disabled={!estado}
+            />
           </div>
 
           <div>
@@ -142,7 +181,9 @@ function QuickSearchCard() {
           </div>
 
           <div>
-            <label className="label">Precio ({modo === "rentar" ? "mensual" : "venta"})</label>
+            <label className="label">
+              Precio ({modo === "rentar" ? "mensual" : "venta"})
+            </label>
             <select
               className="select"
               value={precioIdx}
@@ -151,13 +192,17 @@ function QuickSearchCard() {
             >
               <option value="">Cualquiera</option>
               {RANGES.map((r, i) => (
-                <option key={i} value={i}>{r[2]}</option>
+                <option key={i} value={i}>
+                  {r[2]}
+                </option>
               ))}
             </select>
           </div>
 
           <div className="flex items-end">
-            <button type="submit" className="btn btn-primary w-full md:w-auto">Buscar ahora</button>
+            <button type="submit" className="btn btn-primary w-full md:w-auto">
+              Buscar ahora
+            </button>
           </div>
         </form>
       </div>

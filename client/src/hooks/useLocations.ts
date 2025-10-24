@@ -6,19 +6,23 @@ type Row = {
 };
 
 const normalize = (s: string) =>
-  s?.toLowerCase()?.normalize("NFD")?.replace(/[\u0300-\u036f]/g, "")?.trim() ?? "";
+  s
+    ?.toLowerCase()
+    ?.normalize("NFD")
+    ?.replace(/[\u0300-\u036f]/g, "")
+    ?.trim() ?? "";
 
 const makeUrlCandidates = () => {
   const base = (import.meta as any).env?.BASE_URL || "/";
   const a = base.endsWith("/") ? base : base + "/";
-  const candidates = [
-    `${a}locations.mx.json`,
-    "/locations.mx.json",
-  ];
+  const candidates = [`${a}locations.mx.json`, "/locations.mx.json"];
   return Array.from(new Set(candidates));
 };
 
-async function loadLocations(): Promise<{ states: string[]; map: Map<string, string[]> }> {
+async function loadLocations(): Promise<{
+  states: string[];
+  map: Map<string, string[]>;
+}> {
   const candidates = makeUrlCandidates();
   let lastErr: any = null;
 
@@ -58,7 +62,9 @@ async function loadLocations(): Promise<{ states: string[]; map: Map<string, str
 
 export function useLocations() {
   const [states, setStates] = useState<string[]>([]);
-  const [municipalitiesByState, setMap] = useState<Map<string, string[]>>(new Map());
+  const [municipalitiesByState, setMap] = useState<Map<string, string[]>>(
+    new Map(),
+  );
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
@@ -87,7 +93,12 @@ export function useLocations() {
 
   useEffect(() => {
     try {
-      console.info("[useLocations] states:", states.length, "sample:", states.slice(0, 3));
+      console.info(
+        "[useLocations] states:",
+        states.length,
+        "sample:",
+        states.slice(0, 3),
+      );
     } catch {}
   }, [states]);
 
@@ -99,7 +110,14 @@ export function useLocations() {
     return [];
   };
 
-  return { loading, error, states, municipalitiesByState, findMunicipalities, normalize };
+  return {
+    loading,
+    error,
+    states,
+    municipalitiesByState,
+    findMunicipalities,
+    normalize,
+  };
 }
 
 export type Option = { value: string; label: string };

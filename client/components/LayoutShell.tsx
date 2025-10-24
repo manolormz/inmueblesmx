@@ -17,10 +17,7 @@ export default function LayoutShell({
             <span className="font-display text-xl tracking-wide">Kentra</span>
           </Link>
           <nav className="flex items-center gap-6 font-display tracking-wide text-sm">
-            <Link
-              to="/buscar"
-              className="text-white/90 hover:text-white"
-            >
+            <Link to="/buscar" className="text-white/90 hover:text-white">
               Comprar
             </Link>
             <Link

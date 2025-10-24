@@ -61,7 +61,11 @@ function App() {
                 {/* Debug overlay auto-mounts if ?debug=1 */}
                 <DebugTools />
                 <DebugBoundary name="Routes">
-                  <Suspense fallback={<div className="p-6 text-sm">Cargando Kentra…</div>}>
+                  <Suspense
+                    fallback={
+                      <div className="p-6 text-sm">Cargando Kentra…</div>
+                    }
+                  >
                     <Routes>
                       <Route path="/" element={<Home />} />
                       <Route path="/publish" element={<Publish />} />

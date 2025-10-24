@@ -49,18 +49,27 @@ export default function HeroHome() {
         <h1 className="font-display text-4xl md:text-6xl text-primary font-semibold leading-tight">
           Encuentra el espacio perfecto
           <br />
-          <span className="text-[color:var(--color-text)]">para tu próxima etapa</span>
+          <span className="text-[color:var(--color-text)]">
+            para tu próxima etapa
+          </span>
         </h1>
 
         <p className="mt-4 text-base md:text-lg text-gray-700 leading-relaxed">
-          Kentra combina tecnología, diseño y confianza para ayudarte a encontrar un hogar con propósito.
+          Kentra combina tecnología, diseño y confianza para ayudarte a
+          encontrar un hogar con propósito.
         </p>
 
         <div className="mt-8 flex flex-wrap justify-center gap-4">
-          <Link to="/buscar" className="btn btn-primary text-base md:text-lg px-8">
+          <Link
+            to="/buscar"
+            className="btn btn-primary text-base md:text-lg px-8"
+          >
             Explorar propiedades
           </Link>
-          <Link to="/contacto" className="btn btn-secondary text-base md:text-lg px-8">
+          <Link
+            to="/contacto"
+            className="btn btn-secondary text-base md:text-lg px-8"
+          >
             Hablar con un asesor
           </Link>
         </div>

@@ -11,7 +11,10 @@ export default function HeroStripe() {
       />
       <div
         className="absolute inset-0"
-        style={{ background: "linear-gradient(180deg, rgba(87,93,67,0.35) 0%, rgba(248,247,243,0.85) 85%)" }}
+        style={{
+          background:
+            "linear-gradient(180deg, rgba(87,93,67,0.35) 0%, rgba(248,247,243,0.85) 85%)",
+        }}
       />
       <div className="relative z-10 h-full flex items-center justify-center text-center px-6">
         <h1 className="font-display text-2xl md:text-4xl text-primary font-semibold tracking-wide">

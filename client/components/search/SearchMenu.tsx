@@ -2,7 +2,12 @@ import React, { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
-type SortValue = "relevance" | "price_asc" | "price_desc" | "area_asc" | "area_desc";
+type SortValue =
+  | "relevance"
+  | "price_asc"
+  | "price_desc"
+  | "area_asc"
+  | "area_desc";
 
 const CHIP_KEYS = ["jardin", "alberca", "mascotas"] as const;
 type ChipKey = (typeof CHIP_KEYS)[number];
@@ -20,7 +25,9 @@ function useUrlState() {
     (params.get("chips") || "")
       .split(",")
       .map((s) => s.trim())
-      .filter((x): x is ChipKey => (CHIP_KEYS as readonly string[]).includes(x)),
+      .filter((x): x is ChipKey =>
+        (CHIP_KEYS as readonly string[]).includes(x),
+      ),
   );
 
   const setParam = (k: string, v?: string) => {
@@ -151,7 +158,11 @@ export default function SearchMenu({
         {/* Orden / page size */}
         <div className="flex items-center gap-2">
           <label className="text-sm">Orden:</label>
-          <select className="select" value={orden} onChange={(e) => setParam("orden", e.target.value)}>
+          <select
+            className="select"
+            value={orden}
+            onChange={(e) => setParam("orden", e.target.value)}
+          >
             <option value="relevance">Relevancia</option>
             <option value="price_asc">Precio ↑</option>
             <option value="price_desc">Precio ↓</option>
@@ -163,7 +174,9 @@ export default function SearchMenu({
           <select
             className="select w-[92px]"
             value={pp}
-            onChange={(e) => setParam("pp", String(parseInt(e.target.value) || 12))}
+            onChange={(e) =>
+              setParam("pp", String(parseInt(e.target.value) || 12))
+            }
           >
             <option>8</option>
             <option>12</option>
