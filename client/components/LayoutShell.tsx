@@ -24,7 +24,7 @@ export default function LayoutShell({
               Comprar
             </Link>
             <Link
-              to="/search?operation=Rent&status=Published"
+              to="/buscar?modo=renta"
               className="text-white/90 hover:text-white"
             >
               Rentar
