@@ -23,8 +23,25 @@ const makeUrlCandidates = () => {
 
 function parseLocations(json: LocationsShape): { states: string[]; map: Map<string, string[]> } {
   if (Array.isArray(json)) {
-    const states = json.filter((x) => typeof x === "string") as string[];
-    return { states, map: new Map() };
+    if (json.length === 0) return { states: [], map: new Map() };
+    if (typeof json[0] === "string") {
+      const states = (json as string[]).filter((x) => typeof x === "string") as string[];
+      return { states, map: new Map() };
+    }
+    const map = new Map<string, string[]>();
+    const set = new Set<string>();
+    for (const anyRow of json as any[]) {
+      const s = String(anyRow.stateName || anyRow.state || anyRow.Estado || "");
+      const m = String(anyRow.municipalityName || anyRow.municipality || anyRow.Municipio || "");
+      if (!s || !m) continue;
+      set.add(s);
+      const list = map.get(s) ?? [];
+      list.push(m);
+      map.set(s, list);
+    }
+    const states = Array.from(set).sort((a, b) => normalize(a).localeCompare(normalize(b)));
+    for (const [k, list] of map) map.set(k, Array.from(new Set(list)).sort((a, b) => normalize(a).localeCompare(normalize(b))));
+    return { states, map };
   }
 
   if (json && Array.isArray(json.states)) {
@@ -46,36 +63,27 @@ function parseLocations(json: LocationsShape): { states: string[]; map: Map<stri
   return { states: [], map: new Map() };
 }
 
-async function loadLocations(): Promise<{ states: string[]; map: Map<string, string[]> }> {
+async function loadFromStatic(): Promise<{ states: string[]; map: Map<string, string[]> }> {
+  const raw: LocationsShape = (staticLocations as any)?.default ?? (staticLocations as any);
+  return parseLocations(raw);
+}
+
+async function loadFromFetch(): Promise<{ states: string[]; map: Map<string, string[]> }> {
   const candidates = makeUrlCandidates();
   let lastErr: any = null;
-
   for (const url of candidates) {
     try {
-      console.info("[useLocations] trying:", url);
+      console.info("[useLocations] fetch:", url);
       const res = await fetch(url, { cache: "no-store" });
-      if (!res.ok) throw new Error(`HTTP ${res.status} at ${url}`);
+      if (!res.ok) throw new Error(`HTTP ${res.status} @ ${url}`);
       const raw = (await res.json()) as LocationsShape;
-      const { states, map } = parseLocations(raw);
-      console.info("[useLocations] parsed:", states.length, "states");
-      return { states, map };
+      return parseLocations(raw);
     } catch (e) {
       lastErr = e;
-      console.warn("[useLocations] failed:", e);
+      console.warn("[useLocations] fetch fail:", e);
     }
   }
-
-  // Optional runtime-only fallback import (avoids bundler resolution)
-  try {
-    const dynImport: any = new Function("p", "return import(p)");
-    const mod: any = await dynImport("../data/locations.mx.json");
-    const raw: LocationsShape = mod?.default ?? mod;
-    const { states, map } = parseLocations(raw);
-    console.info("[useLocations] fallback import ok:", states.length, "states");
-    return { states, map };
-  } catch (_ignore) {}
-
-  throw lastErr || new Error("No se pudo cargar locations.mx.json");
+  throw lastErr || new Error("No fetchable locations");
 }
 
 export function useLocations() {
@@ -86,22 +94,33 @@ export function useLocations() {
 
   useEffect(() => {
     let cancelled = false;
-    loadLocations()
-      .then(({ states, map }) => {
+    (async () => {
+      try {
+        const s = await loadFromStatic();
         if (cancelled) return;
-        setStates(states);
-        setMap(map);
-      })
-      .catch((err) => {
-        console.error("[useLocations] error final:", err);
-        if (cancelled) return;
-        setStates([]);
-        setMap(new Map());
-        setError(err);
-      })
-      .finally(() => {
+        setStates(s.states);
+        setMap(s.map);
+        console.info("[useLocations] static ok:", s.states.length);
+      } catch (e) {
+        console.warn("[useLocations] static import failed, trying fetch…", e);
+        try {
+          const f = await loadFromFetch();
+          if (cancelled) return;
+          setStates(f.states);
+          setMap(f.map);
+          console.info("[useLocations] fetch ok:", f.states.length);
+        } catch (err2) {
+          console.error("[useLocations] final error:", err2);
+          if (!cancelled) {
+            setStates([]);
+            setMap(new Map());
+            setError(err2 as any);
+          }
+        }
+      } finally {
         if (!cancelled) setLoading(false);
-      });
+      }
+    })();
     return () => {
       cancelled = true;
     };
