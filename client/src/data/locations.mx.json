@@ -1,0 +1,1502 @@
+[
+  {
+    "stateId": "AGU",
+    "stateName": "Aguascalientes",
+    "municipalityId": "AGS",
+    "municipalityName": "Aguascalientes"
+  },
+  {
+    "stateId": "AGU",
+    "stateName": "Aguascalientes",
+    "municipalityId": "ASI",
+    "municipalityName": "Asientos"
+  },
+  {
+    "stateId": "AGU",
+    "stateName": "Aguascalientes",
+    "municipalityId": "CAL",
+    "municipalityName": "Calvillo"
+  },
+  {
+    "stateId": "AGU",
+    "stateName": "Aguascalientes",
+    "municipalityId": "COS",
+    "municipalityName": "Cosío"
+  },
+  {
+    "stateId": "AGU",
+    "stateName": "Aguascalientes",
+    "municipalityId": "JES",
+    "municipalityName": "Jesús María"
+  },
+  {
+    "stateId": "AGU",
+    "stateName": "Aguascalientes",
+    "municipalityId": "PAB",
+    "municipalityName": "Pabellón de Arteaga"
+  },
+  {
+    "stateId": "AGU",
+    "stateName": "Aguascalientes",
+    "municipalityId": "RIN",
+    "municipalityName": "Rincón de Romos"
+  },
+  {
+    "stateId": "AGU",
+    "stateName": "Aguascalientes",
+    "municipalityId": "TEP",
+    "municipalityName": "Tepezalá"
+  },
+  {
+    "stateId": "BCN",
+    "stateName": "Baja California",
+    "municipalityId": "TIJ",
+    "municipalityName": "Tijuana"
+  },
+  {
+    "stateId": "BCN",
+    "stateName": "Baja California",
+    "municipalityId": "MXL",
+    "municipalityName": "Mexicali"
+  },
+  {
+    "stateId": "BCN",
+    "stateName": "Baja California",
+    "municipalityId": "ENS",
+    "municipalityName": "Ensenada"
+  },
+  {
+    "stateId": "BCN",
+    "stateName": "Baja California",
+    "municipalityId": "TEC",
+    "municipalityName": "Tecate"
+  },
+  {
+    "stateId": "BCN",
+    "stateName": "Baja California",
+    "municipalityId": "ROS",
+    "municipalityName": "Playas de Rosarito"
+  },
+  {
+    "stateId": "BCN",
+    "stateName": "Baja California",
+    "municipalityId": "SFE",
+    "municipalityName": "San Felipe"
+  },
+  {
+    "stateId": "BCN",
+    "stateName": "Baja California",
+    "municipalityId": "SQA",
+    "municipalityName": "San Quintín"
+  },
+  {
+    "stateId": "BCN",
+    "stateName": "Baja California",
+    "municipalityId": "VIC",
+    "municipalityName": "Vicente Guerrero"
+  },
+  {
+    "stateId": "BCS",
+    "stateName": "Baja California Sur",
+    "municipalityId": "LAP",
+    "municipalityName": "La Paz"
+  },
+  {
+    "stateId": "BCS",
+    "stateName": "Baja California Sur",
+    "municipalityId": "CSL",
+    "municipalityName": "Los Cabos"
+  },
+  {
+    "stateId": "BCS",
+    "stateName": "Baja California Sur",
+    "municipalityId": "COM",
+    "municipalityName": "Comondú"
+  },
+  {
+    "stateId": "BCS",
+    "stateName": "Baja California Sur",
+    "municipalityId": "MUL",
+    "municipalityName": "Mulegé"
+  },
+  {
+    "stateId": "BCS",
+    "stateName": "Baja California Sur",
+    "municipalityId": "LOR",
+    "municipalityName": "Loreto"
+  },
+  {
+    "stateId": "BCS",
+    "stateName": "Baja California Sur",
+    "municipalityId": "CON",
+    "municipalityName": "Ciudad Constitución"
+  },
+  {
+    "stateId": "BCS",
+    "stateName": "Baja California Sur",
+    "municipalityId": "ROS",
+    "municipalityName": "Santa Rosalía"
+  },
+  {
+    "stateId": "BCS",
+    "stateName": "Baja California Sur",
+    "municipalityId": "TOD",
+    "municipalityName": "Todos Santos"
+  },
+  {
+    "stateId": "CAM",
+    "stateName": "Campeche",
+    "municipalityId": "CAM",
+    "municipalityName": "Campeche"
+  },
+  {
+    "stateId": "CAM",
+    "stateName": "Campeche",
+    "municipalityId": "CDE",
+    "municipalityName": "Ciudad del Carmen"
+  },
+  {
+    "stateId": "CAM",
+    "stateName": "Campeche",
+    "municipalityId": "CAL",
+    "municipalityName": "Calkiní"
+  },
+  {
+    "stateId": "CAM",
+    "stateName": "Campeche",
+    "municipalityId": "ESC",
+    "municipalityName": "Escárcega"
+  },
+  {
+    "stateId": "CAM",
+    "stateName": "Campeche",
+    "municipalityId": "CHP",
+    "municipalityName": "Champotón"
+  },
+  {
+    "stateId": "CAM",
+    "stateName": "Campeche",
+    "municipalityId": "HOP",
+    "municipalityName": "Hopelchén"
+  },
+  {
+    "stateId": "CAM",
+    "stateName": "Campeche",
+    "municipalityId": "TEN",
+    "municipalityName": "Tenabo"
+  },
+  {
+    "stateId": "CAM",
+    "stateName": "Campeche",
+    "municipalityId": "PAL",
+    "municipalityName": "Palizada"
+  },
+  {
+    "stateId": "CHP",
+    "stateName": "Chiapas",
+    "municipalityId": "TUX",
+    "municipalityName": "Tuxtla Gutiérrez"
+  },
+  {
+    "stateId": "CHP",
+    "stateName": "Chiapas",
+    "municipalityId": "SCL",
+    "municipalityName": "San Cristóbal de las Casas"
+  },
+  {
+    "stateId": "CHP",
+    "stateName": "Chiapas",
+    "municipalityId": "TAP",
+    "municipalityName": "Tapachula"
+  },
+  {
+    "stateId": "CHP",
+    "stateName": "Chiapas",
+    "municipalityId": "COM",
+    "municipalityName": "Comitán de Domínguez"
+  },
+  {
+    "stateId": "CHP",
+    "stateName": "Chiapas",
+    "municipalityId": "TON",
+    "municipalityName": "Tonalá"
+  },
+  {
+    "stateId": "CHP",
+    "stateName": "Chiapas",
+    "municipalityId": "PCH",
+    "municipalityName": "Pichucalco"
+  },
+  {
+    "stateId": "CHP",
+    "stateName": "Chiapas",
+    "municipalityId": "PAL",
+    "municipalityName": "Palenque"
+  },
+  {
+    "stateId": "CHP",
+    "stateName": "Chiapas",
+    "municipalityId": "CHI",
+    "municipalityName": "Chiapa de Corzo"
+  },
+  {
+    "stateId": "CHI",
+    "stateName": "Chihuahua",
+    "municipalityId": "CHH",
+    "municipalityName": "Chihuahua"
+  },
+  {
+    "stateId": "CHI",
+    "stateName": "Chihuahua",
+    "municipalityId": "JUA",
+    "municipalityName": "Juárez"
+  },
+  {
+    "stateId": "CHI",
+    "stateName": "Chihuahua",
+    "municipalityId": "DEL",
+    "municipalityName": "Delicias"
+  },
+  {
+    "stateId": "CHI",
+    "stateName": "Chihuahua",
+    "municipalityId": "CUA",
+    "municipalityName": "Cuauhtémoc"
+  },
+  {
+    "stateId": "CHI",
+    "stateName": "Chihuahua",
+    "municipalityId": "PAR",
+    "municipalityName": "Hidalgo del Parral"
+  },
+  {
+    "stateId": "CHI",
+    "stateName": "Chihuahua",
+    "municipalityId": "NCG",
+    "municipalityName": "Nuevo Casas Grandes"
+  },
+  {
+    "stateId": "CHI",
+    "stateName": "Chihuahua",
+    "municipalityId": "CAM",
+    "municipalityName": "Camargo"
+  },
+  {
+    "stateId": "CHI",
+    "stateName": "Chihuahua",
+    "municipalityId": "JIM",
+    "municipalityName": "Jiménez"
+  },
+  {
+    "stateId": "CMX",
+    "stateName": "Ciudad de México",
+    "municipalityId": "IZT",
+    "municipalityName": "Iztapalapa"
+  },
+  {
+    "stateId": "CMX",
+    "stateName": "Ciudad de México",
+    "municipalityId": "GAM",
+    "municipalityName": "Gustavo A. Madero"
+  },
+  {
+    "stateId": "CMX",
+    "stateName": "Ciudad de México",
+    "municipalityId": "AO",
+    "municipalityName": "Álvaro Obregón"
+  },
+  {
+    "stateId": "CMX",
+    "stateName": "Ciudad de México",
+    "municipalityId": "BJ",
+    "municipalityName": "Benito Juárez"
+  },
+  {
+    "stateId": "CMX",
+    "stateName": "Ciudad de México",
+    "municipalityId": "MH",
+    "municipalityName": "Miguel Hidalgo"
+  },
+  {
+    "stateId": "CMX",
+    "stateName": "Ciudad de México",
+    "municipalityId": "COY",
+    "municipalityName": "Coyoacán"
+  },
+  {
+    "stateId": "CMX",
+    "stateName": "Ciudad de México",
+    "municipalityId": "TLA",
+    "municipalityName": "Tlalpan"
+  },
+  {
+    "stateId": "CMX",
+    "stateName": "Ciudad de México",
+    "municipalityId": "AZC",
+    "municipalityName": "Azcapotzalco"
+  },
+  {
+    "stateId": "COA",
+    "stateName": "Coahuila de Zaragoza",
+    "municipalityId": "SLT",
+    "municipalityName": "Saltillo"
+  },
+  {
+    "stateId": "COA",
+    "stateName": "Coahuila de Zaragoza",
+    "municipalityId": "TRR",
+    "municipalityName": "Torreón"
+  },
+  {
+    "stateId": "COA",
+    "stateName": "Coahuila de Zaragoza",
+    "municipalityId": "MON",
+    "municipalityName": "Monclova"
+  },
+  {
+    "stateId": "COA",
+    "stateName": "Coahuila de Zaragoza",
+    "municipalityId": "PNR",
+    "municipalityName": "Piedras Negras"
+  },
+  {
+    "stateId": "COA",
+    "stateName": "Coahuila de Zaragoza",
+    "municipalityId": "ACU",
+    "municipalityName": "Acuña"
+  },
+  {
+    "stateId": "COA",
+    "stateName": "Coahuila de Zaragoza",
+    "municipalityId": "RAM",
+    "municipalityName": "Ramos Arizpe"
+  },
+  {
+    "stateId": "COA",
+    "stateName": "Coahuila de Zaragoza",
+    "municipalityId": "SAB",
+    "municipalityName": "Sabinas"
+  },
+  {
+    "stateId": "COA",
+    "stateName": "Coahuila de Zaragoza",
+    "municipalityId": "SPR",
+    "municipalityName": "San Pedro"
+  },
+  {
+    "stateId": "COL",
+    "stateName": "Colima",
+    "municipalityId": "COL",
+    "municipalityName": "Colima"
+  },
+  {
+    "stateId": "COL",
+    "stateName": "Colima",
+    "municipalityId": "MAN",
+    "municipalityName": "Manzanillo"
+  },
+  {
+    "stateId": "COL",
+    "stateName": "Colima",
+    "municipalityId": "TEC",
+    "municipalityName": "Tecomán"
+  },
+  {
+    "stateId": "COL",
+    "stateName": "Colima",
+    "municipalityId": "VDA",
+    "municipalityName": "Villa de Álvarez"
+  },
+  {
+    "stateId": "COL",
+    "stateName": "Colima",
+    "municipalityId": "ARM",
+    "municipalityName": "Armería"
+  },
+  {
+    "stateId": "COL",
+    "stateName": "Colima",
+    "municipalityId": "COQ",
+    "municipalityName": "Coquimatlán"
+  },
+  {
+    "stateId": "COL",
+    "stateName": "Colima",
+    "municipalityId": "COM",
+    "municipalityName": "Comala"
+  },
+  {
+    "stateId": "COL",
+    "stateName": "Colima",
+    "municipalityId": "CUA",
+    "municipalityName": "Cuauhtémoc"
+  },
+  {
+    "stateId": "DUR",
+    "stateName": "Durango",
+    "municipalityId": "DGO",
+    "municipalityName": "Durango"
+  },
+  {
+    "stateId": "DUR",
+    "stateName": "Durango",
+    "municipalityId": "GPA",
+    "municipalityName": "Gómez Palacio"
+  },
+  {
+    "stateId": "DUR",
+    "stateName": "Durango",
+    "municipalityId": "LER",
+    "municipalityName": "Lerdo"
+  },
+  {
+    "stateId": "DUR",
+    "stateName": "Durango",
+    "municipalityId": "SAP",
+    "municipalityName": "Santiago Papasquiaro"
+  },
+  {
+    "stateId": "DUR",
+    "stateName": "Durango",
+    "municipalityId": "CAN",
+    "municipalityName": "Canatlán"
+  },
+  {
+    "stateId": "DUR",
+    "stateName": "Durango",
+    "municipalityId": "PNU",
+    "municipalityName": "Pueblo Nuevo"
+  },
+  {
+    "stateId": "DUR",
+    "stateName": "Durango",
+    "municipalityId": "NDG",
+    "municipalityName": "Nombre de Dios"
+  },
+  {
+    "stateId": "DUR",
+    "stateName": "Durango",
+    "municipalityId": "GVI",
+    "municipalityName": "Guadalupe Victoria"
+  },
+  {
+    "stateId": "GUA",
+    "stateName": "Guanajuato",
+    "municipalityId": "LEO",
+    "municipalityName": "León"
+  },
+  {
+    "stateId": "GUA",
+    "stateName": "Guanajuato",
+    "municipalityId": "IRA",
+    "municipalityName": "Irapuato"
+  },
+  {
+    "stateId": "GUA",
+    "stateName": "Guanajuato",
+    "municipalityId": "CEL",
+    "municipalityName": "Celaya"
+  },
+  {
+    "stateId": "GUA",
+    "stateName": "Guanajuato",
+    "municipalityId": "GTO",
+    "municipalityName": "Guanajuato"
+  },
+  {
+    "stateId": "GUA",
+    "stateName": "Guanajuato",
+    "municipalityId": "SAL",
+    "municipalityName": "Salamanca"
+  },
+  {
+    "stateId": "GUA",
+    "stateName": "Guanajuato",
+    "municipalityId": "SMA",
+    "municipalityName": "San Miguel de Allende"
+  },
+  {
+    "stateId": "GUA",
+    "stateName": "Guanajuato",
+    "municipalityId": "SIL",
+    "municipalityName": "Silao de la Victoria"
+  },
+  {
+    "stateId": "GUA",
+    "stateName": "Guanajuato",
+    "municipalityId": "VAL",
+    "municipalityName": "Valle de Santiago"
+  },
+  {
+    "stateId": "GRO",
+    "stateName": "Guerrero",
+    "municipalityId": "ACA",
+    "municipalityName": "Acapulco de Juárez"
+  },
+  {
+    "stateId": "GRO",
+    "stateName": "Guerrero",
+    "municipalityId": "CHL",
+    "municipalityName": "Chilpancingo de los Bravo"
+  },
+  {
+    "stateId": "GRO",
+    "stateName": "Guerrero",
+    "municipalityId": "TAX",
+    "municipalityName": "Taxco de Alarcón"
+  },
+  {
+    "stateId": "GRO",
+    "stateName": "Guerrero",
+    "municipalityId": "ZIH",
+    "municipalityName": "Zihuatanejo de Azueta"
+  },
+  {
+    "stateId": "GRO",
+    "stateName": "Guerrero",
+    "municipalityId": "IGU",
+    "municipalityName": "Iguala de la Independencia"
+  },
+  {
+    "stateId": "GRO",
+    "stateName": "Guerrero",
+    "municipalityId": "CHA",
+    "municipalityName": "Chilapa de Álvarez"
+  },
+  {
+    "stateId": "GRO",
+    "stateName": "Guerrero",
+    "municipalityId": "OME",
+    "municipalityName": "Ometepec"
+  },
+  {
+    "stateId": "GRO",
+    "stateName": "Guerrero",
+    "municipalityId": "COY",
+    "municipalityName": "Coyuca de Benítez"
+  },
+  {
+    "stateId": "HGO",
+    "stateName": "Hidalgo",
+    "municipalityId": "PAC",
+    "municipalityName": "Pachuca de Soto"
+  },
+  {
+    "stateId": "HGO",
+    "stateName": "Hidalgo",
+    "municipalityId": "TUL",
+    "municipalityName": "Tulancingo de Bravo"
+  },
+  {
+    "stateId": "HGO",
+    "stateName": "Hidalgo",
+    "municipalityId": "TDA",
+    "municipalityName": "Tula de Allende"
+  },
+  {
+    "stateId": "HGO",
+    "stateName": "Hidalgo",
+    "municipalityId": "TIZ",
+    "municipalityName": "Tizayuca"
+  },
+  {
+    "stateId": "HGO",
+    "stateName": "Hidalgo",
+    "municipalityId": "MDR",
+    "municipalityName": "Mineral de la Reforma"
+  },
+  {
+    "stateId": "HGO",
+    "stateName": "Hidalgo",
+    "municipalityId": "HUJ",
+    "municipalityName": "Huejutla de Reyes"
+  },
+  {
+    "stateId": "HGO",
+    "stateName": "Hidalgo",
+    "municipalityId": "IXM",
+    "municipalityName": "Ixmiquilpan"
+  },
+  {
+    "stateId": "HGO",
+    "stateName": "Hidalgo",
+    "municipalityId": "TPR",
+    "municipalityName": "Tepeji del Río de Ocampo"
+  },
+  {
+    "stateId": "JAL",
+    "stateName": "Jalisco",
+    "municipalityId": "GDL",
+    "municipalityName": "Guadalajara"
+  },
+  {
+    "stateId": "JAL",
+    "stateName": "Jalisco",
+    "municipalityId": "ZAP",
+    "municipalityName": "Zapopan"
+  },
+  {
+    "stateId": "JAL",
+    "stateName": "Jalisco",
+    "municipalityId": "TLQ",
+    "municipalityName": "Tlaquepaque"
+  },
+  {
+    "stateId": "JAL",
+    "stateName": "Jalisco",
+    "municipalityId": "TON",
+    "municipalityName": "Tonalá"
+  },
+  {
+    "stateId": "JAL",
+    "stateName": "Jalisco",
+    "municipalityId": "PVR",
+    "municipalityName": "Puerto Vallarta"
+  },
+  {
+    "stateId": "JAL",
+    "stateName": "Jalisco",
+    "municipalityId": "TLA",
+    "municipalityName": "Tlajomulco de Zúñiga"
+  },
+  {
+    "stateId": "JAL",
+    "stateName": "Jalisco",
+    "municipalityId": "TEP",
+    "municipalityName": "Tepatitlán de Morelos"
+  },
+  {
+    "stateId": "JAL",
+    "stateName": "Jalisco",
+    "municipalityId": "LAG",
+    "municipalityName": "Lagos de Moreno"
+  },
+  {
+    "stateId": "MEX",
+    "stateName": "México",
+    "municipalityId": "TOL",
+    "municipalityName": "Toluca"
+  },
+  {
+    "stateId": "MEX",
+    "stateName": "México",
+    "municipalityId": "ECA",
+    "municipalityName": "Ecatepec de Morelos"
+  },
+  {
+    "stateId": "MEX",
+    "stateName": "México",
+    "municipalityId": "NAU",
+    "municipalityName": "Naucalpan de Juárez"
+  },
+  {
+    "stateId": "MEX",
+    "stateName": "México",
+    "municipalityId": "TLA",
+    "municipalityName": "Tlalnepantla de Baz"
+  },
+  {
+    "stateId": "MEX",
+    "stateName": "México",
+    "municipalityId": "NEZ",
+    "municipalityName": "Nezahualcóyotl"
+  },
+  {
+    "stateId": "MEX",
+    "stateName": "México",
+    "municipalityId": "MET",
+    "municipalityName": "Metepec"
+  },
+  {
+    "stateId": "MEX",
+    "stateName": "México",
+    "municipalityId": "ATZ",
+    "municipalityName": "Atizapán de Zaragoza"
+  },
+  {
+    "stateId": "MEX",
+    "stateName": "México",
+    "municipalityId": "CUI",
+    "municipalityName": "Cuautitlán Izcalli"
+  },
+  {
+    "stateId": "MIC",
+    "stateName": "Michoacán de Ocampo",
+    "municipalityId": "MOR",
+    "municipalityName": "Morelia"
+  },
+  {
+    "stateId": "MIC",
+    "stateName": "Michoacán de Ocampo",
+    "municipalityId": "URU",
+    "municipalityName": "Uruapan"
+  },
+  {
+    "stateId": "MIC",
+    "stateName": "Michoacán de Ocampo",
+    "municipalityId": "ZAM",
+    "municipalityName": "Zamora"
+  },
+  {
+    "stateId": "MIC",
+    "stateName": "Michoacán de Ocampo",
+    "municipalityId": "LZC",
+    "municipalityName": "Lázaro Cárdenas"
+  },
+  {
+    "stateId": "MIC",
+    "stateName": "Michoacán de Ocampo",
+    "municipalityId": "PAT",
+    "municipalityName": "Pátzcuaro"
+  },
+  {
+    "stateId": "MIC",
+    "stateName": "Michoacán de Ocampo",
+    "municipalityId": "ZIT",
+    "municipalityName": "Zitácuaro"
+  },
+  {
+    "stateId": "MIC",
+    "stateName": "Michoacán de Ocampo",
+    "municipalityId": "APA",
+    "municipalityName": "Apatzingán"
+  },
+  {
+    "stateId": "MIC",
+    "stateName": "Michoacán de Ocampo",
+    "municipalityId": "LAP",
+    "municipalityName": "La Piedad"
+  },
+  {
+    "stateId": "MOR",
+    "stateName": "Morelos",
+    "municipalityId": "CUE",
+    "municipalityName": "Cuernavaca"
+  },
+  {
+    "stateId": "MOR",
+    "stateName": "Morelos",
+    "municipalityId": "JIU",
+    "municipalityName": "Jiutepec"
+  },
+  {
+    "stateId": "MOR",
+    "stateName": "Morelos",
+    "municipalityId": "TEM",
+    "municipalityName": "Temixco"
+  },
+  {
+    "stateId": "MOR",
+    "stateName": "Morelos",
+    "municipalityId": "CUA",
+    "municipalityName": "Cuautla"
+  },
+  {
+    "stateId": "MOR",
+    "stateName": "Morelos",
+    "municipalityId": "YAU",
+    "municipalityName": "Yautepec"
+  },
+  {
+    "stateId": "MOR",
+    "stateName": "Morelos",
+    "municipalityId": "EZI",
+    "municipalityName": "Emiliano Zapata"
+  },
+  {
+    "stateId": "MOR",
+    "stateName": "Morelos",
+    "municipalityId": "XOC",
+    "municipalityName": "Xochitepec"
+  },
+  {
+    "stateId": "MOR",
+    "stateName": "Morelos",
+    "municipalityId": "JOJ",
+    "municipalityName": "Jojutla"
+  },
+  {
+    "stateId": "NAY",
+    "stateName": "Nayarit",
+    "municipalityId": "TEP",
+    "municipalityName": "Tepic"
+  },
+  {
+    "stateId": "NAY",
+    "stateName": "Nayarit",
+    "municipalityId": "BDB",
+    "municipalityName": "Bahía de Banderas"
+  },
+  {
+    "stateId": "NAY",
+    "stateName": "Nayarit",
+    "municipalityId": "COM",
+    "municipalityName": "Compostela"
+  },
+  {
+    "stateId": "NAY",
+    "stateName": "Nayarit",
+    "municipalityId": "XAL",
+    "municipalityName": "Xalisco"
+  },
+  {
+    "stateId": "NAY",
+    "stateName": "Nayarit",
+    "municipalityId": "SIX",
+    "municipalityName": "Santiago Ixcuintla"
+  },
+  {
+    "stateId": "NAY",
+    "stateName": "Nayarit",
+    "municipalityId": "ACP",
+    "municipalityName": "Acaponeta"
+  },
+  {
+    "stateId": "NAY",
+    "stateName": "Nayarit",
+    "municipalityId": "TEC",
+    "municipalityName": "Tecuala"
+  },
+  {
+    "stateId": "NAY",
+    "stateName": "Nayarit",
+    "municipalityId": "SBL",
+    "municipalityName": "San Blas"
+  },
+  {
+    "stateId": "NLE",
+    "stateName": "Nuevo León",
+    "municipalityId": "MTY",
+    "municipalityName": "Monterrey"
+  },
+  {
+    "stateId": "NLE",
+    "stateName": "Nuevo León",
+    "municipalityId": "SPG",
+    "municipalityName": "San Pedro Garza García"
+  },
+  {
+    "stateId": "NLE",
+    "stateName": "Nuevo León",
+    "municipalityId": "SNG",
+    "municipalityName": "San Nicolás de los Garza"
+  },
+  {
+    "stateId": "NLE",
+    "stateName": "Nuevo León",
+    "municipalityId": "GPE",
+    "municipalityName": "Guadalupe"
+  },
+  {
+    "stateId": "NLE",
+    "stateName": "Nuevo León",
+    "municipalityId": "APO",
+    "municipalityName": "Apodaca"
+  },
+  {
+    "stateId": "NLE",
+    "stateName": "Nuevo León",
+    "municipalityId": "ESC",
+    "municipalityName": "General Escobedo"
+  },
+  {
+    "stateId": "NLE",
+    "stateName": "Nuevo León",
+    "municipalityId": "STC",
+    "municipalityName": "Santa Catarina"
+  },
+  {
+    "stateId": "NLE",
+    "stateName": "Nuevo León",
+    "municipalityId": "JUA",
+    "municipalityName": "Juárez"
+  },
+  {
+    "stateId": "OAX",
+    "stateName": "Oaxaca",
+    "municipalityId": "OAX",
+    "municipalityName": "Oaxaca de Juárez"
+  },
+  {
+    "stateId": "OAX",
+    "stateName": "Oaxaca",
+    "municipalityId": "SAL",
+    "municipalityName": "Salina Cruz"
+  },
+  {
+    "stateId": "OAX",
+    "stateName": "Oaxaca",
+    "municipalityId": "JTZ",
+    "municipalityName": "Juchitán de Zaragoza"
+  },
+  {
+    "stateId": "OAX",
+    "stateName": "Oaxaca",
+    "municipalityId": "SJT",
+    "municipalityName": "San Juan Bautista Tuxtepec"
+  },
+  {
+    "stateId": "OAX",
+    "stateName": "Oaxaca",
+    "municipalityId": "HUA",
+    "municipalityName": "Huajuapan de León"
+  },
+  {
+    "stateId": "OAX",
+    "stateName": "Oaxaca",
+    "municipalityId": "PE",
+    "municipalityName": "Puerto Escondido"
+  },
+  {
+    "stateId": "OAX",
+    "stateName": "Oaxaca",
+    "municipalityId": "HUA2",
+    "municipalityName": "Huatulco"
+  },
+  {
+    "stateId": "OAX",
+    "stateName": "Oaxaca",
+    "municipalityId": "TEH",
+    "municipalityName": "Tehuantepec"
+  },
+  {
+    "stateId": "PUE",
+    "stateName": "Puebla",
+    "municipalityId": "PUE",
+    "municipalityName": "Puebla"
+  },
+  {
+    "stateId": "PUE",
+    "stateName": "Puebla",
+    "municipalityId": "SAC",
+    "municipalityName": "San Andrés Cholula"
+  },
+  {
+    "stateId": "PUE",
+    "stateName": "Puebla",
+    "municipalityId": "SPC",
+    "municipalityName": "San Pedro Cholula"
+  },
+  {
+    "stateId": "PUE",
+    "stateName": "Puebla",
+    "municipalityId": "TEH",
+    "municipalityName": "Tehuacán"
+  },
+  {
+    "stateId": "PUE",
+    "stateName": "Puebla",
+    "municipalityId": "ATL",
+    "municipalityName": "Atlixco"
+  },
+  {
+    "stateId": "PUE",
+    "stateName": "Puebla",
+    "municipalityId": "HUJ",
+    "municipalityName": "Huejotzingo"
+  },
+  {
+    "stateId": "PUE",
+    "stateName": "Puebla",
+    "municipalityId": "CUA",
+    "municipalityName": "Cuautlancingo"
+  },
+  {
+    "stateId": "PUE",
+    "stateName": "Puebla",
+    "municipalityId": "SMT",
+    "municipalityName": "San Martín Texmelucan"
+  },
+  {
+    "stateId": "QUE",
+    "stateName": "Querétaro",
+    "municipalityId": "QRO",
+    "municipalityName": "Querétaro"
+  },
+  {
+    "stateId": "QUE",
+    "stateName": "Querétaro",
+    "municipalityId": "SJR",
+    "municipalityName": "San Juan del Río"
+  },
+  {
+    "stateId": "QUE",
+    "stateName": "Querétaro",
+    "municipalityId": "COR",
+    "municipalityName": "Corregidora"
+  },
+  {
+    "stateId": "QUE",
+    "stateName": "Querétaro",
+    "municipalityId": "EMQ",
+    "municipalityName": "El Marqués"
+  },
+  {
+    "stateId": "QUE",
+    "stateName": "Querétaro",
+    "municipalityId": "PES",
+    "municipalityName": "Pedro Escobedo"
+  },
+  {
+    "stateId": "QUE",
+    "stateName": "Querétaro",
+    "municipalityId": "TEQ",
+    "municipalityName": "Tequisquiapan"
+  },
+  {
+    "stateId": "QUE",
+    "stateName": "Querétaro",
+    "municipalityId": "EZM",
+    "municipalityName": "Ezequiel Montes"
+  },
+  {
+    "stateId": "QUE",
+    "stateName": "Querétaro",
+    "municipalityId": "CAD",
+    "municipalityName": "Cadereyta de Montes"
+  },
+  {
+    "stateId": "QROO",
+    "stateName": "Quintana Roo",
+    "municipalityId": "BEN",
+    "municipalityName": "Benito Juárez (Cancún)"
+  },
+  {
+    "stateId": "QROO",
+    "stateName": "Quintana Roo",
+    "municipalityId": "SOL",
+    "municipalityName": "Solidaridad (Playa del Carmen)"
+  },
+  {
+    "stateId": "QROO",
+    "stateName": "Quintana Roo",
+    "municipalityId": "COZ",
+    "municipalityName": "Cozumel"
+  },
+  {
+    "stateId": "QROO",
+    "stateName": "Quintana Roo",
+    "municipalityId": "OPB",
+    "municipalityName": "Othón P. Blanco (Chetumal)"
+  },
+  {
+    "stateId": "QROO",
+    "stateName": "Quintana Roo",
+    "municipalityId": "TUL",
+    "municipalityName": "Tulum"
+  },
+  {
+    "stateId": "QROO",
+    "stateName": "Quintana Roo",
+    "municipalityId": "IMU",
+    "municipalityName": "Isla Mujeres"
+  },
+  {
+    "stateId": "QROO",
+    "stateName": "Quintana Roo",
+    "municipalityId": "PMO",
+    "municipalityName": "Puerto Morelos"
+  },
+  {
+    "stateId": "QROO",
+    "stateName": "Quintana Roo",
+    "municipalityId": "BAC",
+    "municipalityName": "Bacalar"
+  },
+  {
+    "stateId": "SLP",
+    "stateName": "San Luis Potosí",
+    "municipalityId": "SLP",
+    "municipalityName": "San Luis Potosí"
+  },
+  {
+    "stateId": "SLP",
+    "stateName": "San Luis Potosí",
+    "municipalityId": "SGS",
+    "municipalityName": "Soledad de Graciano Sánchez"
+  },
+  {
+    "stateId": "SLP",
+    "stateName": "San Luis Potosí",
+    "municipalityId": "CDV",
+    "municipalityName": "Ciudad Valles"
+  },
+  {
+    "stateId": "SLP",
+    "stateName": "San Luis Potosí",
+    "municipalityId": "RIO",
+    "municipalityName": "Rioverde"
+  },
+  {
+    "stateId": "SLP",
+    "stateName": "San Luis Potosí",
+    "municipalityId": "MAT",
+    "municipalityName": "Matehuala"
+  },
+  {
+    "stateId": "SLP",
+    "stateName": "San Luis Potosí",
+    "municipalityId": "TAM",
+    "municipalityName": "Tamazunchale"
+  },
+  {
+    "stateId": "SLP",
+    "stateName": "San Luis Potosí",
+    "municipalityId": "EBA",
+    "municipalityName": "Ébano"
+  },
+  {
+    "stateId": "SLP",
+    "stateName": "San Luis Potosí",
+    "municipalityId": "CER",
+    "municipalityName": "Cerritos"
+  },
+  {
+    "stateId": "SIN",
+    "stateName": "Sinaloa",
+    "municipalityId": "CUL",
+    "municipalityName": "Culiacán"
+  },
+  {
+    "stateId": "SIN",
+    "stateName": "Sinaloa",
+    "municipalityId": "AHO",
+    "municipalityName": "Ahome (Los Mochis)"
+  },
+  {
+    "stateId": "SIN",
+    "stateName": "Sinaloa",
+    "municipalityId": "MAZ",
+    "municipalityName": "Mazatlán"
+  },
+  {
+    "stateId": "SIN",
+    "stateName": "Sinaloa",
+    "municipalityId": "GSV",
+    "municipalityName": "Guasave"
+  },
+  {
+    "stateId": "SIN",
+    "stateName": "Sinaloa",
+    "municipalityId": "NAV",
+    "municipalityName": "Navolato"
+  },
+  {
+    "stateId": "SIN",
+    "stateName": "Sinaloa",
+    "municipalityId": "SAL",
+    "municipalityName": "Salvador Alvarado (Guamúchil)"
+  },
+  {
+    "stateId": "SIN",
+    "stateName": "Sinaloa",
+    "municipalityId": "FUE",
+    "municipalityName": "El Fuerte"
+  },
+  {
+    "stateId": "SIN",
+    "stateName": "Sinaloa",
+    "municipalityId": "ESC",
+    "municipalityName": "Escuinapa"
+  },
+  {
+    "stateId": "SON",
+    "stateName": "Sonora",
+    "municipalityId": "HMO",
+    "municipalityName": "Hermosillo"
+  },
+  {
+    "stateId": "SON",
+    "stateName": "Sonora",
+    "municipalityId": "CAJ",
+    "municipalityName": "Cajeme (Ciudad Obregón)"
+  },
+  {
+    "stateId": "SON",
+    "stateName": "Sonora",
+    "municipalityId": "NOG",
+    "municipalityName": "Nogales"
+  },
+  {
+    "stateId": "SON",
+    "stateName": "Sonora",
+    "municipalityId": "SLR",
+    "municipalityName": "San Luis Río Colorado"
+  },
+  {
+    "stateId": "SON",
+    "stateName": "Sonora",
+    "municipalityId": "NAV",
+    "municipalityName": "Navojoa"
+  },
+  {
+    "stateId": "SON",
+    "stateName": "Sonora",
+    "municipalityId": "GUA",
+    "municipalityName": "Guaymas"
+  },
+  {
+    "stateId": "SON",
+    "stateName": "Sonora",
+    "municipalityId": "CAB",
+    "municipalityName": "Caborca"
+  },
+  {
+    "stateId": "SON",
+    "stateName": "Sonora",
+    "municipalityId": "AGP",
+    "municipalityName": "Agua Prieta"
+  },
+  {
+    "stateId": "TAB",
+    "stateName": "Tabasco",
+    "municipalityId": "CEN",
+    "municipalityName": "Centro (Villahermosa)"
+  },
+  {
+    "stateId": "TAB",
+    "stateName": "Tabasco",
+    "municipalityId": "COM",
+    "municipalityName": "Comalcalco"
+  },
+  {
+    "stateId": "TAB",
+    "stateName": "Tabasco",
+    "municipalityId": "CAR",
+    "municipalityName": "Cárdenas"
+  },
+  {
+    "stateId": "TAB",
+    "stateName": "Tabasco",
+    "municipalityId": "MAC",
+    "municipalityName": "Macuspana"
+  },
+  {
+    "stateId": "TAB",
+    "stateName": "Tabasco",
+    "municipalityId": "CUN",
+    "municipalityName": "Cunduacán"
+  },
+  {
+    "stateId": "TAB",
+    "stateName": "Tabasco",
+    "municipalityId": "HUI",
+    "municipalityName": "Huimanguillo"
+  },
+  {
+    "stateId": "TAB",
+    "stateName": "Tabasco",
+    "municipalityId": "TEA",
+    "municipalityName": "Teapa"
+  },
+  {
+    "stateId": "TAB",
+    "stateName": "Tabasco",
+    "municipalityId": "PAR",
+    "municipalityName": "Paraíso"
+  },
+  {
+    "stateId": "TAM",
+    "stateName": "Tamaulipas",
+    "municipalityId": "TAM",
+    "municipalityName": "Tampico"
+  },
+  {
+    "stateId": "TAM",
+    "stateName": "Tamaulipas",
+    "municipalityId": "CM",
+    "municipalityName": "Ciudad Madero"
+  },
+  {
+    "stateId": "TAM",
+    "stateName": "Tamaulipas",
+    "municipalityId": "ALT",
+    "municipalityName": "Altamira"
+  },
+  {
+    "stateId": "TAM",
+    "stateName": "Tamaulipas",
+    "municipalityId": "REY",
+    "municipalityName": "Reynosa"
+  },
+  {
+    "stateId": "TAM",
+    "stateName": "Tamaulipas",
+    "municipalityId": "MAT",
+    "municipalityName": "Matamoros"
+  },
+  {
+    "stateId": "TAM",
+    "stateName": "Tamaulipas",
+    "municipalityId": "NLD",
+    "municipalityName": "Nuevo Laredo"
+  },
+  {
+    "stateId": "TAM",
+    "stateName": "Tamaulipas",
+    "municipalityId": "VIC",
+    "municipalityName": "Victoria"
+  },
+  {
+    "stateId": "TAM",
+    "stateName": "Tamaulipas",
+    "municipalityId": "RBV",
+    "municipalityName": "Río Bravo"
+  },
+  {
+    "stateId": "TLA",
+    "stateName": "Tlaxcala",
+    "municipalityId": "TLX",
+    "municipalityName": "Tlaxcala"
+  },
+  {
+    "stateId": "TLA",
+    "stateName": "Tlaxcala",
+    "municipalityId": "API",
+    "municipalityName": "Apizaco"
+  },
+  {
+    "stateId": "TLA",
+    "stateName": "Tlaxcala",
+    "municipalityId": "HUA",
+    "municipalityName": "Huamantla"
+  },
+  {
+    "stateId": "TLA",
+    "stateName": "Tlaxcala",
+    "municipalityId": "CHI",
+    "municipalityName": "Chiautempan"
+  },
+  {
+    "stateId": "TLA",
+    "stateName": "Tlaxcala",
+    "municipalityId": "ZAC",
+    "municipalityName": "Zacatelco"
+  },
+  {
+    "stateId": "TLA",
+    "stateName": "Tlaxcala",
+    "municipalityId": "TLX2",
+    "municipalityName": "Tlaxco"
+  },
+  {
+    "stateId": "TLA",
+    "stateName": "Tlaxcala",
+    "municipalityId": "PAP",
+    "municipalityName": "Papalotla de Xicohténcatl"
+  },
+  {
+    "stateId": "TLA",
+    "stateName": "Tlaxcala",
+    "municipalityId": "SPM",
+    "municipalityName": "San Pablo del Monte"
+  },
+  {
+    "stateId": "VER",
+    "stateName": "Veracruz de Ignacio de la Llave",
+    "municipalityId": "VER",
+    "municipalityName": "Veracruz"
+  },
+  {
+    "stateId": "VER",
+    "stateName": "Veracruz de Ignacio de la Llave",
+    "municipalityId": "XAL",
+    "municipalityName": "Xalapa"
+  },
+  {
+    "stateId": "VER",
+    "stateName": "Veracruz de Ignacio de la Llave",
+    "municipalityId": "COA",
+    "municipalityName": "Coatzacoalcos"
+  },
+  {
+    "stateId": "VER",
+    "stateName": "Veracruz de Ignacio de la Llave",
+    "municipalityId": "POZ",
+    "municipalityName": "Poza Rica de Hidalgo"
+  },
+  {
+    "stateId": "VER",
+    "stateName": "Veracruz de Ignacio de la Llave",
+    "municipalityId": "COR",
+    "municipalityName": "Córdoba"
+  },
+  {
+    "stateId": "VER",
+    "stateName": "Veracruz de Ignacio de la Llave",
+    "municipalityId": "ORI",
+    "municipalityName": "Orizaba"
+  },
+  {
+    "stateId": "VER",
+    "stateName": "Veracruz de Ignacio de la Llave",
+    "municipalityId": "BDR",
+    "municipalityName": "Boca del Río"
+  },
+  {
+    "stateId": "VER",
+    "stateName": "Veracruz de Ignacio de la Llave",
+    "municipalityId": "MIN",
+    "municipalityName": "Minatitlán"
+  },
+  {
+    "stateId": "YUC",
+    "stateName": "Yucatán",
+    "municipalityId": "MER",
+    "municipalityName": "Mérida"
+  },
+  {
+    "stateId": "YUC",
+    "stateName": "Yucatán",
+    "municipalityId": "VAL",
+    "municipalityName": "Valladolid"
+  },
+  {
+    "stateId": "YUC",
+    "stateName": "Yucatán",
+    "municipalityId": "TIZ",
+    "municipalityName": "Tizimín"
+  },
+  {
+    "stateId": "YUC",
+    "stateName": "Yucatán",
+    "municipalityId": "PRO",
+    "municipalityName": "Progreso"
+  },
+  {
+    "stateId": "YUC",
+    "stateName": "Yucatán",
+    "municipalityId": "KAN",
+    "municipalityName": "Kanasín"
+  },
+  {
+    "stateId": "YUC",
+    "stateName": "Yucatán",
+    "municipalityId": "UMA",
+    "municipalityName": "Umán"
+  },
+  {
+    "stateId": "YUC",
+    "stateName": "Yucatán",
+    "municipalityId": "MOT",
+    "municipalityName": "Motul"
+  },
+  {
+    "stateId": "YUC",
+    "stateName": "Yucatán",
+    "municipalityId": "TIC",
+    "municipalityName": "Ticul"
+  },
+  {
+    "stateId": "ZAC",
+    "stateName": "Zacatecas",
+    "municipalityId": "ZAC",
+    "municipalityName": "Zacatecas"
+  },
+  {
+    "stateId": "ZAC",
+    "stateName": "Zacatecas",
+    "municipalityId": "FRE",
+    "municipalityName": "Fresnillo"
+  }
+]
