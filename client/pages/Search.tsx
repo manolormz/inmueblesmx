@@ -337,7 +337,6 @@ export default function Search() {
 
   return (
     <div className="min-h-screen bg-white">
-      <Header />
 
       <SafePreview>
         {/* Sticky filter bar */}
@@ -791,7 +790,7 @@ export default function Search() {
             {/* Recámaras */}
             <div>
               <label className="block text-sm font-medium mb-1">
-                Recámaras
+                Rec��maras
               </label>
               <select
                 className="w-full border rounded h-10 px-2"
