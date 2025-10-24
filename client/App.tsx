@@ -57,7 +57,7 @@ const App = () => (
           <DebugOverlay />
           **/}
             <Routes>
-              <Route path="/" element={<Navigate to="/buscar" replace />} />
+              <Route path="/" element={<Buscar />} />
               <Route path="/publish" element={<Publish />} />
               <Route path="/search" element={<Search />} />
               <Route path="/property/:slug" element={<Property />} />
@@ -78,7 +78,7 @@ const App = () => (
                 element={<DashboardPropertyEdit />}
               />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<Navigate to="/buscar" replace />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </LayoutShell>
         </AuthProvider>
