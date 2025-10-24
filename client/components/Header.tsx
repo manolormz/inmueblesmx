@@ -16,10 +16,8 @@ export function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center gap-2">
-            <Home className="w-8 h-8 text-blue-600" />
-            <span className="text-2xl font-bold text-blue-600">
-              InmueblesMX
-            </span>
+            <Home className="w-8 h-8 text-primary" />
+            <span className="text-2xl font-bold text-primary">Kentra</span>
           </div>
 
           <nav
@@ -32,7 +30,7 @@ export function Header() {
                 search: "?operation=Sale&status=Published",
               }}
               onClick={onClickLog("nav-comprar")}
-              className="text-gray-700 hover:text-blue-600 transition"
+              className="text-gray-700 hover:text-primary transition"
               role="link"
               data-loc="NavbarComprar"
             >
@@ -44,7 +42,7 @@ export function Header() {
                 search: "?operation=Rent&status=Published",
               }}
               onClick={onClickLog("nav-rentar")}
-              className="text-gray-700 hover:text-blue-600 transition"
+              className="text-gray-700 hover:text-primary transition"
               role="link"
             >
               Rentar
@@ -52,7 +50,7 @@ export function Header() {
             <Link
               to="/publish"
               onClick={onClickLog("nav-vender")}
-              className="text-gray-700 hover:text-blue-600 transition"
+              className="text-gray-700 hover:text-primary transition"
               role="link"
             >
               Vender
@@ -60,7 +58,7 @@ export function Header() {
             <Link
               to="/agencia"
               onClick={onClickLog("nav-agencia")}
-              className="text-gray-700 hover:text-blue-600 transition"
+              className="text-gray-700 hover:text-primary transition"
               role="link"
             >
               Soy inmobiliaria
@@ -68,7 +66,7 @@ export function Header() {
             <Link
               to="/maintenance"
               onClick={onClickLog("nav-mantenimiento")}
-              className="text-gray-700 hover:text-blue-600 transition"
+              className="text-gray-700 hover:text-primary transition"
               aria-label="Mantenimiento"
               data-loc="NavbarMaintenance"
             >
@@ -81,14 +79,14 @@ export function Header() {
               <>
                 <Link
                   to="/login"
-                  className="text-gray-700 hover:text-blue-600 transition"
+                  className="text-gray-700 hover:text-primary transition"
                   data-loc="NavbarLogin"
                 >
                   Iniciar sesión
                 </Link>
                 <Link
                   to="/register"
-                  className="text-white bg-blue-600 hover:bg-blue-700 px-3 py-2 rounded-md text-sm font-medium"
+                  className="btn btn-primary"
                   data-loc="NavbarRegister"
                 >
                   Registrarse
