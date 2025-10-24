@@ -482,7 +482,6 @@ export default function Search() {
           markers={mapMarkers}
           initialCenter={{ lat: 19.4326, lng: -99.1332 }}
           initialZoom={11}
-          fitBbox={fitBbox}
           controls={
             <div className="flex gap-2 items-center">
               <GeocoderInput onPick={(f)=>{
