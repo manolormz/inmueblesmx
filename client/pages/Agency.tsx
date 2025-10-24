@@ -4,7 +4,7 @@ import FormField from '@/components/ui/FormField';
 import ActionBar from '@/components/ui/ActionBar';
 import { Input } from '@/components/ui/input';
 import { Api } from '@/services/api';
-import { useToast } from '@/components/ui/Toast';
+import { useToast } from '@/hooks/use-toast';
 import { useZodForm } from '@/hooks/useZodForm';
 import { AgencyInput } from '@shared/forms';
 import { track } from '@/services/analytics';
