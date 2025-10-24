@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { useLocations } from "@/hooks/useLocations";
+import { useLocations } from "../src/hooks/useLocations";
 import EstadoSelect from "@/components/EstadoSelect";
 import MunicipioSelect from "@/components/MunicipioSelect";
 import Hero from "../src/components/Hero";
