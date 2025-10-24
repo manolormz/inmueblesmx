@@ -6,7 +6,7 @@ import { PropertyTypeOptions, CurrencyOptions } from "@shared/options";
 import { formatPriceCompactMXN, getOptionLabelEs } from "@shared/formatters";
 import { getPriceOptionsMXNByOperation } from "@shared/filters";
 import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
+import Footer from "@/components/Footer";
 import SafeMapToggle from "@/components/SafeMapToggle";
 import GeocoderInput from "@/components/GeocoderInput";
 import SafePreview from "@/components/SafePreview";
