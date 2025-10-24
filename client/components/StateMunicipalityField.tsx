@@ -190,12 +190,6 @@ export default function StateMunicipalityField({
             </option>
           ))}
         </select>
-        {dataCount > 0 && (
-          <div className="mt-1 text-xs text-gray-400">
-            dataset: {dataCount}
-            {usedFallback ? " (fallback)" : ""}
-          </div>
-        )}
       </div>
 
       {/* Municipio */}
