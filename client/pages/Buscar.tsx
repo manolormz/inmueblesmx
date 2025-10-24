@@ -53,7 +53,7 @@ export default function Buscar() {
 
   return (
     <div className="max-w-5xl mx-auto p-4 space-y-6 bg-secondary/40 rounded-2xl">
-      <h1 className="text-2xl font-semibold">Buscar propiedades</h1>
+      <Hero />
 
       {error && (
         <div className="p-3 rounded bg-red-50 border text-red-700">
