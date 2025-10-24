@@ -7,7 +7,6 @@ import React, { Suspense, lazy } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LayoutShell from "@/src/components/LayoutShell";
 import DebugBoundary from "./components/DebugBoundary";
-import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Publish from "./pages/Publish";
 import Search from "./pages/Search";
@@ -66,7 +65,7 @@ function App() {
                 >
                   <Routes>
                     <Route element={<LayoutShell />}>
-                      <Route index element={<Index />} />
+                      <Route index element={<Home />} />
                       <Route path="publish" element={<Publish />} />
                       <Route path="search" element={<Search />} />
                       <Route path="property/:slug" element={<Property />} />
