@@ -5,7 +5,7 @@ import FormField from '@/components/ui/FormField';
 import { useZodForm } from '@/hooks/useZodForm';
 import { AuthLogin } from '@shared/forms';
 import { Api } from '@/services/api';
-import { useToast } from '@/components/ui/Toast';
+import { useToast } from '@/hooks/use-toast';
 import { track } from '@/services/analytics';
 
 export default function LoginWrapper(){
