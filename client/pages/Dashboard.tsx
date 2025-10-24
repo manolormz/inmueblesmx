@@ -365,7 +365,7 @@ function FavsSection() {
             />
             <div className="p-4 space-y-2">
               <h3 className="font-semibold text-lg">{p.title}</h3>
-              <div className="text-blue-700 font-semibold">
+              <div className="text-primary font-semibold">
                 {formatPrice(p.price, p.currency)}
               </div>
             </div>
