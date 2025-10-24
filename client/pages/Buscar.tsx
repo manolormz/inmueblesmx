@@ -62,21 +62,23 @@ export default function Buscar() {
       )}
 
       <div className="card p-4 md:p-6">
-        <div className="flex items-center gap-2 mb-4">
-          <button
-            type="button"
-            className={`btn ${params.get("operation") === "Sale" ? "btn-primary" : "btn-secondary"}`}
-            onClick={() => { const n = new URLSearchParams(params); n.set("operation","Sale"); setParams(n, { replace:true }); }}
-          >
-            Comprar
-          </button>
-          <button
-            type="button"
-            className={`btn ${params.get("operation") === "Rent" ? "btn-primary" : "btn-secondary"}`}
-            onClick={() => { const n = new URLSearchParams(params); n.set("operation","Rent"); setParams(n, { replace:true }); }}
-          >
-            Rentar
-          </button>
+        <div className="mb-4">
+          <div className="inline-flex rounded-2xl overflow-hidden border border-primary/40">
+            <button
+              type="button"
+              className={`px-4 py-2 text-sm md:text-base font-medium ${params.get("operation") === "Sale" ? "bg-primary text-white" : "bg-white text-[color:var(--color-text)]"}`}
+              onClick={() => { const n = new URLSearchParams(params); n.set("operation","Sale"); setParams(n, { replace:true }); }}
+            >
+              Comprar
+            </button>
+            <button
+              type="button"
+              className={`px-4 py-2 text-sm md:text-base font-medium ${params.get("operation") === "Rent" ? "bg-primary text-white" : "bg-white text-[color:var(--color-text)]"}`}
+              onClick={() => { const n = new URLSearchParams(params); n.set("operation","Rent"); setParams(n, { replace:true }); }}
+            >
+              Rentar
+            </button>
+          </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <EstadoSelect value={estado} onChange={setEstado} options={states} disabled={loading} />
